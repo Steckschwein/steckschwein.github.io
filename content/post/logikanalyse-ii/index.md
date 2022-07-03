@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Logikanalyse II [UPDATE]"
 date: "2017-05-04"

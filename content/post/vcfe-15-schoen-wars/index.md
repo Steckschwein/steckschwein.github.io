@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "VCFe 15 - Schön wars!"
 date: "2014-05-04"

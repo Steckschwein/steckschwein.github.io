@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Ein richtiger Computer soll es sein"
 date: "2014-03-15"

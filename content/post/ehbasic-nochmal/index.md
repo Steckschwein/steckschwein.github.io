@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "EhBASIC nochmal"
 date: "2017-01-22"

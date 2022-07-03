@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Markos Pacman Talk at VCFb"
 date: "2019-10-23"

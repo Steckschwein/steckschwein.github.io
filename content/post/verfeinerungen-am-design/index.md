@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Verfeinerungen am Design"
 date: "2014-06-24"

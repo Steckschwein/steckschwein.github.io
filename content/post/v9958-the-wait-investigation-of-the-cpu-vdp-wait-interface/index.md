@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "V9958 - \"The WAIT\" - investigation of the CPU/VDP /WAIT interface"
 date: "2018-10-22"

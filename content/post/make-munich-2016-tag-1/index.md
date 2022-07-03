@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Make Munich 2016, Tag 1"
 date: "2016-01-16"

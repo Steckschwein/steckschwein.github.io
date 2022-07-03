@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Schweinebauchanzeige"
 date: "2015-07-24"

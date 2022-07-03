@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Das Steckschwein auf dem VCFe 16.0"
 date: "2015-04-20"

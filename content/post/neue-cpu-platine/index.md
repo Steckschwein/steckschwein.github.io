@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Die neuen CPU-Boards sind fertig"
 date: "2016-04-21"

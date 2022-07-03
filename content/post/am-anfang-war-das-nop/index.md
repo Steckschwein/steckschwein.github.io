@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Am Anfang war das NOP"
 date: "2014-02-12"

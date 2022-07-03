@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Ein Spiel entsteht..."
 date: "2015-09-11"

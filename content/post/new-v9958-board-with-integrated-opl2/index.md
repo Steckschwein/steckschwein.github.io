@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "New V9958-Board with integrated OPL2"
 date: "2018-12-07"

@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "SPI mit 65c22 VIA"
 date: "2014-07-13"

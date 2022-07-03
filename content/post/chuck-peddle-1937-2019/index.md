@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Chuck Peddle, 1937 - 2019"
 date: "2019-12-21"

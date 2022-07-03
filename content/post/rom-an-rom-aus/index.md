@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "ROM an, ROM aus"
 date: "2014-10-26"

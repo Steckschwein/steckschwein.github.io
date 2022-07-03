@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Make Munich 2016 - das wars schon wieder"
 date: "2016-01-18"

@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Connecting SNES Controller to the Steckschwein"
 date: "2020-01-15"

@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "VCFe 16.0 - schon wieder vorbei"
 date: "2015-05-03"

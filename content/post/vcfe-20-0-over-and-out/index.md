@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "VCFe 20.0 - over and out"
 date: "2019-04-28"

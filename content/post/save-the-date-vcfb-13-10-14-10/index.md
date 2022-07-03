@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Save the date: VCFb - 13.10.-14.10."
 date: "2018-10-01"

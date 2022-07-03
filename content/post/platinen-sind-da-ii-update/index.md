@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Platinen sind da II (UPDATE)"
 date: "2015-02-21"

@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "WOZMON - a memory monitor in 256 bytes"
 date: "2018-07-22"

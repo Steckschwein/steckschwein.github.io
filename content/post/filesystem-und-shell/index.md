@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Filesystem und Shell"
 date: "2015-05-20"

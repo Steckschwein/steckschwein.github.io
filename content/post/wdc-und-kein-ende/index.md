@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "WDC und kein Ende"
 date: "2015-06-26"

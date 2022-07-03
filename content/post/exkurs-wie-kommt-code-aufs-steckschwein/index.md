@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Exkurs: Wie kommt Code aufs Steckschwein?"
 date: "2014-04-03"

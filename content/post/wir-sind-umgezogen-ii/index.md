@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Wir sind umgezogen II"
 date: "2016-07-14"

@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "... kein Spaß - Murphy schlägt zu"
 date: "2014-03-31"

@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Make Munich 2019 - It's been our pleasure"
 date: "2019-03-03"

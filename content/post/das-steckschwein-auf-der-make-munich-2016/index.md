@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Das Steckschwein auf der Make Munich 2016"
 date: "2015-11-30"

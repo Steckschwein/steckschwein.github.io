@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "V9958 - Vom Steckbrett zum Prototypen"
 date: "2018-03-01"

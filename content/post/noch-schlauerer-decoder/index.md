@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Noch schlauerer Decoder"
 date: "2014-07-01"

@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Neue Hardware - die Platinen sind da"
 date: "2017-11-28"

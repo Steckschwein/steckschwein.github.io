@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Das Schwein kann singen..."
 date: "2015-01-04"

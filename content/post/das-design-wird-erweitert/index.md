@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Das Design wird erweitert"
 date: "2014-03-16"

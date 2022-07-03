@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Neue CPU-Boards"
 date: "2016-03-08"

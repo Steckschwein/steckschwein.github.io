@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Murphy II"
 date: "2014-04-02"

@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "ACIA muss wieder raus"
 date: "2014-03-28"

@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Fixing the white screen problem on a Tekway DST1062B oscilloscope"
 date: "2019-02-17"

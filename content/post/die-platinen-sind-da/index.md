@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Die Platinen sind da!"
 date: "2015-02-21"

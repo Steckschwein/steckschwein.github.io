@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Mehr Mut: Es werde Code!"
 date: "2014-02-12"

@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Vintage Computer Festival Europe"
 date: "2019-04-24"

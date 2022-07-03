@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Meet us at Make Munich, 2.3. - 3.3.2019"
 date: "2019-02-22"

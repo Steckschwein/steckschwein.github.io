@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Doppelt hält besser"
 date: "2014-02-22"

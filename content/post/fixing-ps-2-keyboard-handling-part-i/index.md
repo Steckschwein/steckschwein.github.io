@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Fixing PS/2 Keyboard handling (Part I)"
 date: "2020-11-14"

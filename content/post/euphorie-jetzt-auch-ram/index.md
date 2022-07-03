@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Euphorie: Jetzt auch RAM!"
 date: "2014-02-12"

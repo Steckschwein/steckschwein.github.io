@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "V9958 - Es ist vollbracht"
 date: "2018-03-17"

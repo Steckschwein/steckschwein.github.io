@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Weird bug in SD card code"
 date: "2019-10-16"

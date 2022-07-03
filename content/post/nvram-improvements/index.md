@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "NVRAM improvements"
 date: "2019-06-13"

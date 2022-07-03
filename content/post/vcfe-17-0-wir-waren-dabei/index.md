@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "VCFe 17.0 - wir waren dabei"
 date: "2016-05-01"

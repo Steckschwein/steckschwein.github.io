@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "VCFB 2018 It was great..."
 date: "2018-10-13"

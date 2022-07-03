@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Forth Benchmarks"
 date: "2019-07-02"

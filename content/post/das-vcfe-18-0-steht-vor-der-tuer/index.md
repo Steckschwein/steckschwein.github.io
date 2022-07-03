@@ -1,5 +1,5 @@
 ---
-draft: true
+draft: false
 
 title: "Das VCFe 18.0 steht vor der Tür"
 date: "2017-04-19"
