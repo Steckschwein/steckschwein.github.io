@@ -1,0 +1,11 @@
+#baseURL = "http://www.steckschwein.de"
+baseURL = "/"
+languageCode = "en-us"
+title = "Steckschwein"
+theme = "gohugo-theme-ananke"
+SectionPagesMenu = "main"
+
+[params]
+featured_image = "/images/cropped-steckos.jpg"
+twitter = "https://twitter.com/steckschwein"
+description = "Never trust a computer you did not build yourself."
