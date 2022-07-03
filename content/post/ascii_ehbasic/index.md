@@ -10,7 +10,10 @@ In the past, we only could read or write a file as a whole, relative to the loca
 
 So clearly, the better approach is to read the BASIC program as source in it’s ASCII representation. This is the way EhBasic’s late creator, Lee Davison, preferred, and suggested how to implement this:
 
-    To load an ASCII program redirect the character input vector to read from your filesystem and return to the main interpreter loop. The input vector should be restored and the file closed when the file end is reached or an error is encountered.
+    To load an ASCII program redirect the character input vector to read 
+    from your filesystem and return to the main interpreter loop. 
+    The input vector should be restored and the file closed when the 
+    file end is reached or an error is encountered.
 
 Basically the interpreter would read characters and interpret them, just like them being typed in, but instead they will be read from the file. So, our LOAD command is implemented like this:
 ```
