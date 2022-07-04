@@ -2,7 +2,7 @@
 baseURL = "https://steckschwein.github.io"
 languageCode = "en-us"
 title = "Steckschwein"
-theme = "garden"
+theme = "ananke"
 SectionPagesMenu = "main"
 
 [params]
