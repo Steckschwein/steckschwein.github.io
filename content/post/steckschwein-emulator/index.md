@@ -19,35 +19,37 @@ is done in a dedicated file [memory.c](https://github.com/twoinke/steckschwein-e
 
 So if the CPU accesses these address range e.g. asking for a byte from such an address via
 
-LDA $0220
+`LDA $0220`
 
 the emulator dispatches the memory read to the corresponding i/o implementation. this  is done with a simple ordered "if-cascade" as follows
 
-uint8\_t
-real\_read6502(uint16\_t address, bool debugOn, uint8\_t bank)
+```
+uint8_t
+real_read6502(uint16_t address, bool debugOn, uint8_t bank)
 {
 	if (address < 0x0200)
 	{ // RAM
-		return RAM\[address\];
+		return RAM[address];
 	}
 	else if (address < 0x0280) { // I/O
 		// TODO I/O map?
 		if (address  < 0x210) // UART at $0200
 		{
-			return uart\_read(address & 0xf);
+			return uart_read(address & 0xf);
 		}
 		else if (address < 0x0220) // VIA at $0210
 		{
-			return via1\_read(address & 0xf);
+			return via1_read(address & 0xf);
 		}
 		else if (address < 0x0230) // VDP at $0220
 		{
 			return ioPortRead(NULL,address);
 		}
 
+```
 The LDA shown above will end up in the line with
 
-return ioPortRead(NULL,address);
+`return ioPortRead(NULL,address);`
 
 and thus our VDP implementation is asked for a byte to read.
 
@@ -81,4 +83,4 @@ On the screenshot you may have noticed the "date" tool, which actually gives the
 
 to be continued...
 
-code: [https://github.com/twoinke/steckschwein-emulator](https://github.com/twoinke/steckschwein-emulator)
+code: [https://github.com/Steckschwein/steckschwein-emulator](https://github.com/Steckschwein/steckschwein-emulator)
