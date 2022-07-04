@@ -13,7 +13,9 @@ Recently, Michael Steil published a [blog post about connecting NES and SNES Con
 
 Why not use his approach and adapt it to the Steckschwein? The Steckschwein has a User Port, too, albeit a very different one as the C64. Basically, the Steckschwein-User-Port consists of the complete Port A of the VIA, plus the /RESET and /IRQ lines. Also of course, VCC and GND.
 
+```
 User Port:
+
       |---------GND
       | |-------PA6  
       | | |-----PA4
@@ -40,11 +42,12 @@ Pin Description
 5  –
 6  –
 7  GND
-
-\[caption id="attachment\_1289" align="alignnone" width="960"\]![snes](images/snes.jpg) Simple adapter to connect one SNES controller\[/caption\]
+```
+![snes](images/snes.jpg) Simple adapter to connect one SNES controller
 
 As for the code, we use Michael's code with only a few modifications respective to the different pinout, and with a handful of optimizations. Having a 65c02 instead of the 6510 in the C64 gives us the STZ instruction, also using PA0 as clock pin takes just an INC instruction followed by STZ to pulse the clock line.
 
+```
 nes\_data = via1porta
 nes\_ddr = via1ddra
 ; zero page
@@ -91,15 +94,14 @@ l1: lda nes\_data
     cpx #3
     bne l2
     rts
-
+```
 Small test program to output a different character for each button:
 
-\[wpvideo 5Kk7bE3z\]
-
+{{< youtube 5Kk7bE3z >}}
  
 
 Also, instead of the original Nintendo SNES controller, I use an [8bitdo SN30](https://www.8bitdo.com/) Bluetooth controller with the SNES receiver. One could say this is the first time a Bluetooth device has been connected to the Steckschwein.
 
-\[caption id="attachment\_1296" align="alignnone" width="4032"\]![IMG_5814](images/img_5814.jpg) Bluetooth SNES receiver from 8bitdo\[/caption\]
+![IMG_5814](images/img_5814.jpg) Bluetooth SNES receiver from 8bitdo
 
 Up next: Patching our games!
