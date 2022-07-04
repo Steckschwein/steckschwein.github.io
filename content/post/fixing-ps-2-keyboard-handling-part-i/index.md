@@ -29,7 +29,9 @@ Finally, we decided to go the most simple way. The PS/2 controller will pull the
 
 This is all the code that's needed on the PS/2 controller side:  
 
-    if (kb\_buffcnt > 0)
+
+```
+    if (kb_buffcnt > 0)
     {
         DDRC |= (1 << IRQ);     // pull IRQ line
     }
@@ -38,22 +40,26 @@ This is all the code that's needed on the PS/2 controller side:
         DDRC &= ~(1 << IRQ); // release IRQ line
     }
 
+```
+
 Now, we need to add a little handling code to the steckOS IRQ-handler. Since we do not have an interrupt register, we just check the keyboard last, after every "known" interrupt source has been handled.  
 To get around having to implement another keyboard buffer, we just use a single memory location, labelled "key". The IRQ handler will only fetch a byte from the keyboard when the target location is zero (0), otherwise it will just exit.  
 The system getkey-routine will load the contents from that location into the A register, and overwrite the location with 0 again to enable fetching the next char from the buffer.
 
 The SPI check code is the last bit in the IRQ-handler routine:
 
-`@check_spi:  
-lda key  
-bne @exit  
-jsr fetchkey  
-bcc @exit  
-sta key  
+```
+@check_spi:  
+    lda key  
+    bne @exit  
+    jsr fetchkey  
+    bcc @exit  
+    sta key  
   
 @exit:  
-restore  
-rti`
+    restore  
+    rti
+```
 
 That's basically all that's needed. The former getkey-routine has been renamed to fetchkey, and the new getkey routine only handles the ZP buffer location while retaining the old behaviour including setting the carry flag when a byte has been received. This way, existing programs using the keyboard do not have to be modified.
 
