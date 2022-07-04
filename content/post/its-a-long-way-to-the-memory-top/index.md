@@ -9,7 +9,7 @@ On arrival, the first interesting thing is the way they were packaged. No anti e
 
 Next, WDC reacted to that tweet, stating that these might be not genuine or be at least very old. 
 
-
+{{< tweet user="steckschwein" id="1532446031127904256" >}}
 https://twitter.com/steckschwein/status/1532446031127904256
 
 
