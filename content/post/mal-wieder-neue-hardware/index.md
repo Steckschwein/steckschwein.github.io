@@ -18,4 +18,4 @@ Zum Schutz der VIA-Pins dienen nun keine Optokoppler, sondern simple Serienwider
 
 Der User-Port hat ein neues, von [Neil Franklin](http://neil.franklin.ch/) vorgeschlagenes Pinout, in dem nun auch die /RESET und /IRQ-Leitungen vorhanden sind. Auch am Tastaturcontroller hat sich eine Kleinigkeit geändert, die Datenpins für den PS/2 Port sind nach PD6 bzw. PD7 gewandert. Somit sind die RX/TX-Pins des AVR USART wieder frei und bereit für neue Schandtaten. Deswegen haben sie auch eine kleine Pinleiste spendiert bekommen.
 
-\[caption id="attachment\_973" align="alignnone" width="1918"\]![io2_0](images/io2_0.png) 3D Rendering der neuen IO-Platine\[/caption\]
+![](images/io2_0.png) 3D Rendering der neuen IO-Platine

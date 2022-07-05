@@ -25,7 +25,7 @@ version - The version byte will help tracking changes to the NVRAM data structur
 
 To manipulate the contents of the NVRAM in a user friendly way, steckOS provides a tool written in C.
 
-\[caption id="attachment\_1233" align="alignnone" width="1280"\]![nvram](images/nvram-1.jpg) nvram tool\[/caption\]
+![](images/nvram-1.jpg) nvram tool
 
  
 

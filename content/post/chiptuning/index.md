@@ -28,11 +28,11 @@ Zum Glück bietet der 6502 auch hier genau das, was wir brauchen: Den RDY-Pin. W
 
 Im Grunde genommen brauchen wir also einen Zähler, der die Taktfrequenz des Systems herunterteilt, und eine Selektionslogik, über die sich wählen läßt, welcher Ausgang des Zählers die Grundlage für das RDY-Signal bilden soll, und damit die Anzahl der Wait States bestimmt. Dieses Signal bildet invertiert das RDY-Signal.
 
-\[caption id="attachment\_388" align="alignnone" width="800"\]![tekway331_2](images/tekway331_2.gif) Gelb: RDY, Blau: PHI2 (Systemtakt) - 2 Wait States für den Videochip\[/caption\]
+![](images/tekway331_2.gif) Gelb: RDY, Blau: PHI2 (Systemtakt) - 2 Wait States für den Videochip
 
 Zur folgender Logik haben wir uns vom [Waitstate-Generator von Daryl Rictor](http://sbc.rictor.org/parts/wsgen.html)  stark inspirieren lassen. Im Wesentlichen haben wir die Adressdekoderlogik zugunsten der bereits ausdekodierten /CS\_... Leitungen entfernt, sowie die Syntax von CUPL nach GALasm überführt.
 
-\[caption id="attachment\_585" align="alignnone" width="2448"\]![img_20160130_144611](images/img_20160130_144611.jpg) Waitstate-Generator-Prototyp auf dem Steckbrett\[/caption\]
+![](images/img_20160130_144611.jpg) Waitstate-Generator-Prototyp auf dem Steckbrett
 
 Folgende Schaltung erzeugt entsprechend 1 oder 2 Waitstates, und versetzt den Ausgangspin in den Tri-State-Zustand, damit auch andere Bausteine Wait-States anfordern können. Sollten einmal mehr Waitstates nötig werden, lassen sich noch 1 oder 2 Zählerstufen hinzufügen, um 4 oder 8 Waitstates zu erzeugen.
 
