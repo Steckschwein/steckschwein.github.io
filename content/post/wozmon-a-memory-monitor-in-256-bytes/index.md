@@ -21,6 +21,7 @@ We started off using [Jeff Tranter's Version](https://github.com/jefftranter/650
 
 So here is our Version of wozmon adapted to run on top of SteckOS in all it's glory:
 
+```
 ;  The WOZ Monitor for the Apple 1
 ;  Written by Steve Wozniak in 1976
 
@@ -32,9 +33,11 @@ Credit where credit is due!
 .include "appstart.inc"
 
 appstart $1000
+```
 
 Our Standard SteckOS includes. The appstart macro takes care of creating a commodore style file "header" with the load address in the first 2 bytes of the file.
 
+```
 ; Page 0 Variables
 XAML            = $24           ;  Last "opened" location Low
 XAMH            = $25           ;  Last "opened" location High
@@ -44,9 +47,11 @@ L               = $28           ;  Hex value parsing Low
 H               = $29           ;  Hex value parsing High
 YSAV            = $2A           ;  Used to see if hex value is given
 MODE            = $2B           ;  $00=XAM, $7F=STOR, $AE=BLOCK XAM
+```
 
 Nothing changed here.
 
+```
 ; Other Variables
 IN              = $0300         ;  Input buffer to $027F
 ; KBD             = $D010         ;  PIA.A keyboard input
@@ -56,9 +61,11 @@ IN              = $0300         ;  Input buffer to $027F
 
                ; .org $FF00
                ; .export RESET
+```
 
 We need to put the input buffer from $027F to somewhere else, because $027F collides with our I/O area. $0300 should be fine. We do not use a PIA for i/o, so we can get rid of those labels. Also, the start address is already defined above, and we won't need to export the RESET label.
 
+```
 RESET:          CLD             ; Clear decimal arithmetic mode.
                 CLI
                 LDY #$7F        ; Mask for DSP data direction register.
@@ -67,19 +74,24 @@ RESET:          CLD             ; Clear decimal arithmetic mode.
                 ; STA KBDCR       ; Enable interrupts, set CA1, CB1, for
                 ; STA DSPCR       ; positive edge sense/output mode.
 
+```
+
 No need to initialize the PIA chip which we don't have, but we still need to initialize the A and Y registers.
 
-NOTCR:          ; CMP #'\_'    ; "\_"?
+```
+NOTCR:          ; CMP #'_'    ; "_"?
                 CMP #$08 + $80
                 BEQ BACKSPACE   ; Yes.
+```
 
-Backspace is $08 on the Steckschwein, not "\_".
+Backspace is $08 on the Steckschwein, not "_".
 
+```
                 CMP #$9B        ; ESC?
                 BEQ ESCAPE      ; Yes.
                 INY             ; Advance text index.
                 BPL NEXTCHAR    ; Auto ESC if > 127.
-ESCAPE:         LDA #'\\' + $80   ; "\\".
+ESCAPE:         LDA #'\' + $80   ; "\".
                 JSR ECHO        ; Output it.
 GETLINE:        LDA #$8A        ; CR.
                 JSR ECHO        ; Output it.
@@ -93,9 +105,11 @@ NEXTCHAR:
                 keyin
                 toupper
                 ORA #$80
+```
 
 Here is our first major code change. Keyboard input is handled using SteckOS means. Then we convert the received character to uppercase, since the Apple I uses uppercase only, hence wozmon does not handle lowercase. Also, and most important, the Apple I keyboard generated ASCII with bit 7 set to "1". We need to emulate that. With these modifications, the bulk of the code can remain as is.
 
+```
                 STA IN,Y        ; Add to text buffer.
                 JSR ECHO        ; Display character.
                 CMP #$8D        ; CR?
@@ -202,21 +216,26 @@ ECHO:
                 jsr krn\_chrout
                 pla
                 RTS             ; Return.
+```
 
 Second important change. We got rid of the Apple I specific routine to output characters and use the chrout-routine of the SteckOS-kernel. But in order not to output garbage, we need to unset bit 7. Since all comparisons afterwards still rely on bit 7 being set, we save the A register to the stack and restore it afterwards. A faster way would be to just set bit 7 again by doing a ORA #$80 before the RTS, but what the heck.
 
+```
 ; BRK             ; unused
 ; BRK             ; unused
+```
 
 We don't need those.
 
+```
 ; Interrupt Vectors
 ; .WORD $0F00     ; NMI
 ; .WORD RESET     ; RESET
 ; .WORD $0000 ; BRK/IRQ
+```
 
 We don't need those either since we are not using wozmon as system software. Interrupt handling is still done by the SteckOS kernel.
 
  
 
-\[caption id="attachment\_1113" align="alignnone" width="1280"\]![wozmon](images/wozmon.jpg) Tada!\[/caption\]
+![wozmon](images/wozmon.jpg) Tada!
