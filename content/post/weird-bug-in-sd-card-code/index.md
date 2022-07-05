@@ -45,14 +45,16 @@ Ok, now what? Enabling Marko's mighty debugging macros, it becomes apparent that
 But why did it work before the fix? Assuming that the card did not change it's behaviour at the same time I fixed the code, let's check what actually happened. Before the fix, we were ANDing $3F with 80:
 
 `
-00111111 $3f
+00111111 $3f`  
+`
 01010000 80 (no $, decimal)
 `
 
 In this case, the BNE after the BIT #80 would take the branch to @l, causing the next byte being read, until finally the card responds with $01:
 
 `
-00000001 $01
+00000001 $01`  
+`
 01010000 80 (no $, decimal)
 `
 
@@ -61,7 +63,8 @@ Now the BNE does not take the branch, and the routine exits.
 Now, with the fixed code,  ANDing $3F with **$**80, to check if bit 7 is clear, which it is:
 
 `
-00111111 $3F
+00111111 $3F`  
+`
 10000000 $80
 `
 
