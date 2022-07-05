@@ -28,9 +28,7 @@ Mit dem neuen Layout hat es nicht nur der UART mit aufs IO-Board geschafft, es s
 - Zweckmäßigere Plazierung vom SPI-Anschluss des ATmega8 und des freien SPI Ports am Platinenrand. Updates der Tastaturcontrollerfirmware sind nun kein Krampf mehr.
 - Der User-Port hat ein besseres Pinout.
 - Die neue Platine sieht einfach besser aus.
+![IMG_3091](images/img_3091.jpg) Frisch ausgepackte Platine
 
-\[caption id="attachment\_977" align="alignnone" width="3264"\]![IMG_3091](images/img_3091.jpg) Frisch ausgepackte Platine\[/caption\]
-
-\[caption id="attachment\_978" align="alignnone" width="3264"\]![IMG_3092](images/img_3092.jpg) Fertig bestückte Platine\[/caption\]
-
-\[caption id="attachment\_979" align="alignnone" width="2448"\]![IMG_3093](images/img_3093.jpg) Die nun obsolet gewordenen Platinen.\[/caption\]
+![IMG_3092](images/img_3092.jpg) Fertig bestückte Platine
+![IMG_3093](images/img_3093.jpg) Die nun obsolet gewordenen Platinen.
