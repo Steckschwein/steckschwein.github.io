@@ -4,6 +4,7 @@ languageCode = "en-us"
 title = "Steckschwein"
 theme = "ananke"
 SectionPagesMenu = "main"
+enableRobotsTXT = true
 
 [params]
 featured_image = "/images/cropped-steckos.jpg"
