@@ -23,6 +23,6 @@ Unsere Timing-Probleme führen wir auf zu kurze Delays bei Registerzugriffen, ei
 
 Das neue V9958-Board markiert auch eine Veränderung in unserer Vorgehensweise. Bislang haben wir Neuerungen immer komplett ausdesigned auf dem Steckbrett aufgebaut, und erst ganz am Schluss Platinen fertigen lassen, haben wir hier bewusst erst nur die Basisversion layoutet und direkt als Platinen fertigen lassen. Die günstigen Preise der diversen Platinenfertiger machens möglich, und wir verbringen weniger Zeit mit nervtötenden, wackligen Steckbrettaufbauten, und können uns auch langwierige und fehlerträchtige Aufbauten auf Lochrasterplatine sparen. Als angenehmen Nebeneffekt haben wir zwingend einen Schaltplan für jeden Schritt erstellt und haben somit alles lückenlos dokumentiert. Wir rechnen mit noch mindestens 2 Revisionen des Boards. Nämlich eine Reduktion der DRAM-Bestückung auf einen einzigen 16bit-Baustein, und zum Schluss Hinzufügen des Soundchips, sodass das Steckschwein in Zukunft nur noch aus 3 Platinen besteht. Jedenfalls bis wir uns dann an den Einplatiner wagen.
 
-\[caption id="attachment\_990" align="alignnone" width="4032"\]![IMG_3308](images/img_3308.jpg) Der Steckbrettaufbau mit 128k. Für das Bild im Hintergrund werden trotzdem nur 16k verwendet.\[/caption\]
+![IMG_3308](images/img_3308.jpg) Der Steckbrettaufbau mit 128k. Für das Bild im Hintergrund werden trotzdem nur 16k verwendet.
 
-\[caption id="attachment\_991" align="alignnone" width="1280"\]![photo_2018-03-01_18-53-11](images/photo_2018-03-01_18-53-11.jpg) 3D-Rendering der neuen Platine\[/caption\]
+![photo_2018-03-01_18-53-11](images/photo_2018-03-01_18-53-11.jpg) 3D-Rendering der neuen Platine
