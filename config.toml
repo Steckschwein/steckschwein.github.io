@@ -1,5 +1,5 @@
-#baseURL = "http://www.steckschwein.de"
-baseURL = "https://steckschwein.github.io"
+baseURL = "https://beta.steckschwein.de"
+#baseURL = "https://steckschwein.github.io"
 languageCode = "en-us"
 title = "Steckschwein"
 theme = "ananke"
