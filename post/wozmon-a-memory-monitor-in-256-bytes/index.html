@@ -1,158 +1,174 @@
 <!doctype html><html lang=en-us><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>WOZMON - a memory monitor in 256 bytes | Steckschwein</title><meta name=viewport content="width=device-width,minimum-scale=1"><meta name=description content="The woz monitor, also known as WOZMON, is a pretty simple memory monitor and was the system software located in the 256 byte PROM on the Apple I. Wozmon is used to inspect and modify memory contents or to execute programs already located in memory. Steve Wozniak managed to squeeze all that functionality into 256 bytes. That&rsquo;s right, bytes. Not megabytes, not kilobytes. Bytes.
 We already had attempted to get wozmon ported to our Steckschwein, but we did not succeed so far."><meta name=generator content="Hugo 0.101.0"><meta name=robots content="noindex, nofollow"><link rel=stylesheet href=/ananke/css/main.min.css><meta property="og:title" content="WOZMON - a memory monitor in 256 bytes"><meta property="og:description" content="The woz monitor, also known as WOZMON, is a pretty simple memory monitor and was the system software located in the 256 byte PROM on the Apple I. Wozmon is used to inspect and modify memory contents or to execute programs already located in memory. Steve Wozniak managed to squeeze all that functionality into 256 bytes. That&rsquo;s right, bytes. Not megabytes, not kilobytes. Bytes.
 We already had attempted to get wozmon ported to our Steckschwein, but we did not succeed so far."><meta property="og:type" content="article"><meta property="og:url" content="https://beta.steckschwein.de/post/wozmon-a-memory-monitor-in-256-bytes/"><meta property="article:section" content="post"><meta property="article:published_time" content="2018-07-22T00:00:00+00:00"><meta property="article:modified_time" content="2018-07-22T00:00:00+00:00"><meta itemprop=name content="WOZMON - a memory monitor in 256 bytes"><meta itemprop=description content="The woz monitor, also known as WOZMON, is a pretty simple memory monitor and was the system software located in the 256 byte PROM on the Apple I. Wozmon is used to inspect and modify memory contents or to execute programs already located in memory. Steve Wozniak managed to squeeze all that functionality into 256 bytes. That&rsquo;s right, bytes. Not megabytes, not kilobytes. Bytes.
-We already had attempted to get wozmon ported to our Steckschwein, but we did not succeed so far."><meta itemprop=datePublished content="2018-07-22T00:00:00+00:00"><meta itemprop=dateModified content="2018-07-22T00:00:00+00:00"><meta itemprop=wordCount content="1498"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="WOZMON - a memory monitor in 256 bytes"><meta name=twitter:description content="The woz monitor, also known as WOZMON, is a pretty simple memory monitor and was the system software located in the 256 byte PROM on the Apple I. Wozmon is used to inspect and modify memory contents or to execute programs already located in memory. Steve Wozniak managed to squeeze all that functionality into 256 bytes. That&rsquo;s right, bytes. Not megabytes, not kilobytes. Bytes.
-We already had attempted to get wozmon ported to our Steckschwein, but we did not succeed so far."></head><body class="ma0 avenir bg-near-white"><header><div class=bg-black><nav class="pv3 ph3 ph4-ns" role=navigation><div class="flex-l justify-between items-center center"><a href=/ class="f3 fw2 hover-white no-underline white-90 dib">Steckschwein</a><div class="flex-l items-center"><ul class="pl0 mr3"><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white no-underline white-90" href=/home/ title="The Project page">The Project</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white no-underline white-90" href=/hardware/ title="Hardware page">Hardware</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white no-underline white-90" href=/software/ title="Software page">Software</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white no-underline white-90" href=/impressum/ title="Impressum page">Impressum</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white no-underline white-90" href=/post/ title="Posts page">Posts</a></li></ul><div class=ananke-socials><a href=https://twitter.com/steckschwein target=_blank class="twitter ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel=noopener aria-label="follow on Twitter——Opens in a new window"><span class=icon><svg style="enable-background:new 0 0 67 67" viewBox="0 0 67 67" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167 22.283c-2.619.953-4.274 3.411-4.086 6.101l.063 1.038-1.048-.127c-3.813-.487-7.145-2.139-9.974-4.915l-1.383-1.377-.356 1.017c-.754 2.267-.272 4.661 1.299 6.271.838.89.649 1.017-.796.487-.503-.169-.943-.296-.985-.233-.146.149.356 2.076.754 2.839.545 1.06 1.655 2.097 2.871 2.712l1.027.487-1.215.021c-1.173.0-1.215.021-1.089.467.419 1.377 2.074 2.839 3.918 3.475l1.299.444-1.131.678c-1.676.976-3.646 1.526-5.616 1.568C19.775 43.256 19 43.341 19 43.405c0 .211 2.557 1.397 4.044 1.864 4.463 1.377 9.765.783 13.746-1.568 2.829-1.673 5.657-5 6.978-8.221.713-1.716 1.425-4.851 1.425-6.354.0-.975.063-1.102 1.236-2.267.692-.678 1.341-1.419 1.467-1.631.21-.403.188-.403-.88-.043-1.781.636-2.033.551-1.152-.402.649-.678 1.425-1.907 1.425-2.267.0-.063-.314.042-.671.233-.377.212-1.215.53-1.844.72l-1.131.361-1.027-.7c-.566-.381-1.361-.805-1.781-.932C39.766 21.902 38.131 21.944 37.167 22.283zM33 64C16.432 64 3 50.569 3 34S16.432 4 33 4s30 13.431 30 30S49.568 64 33 64z" style="fill-rule:evenodd;clip-rule:evenodd"/></svg></span><span class=new-window><svg height="8" style="enable-background:new 0 0 1000 1000" viewBox="0 0 1e3 1e3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M598 128h298v298h-86V274L392 692l-60-60 418-418H598v-86zM810 810V512h86v298c0 46-40 86-86 86H214c-48 0-86-40-86-86V214c0-46 38-86 86-86h298v86H214v596h596z" style="fill-rule:evenodd;clip-rule:evenodd"/></svg></span></a></div></div></div></nav></div></header><main class=pb7 role=main><article class="flex-l flex-wrap justify-between mw8 center ph3"><header class="mt4 w-100"><aside class="instapaper_ignoref b helvetica tracked">POSTS</aside><div id=sharing class="mt3 ananke-socials"><a href="https://twitter.com/share?url=https://beta.steckschwein.de/post/wozmon-a-memory-monitor-in-256-bytes/&text=WOZMON%20-%20a%20memory%20monitor%20in%20256%20bytes" class="ananke-social-link twitter no-underline" aria-label="share on Twitter"><span class=icon><svg style="enable-background:new 0 0 67 67" viewBox="0 0 67 67" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167 22.283c-2.619.953-4.274 3.411-4.086 6.101l.063 1.038-1.048-.127c-3.813-.487-7.145-2.139-9.974-4.915l-1.383-1.377-.356 1.017c-.754 2.267-.272 4.661 1.299 6.271.838.89.649 1.017-.796.487-.503-.169-.943-.296-.985-.233-.146.149.356 2.076.754 2.839.545 1.06 1.655 2.097 2.871 2.712l1.027.487-1.215.021c-1.173.0-1.215.021-1.089.467.419 1.377 2.074 2.839 3.918 3.475l1.299.444-1.131.678c-1.676.976-3.646 1.526-5.616 1.568C19.775 43.256 19 43.341 19 43.405c0 .211 2.557 1.397 4.044 1.864 4.463 1.377 9.765.783 13.746-1.568 2.829-1.673 5.657-5 6.978-8.221.713-1.716 1.425-4.851 1.425-6.354.0-.975.063-1.102 1.236-2.267.692-.678 1.341-1.419 1.467-1.631.21-.403.188-.403-.88-.043-1.781.636-2.033.551-1.152-.402.649-.678 1.425-1.907 1.425-2.267.0-.063-.314.042-.671.233-.377.212-1.215.53-1.844.72l-1.131.361-1.027-.7c-.566-.381-1.361-.805-1.781-.932C39.766 21.902 38.131 21.944 37.167 22.283zM33 64C16.432 64 3 50.569 3 34S16.432 4 33 4s30 13.431 30 30S49.568 64 33 64z" style="fill-rule:evenodd;clip-rule:evenodd"/></svg></span></a></div><h1 class="f1 athelas mt3 mb1">WOZMON - a memory monitor in 256 bytes</h1><time class="f6 mv4 dib tracked" datetime=2018-07-22T00:00:00Z>July 22, 2018</time></header><div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><p>The <a href=https://www.sbprojects.net/projects/apple1/wozmon.php>woz monitor, also known as WOZMON</a>, is a pretty simple memory monitor and was the system software located in the 256 byte PROM on the Apple I. Wozmon is used to inspect and modify memory contents or to execute programs already located in memory. Steve Wozniak managed to squeeze all that functionality into 256 bytes. That&rsquo;s right, bytes. Not megabytes, not kilobytes. Bytes.</p><p>We already had attempted to get wozmon ported to our Steckschwein, but we did not succeed so far. That might have been because the wozmon-code is a little bit hard to read and makes use of some Apple I specific things, which we did not know they were, since we do not have any expertise about the Apple I.</p><p>Fortunately, we got asked by <a href=http://neil.franklin.ch>Neil Franklin</a> to proof-read his in-depth <a href=http://neil.franklin.ch/Info_Texts/Apple_1_Hardware_und_Software.html>article about the Apple I and wozmon</a>, which provided us with the missing background knowledge. So, as a proof of correctness and helpfulness of his article, it was time for a new porting attempt. As it turned out, there had to be 2 bigger changes, one while a char is input, and one while a char is output, and a few smaller but important considerations.</p><p>We started off using <a href=https://github.com/jefftranter/6502/tree/master/asm/wozmon>Jeff Tranter&rsquo;s Version</a>, because Jeff saved us some grunt work by having adapted the code to ca65 syntax.</p><p>So here is our Version of wozmon adapted to run on top of SteckOS in all it&rsquo;s glory:</p><p>; The WOZ Monitor for the Apple 1
-; Written by Steve Wozniak in 1976</p><p>Credit where credit is due!</p><p>.include &ldquo;common.inc&rdquo;
-.include &ldquo;../kernel/kernel.inc&rdquo;
-.include &ldquo;../kernel/kernel_jumptable.inc&rdquo;
-.include &ldquo;appstart.inc&rdquo;</p><p>appstart $1000</p><p>Our Standard SteckOS includes. The appstart macro takes care of creating a commodore style file &ldquo;header&rdquo; with the load address in the first 2 bytes of the file.</p><p>; Page 0 Variables
-XAML = $24 ; Last &ldquo;opened&rdquo; location Low
-XAMH = $25 ; Last &ldquo;opened&rdquo; location High
-STL = $26 ; Store address Low
-STH = $27 ; Store address High
-L = $28 ; Hex value parsing Low
-H = $29 ; Hex value parsing High
-YSAV = $2A ; Used to see if hex value is given
-MODE = $2B ; $00=XAM, $7F=STOR, $AE=BLOCK XAM</p><p>Nothing changed here.</p><p>; Other Variables
-IN = $0300 ; Input buffer to $027F
-; KBD = $D010 ; PIA.A keyboard input
-; KBDCR = $D011 ; PIA.A keyboard control register
-; DSP = $D012 ; PIA.B display output register
-; DSPCR = $D013 ; PIA.B display control register</p><pre><code>           ; .org $FF00
-           ; .export RESET
-</code></pre><p>We need to put the input buffer from $027F to somewhere else, because $027F collides with our I/O area. $0300 should be fine. We do not use a PIA for i/o, so we can get rid of those labels. Also, the start address is already defined above, and we won&rsquo;t need to export the RESET label.</p><p>RESET: CLD ; Clear decimal arithmetic mode.
-CLI
-LDY #$7F ; Mask for DSP data direction register.
-; STY DSP ; Set it up.
-LDA #$A7 ; KBD and DSP control register mask.
-; STA KBDCR ; Enable interrupts, set CA1, CB1, for
-; STA DSPCR ; positive edge sense/output mode.</p><p>No need to initialize the PIA chip which we don&rsquo;t have, but we still need to initialize the A and Y registers.</p><p>NOTCR: ; CMP #&rsquo;_&rsquo; ; &ldquo;_&rdquo;?
-CMP #$08 + $80
-BEQ BACKSPACE ; Yes.</p><p>Backspace is $08 on the Steckschwein, not &ldquo;_&rdquo;.</p><pre><code>            CMP #$9B        ; ESC?
-            BEQ ESCAPE      ; Yes.
-            INY             ; Advance text index.
-            BPL NEXTCHAR    ; Auto ESC if &gt; 127.
-</code></pre><p>ESCAPE: LDA #&rsquo;\&rsquo; + $80 ; &ldquo;\&rdquo;.
-JSR ECHO ; Output it.
-GETLINE: LDA #$8A ; CR.
-JSR ECHO ; Output it.
-LDY #$01 ; Initialize text index.
-BACKSPACE: DEY ; Back up text index.
-BMI GETLINE ; Beyond start of line, reinitialize.
+We already had attempted to get wozmon ported to our Steckschwein, but we did not succeed so far."><meta itemprop=datePublished content="2018-07-22T00:00:00+00:00"><meta itemprop=dateModified content="2018-07-22T00:00:00+00:00"><meta itemprop=wordCount content="1494"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="WOZMON - a memory monitor in 256 bytes"><meta name=twitter:description content="The woz monitor, also known as WOZMON, is a pretty simple memory monitor and was the system software located in the 256 byte PROM on the Apple I. Wozmon is used to inspect and modify memory contents or to execute programs already located in memory. Steve Wozniak managed to squeeze all that functionality into 256 bytes. That&rsquo;s right, bytes. Not megabytes, not kilobytes. Bytes.
+We already had attempted to get wozmon ported to our Steckschwein, but we did not succeed so far."></head><body class="ma0 avenir bg-near-white"><header><div class=bg-black><nav class="pv3 ph3 ph4-ns" role=navigation><div class="flex-l justify-between items-center center"><a href=/ class="f3 fw2 hover-white no-underline white-90 dib">Steckschwein</a><div class="flex-l items-center"><ul class="pl0 mr3"><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white no-underline white-90" href=/home/ title="The Project page">The Project</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white no-underline white-90" href=/hardware/ title="Hardware page">Hardware</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white no-underline white-90" href=/software/ title="Software page">Software</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white no-underline white-90" href=/impressum/ title="Impressum page">Impressum</a></li><li class="list f5 f4-ns fw4 dib pr3"><a class="hover-white no-underline white-90" href=/post/ title="Posts page">Posts</a></li></ul><div class=ananke-socials><a href=https://twitter.com/steckschwein target=_blank class="twitter ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel=noopener aria-label="follow on Twitter——Opens in a new window"><span class=icon><svg style="enable-background:new 0 0 67 67" viewBox="0 0 67 67" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167 22.283c-2.619.953-4.274 3.411-4.086 6.101l.063 1.038-1.048-.127c-3.813-.487-7.145-2.139-9.974-4.915l-1.383-1.377-.356 1.017c-.754 2.267-.272 4.661 1.299 6.271.838.89.649 1.017-.796.487-.503-.169-.943-.296-.985-.233-.146.149.356 2.076.754 2.839.545 1.06 1.655 2.097 2.871 2.712l1.027.487-1.215.021c-1.173.0-1.215.021-1.089.467.419 1.377 2.074 2.839 3.918 3.475l1.299.444-1.131.678c-1.676.976-3.646 1.526-5.616 1.568C19.775 43.256 19 43.341 19 43.405c0 .211 2.557 1.397 4.044 1.864 4.463 1.377 9.765.783 13.746-1.568 2.829-1.673 5.657-5 6.978-8.221.713-1.716 1.425-4.851 1.425-6.354.0-.975.063-1.102 1.236-2.267.692-.678 1.341-1.419 1.467-1.631.21-.403.188-.403-.88-.043-1.781.636-2.033.551-1.152-.402.649-.678 1.425-1.907 1.425-2.267.0-.063-.314.042-.671.233-.377.212-1.215.53-1.844.72l-1.131.361-1.027-.7c-.566-.381-1.361-.805-1.781-.932C39.766 21.902 38.131 21.944 37.167 22.283zM33 64C16.432 64 3 50.569 3 34S16.432 4 33 4s30 13.431 30 30S49.568 64 33 64z" style="fill-rule:evenodd;clip-rule:evenodd"/></svg></span><span class=new-window><svg height="8" style="enable-background:new 0 0 1000 1000" viewBox="0 0 1e3 1e3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M598 128h298v298h-86V274L392 692l-60-60 418-418H598v-86zM810 810V512h86v298c0 46-40 86-86 86H214c-48 0-86-40-86-86V214c0-46 38-86 86-86h298v86H214v596h596z" style="fill-rule:evenodd;clip-rule:evenodd"/></svg></span></a></div></div></div></nav></div></header><main class=pb7 role=main><article class="flex-l flex-wrap justify-between mw8 center ph3"><header class="mt4 w-100"><aside class="instapaper_ignoref b helvetica tracked">POSTS</aside><div id=sharing class="mt3 ananke-socials"><a href="https://twitter.com/share?url=https://beta.steckschwein.de/post/wozmon-a-memory-monitor-in-256-bytes/&text=WOZMON%20-%20a%20memory%20monitor%20in%20256%20bytes" class="ananke-social-link twitter no-underline" aria-label="share on Twitter"><span class=icon><svg style="enable-background:new 0 0 67 67" viewBox="0 0 67 67" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167 22.283c-2.619.953-4.274 3.411-4.086 6.101l.063 1.038-1.048-.127c-3.813-.487-7.145-2.139-9.974-4.915l-1.383-1.377-.356 1.017c-.754 2.267-.272 4.661 1.299 6.271.838.89.649 1.017-.796.487-.503-.169-.943-.296-.985-.233-.146.149.356 2.076.754 2.839.545 1.06 1.655 2.097 2.871 2.712l1.027.487-1.215.021c-1.173.0-1.215.021-1.089.467.419 1.377 2.074 2.839 3.918 3.475l1.299.444-1.131.678c-1.676.976-3.646 1.526-5.616 1.568C19.775 43.256 19 43.341 19 43.405c0 .211 2.557 1.397 4.044 1.864 4.463 1.377 9.765.783 13.746-1.568 2.829-1.673 5.657-5 6.978-8.221.713-1.716 1.425-4.851 1.425-6.354.0-.975.063-1.102 1.236-2.267.692-.678 1.341-1.419 1.467-1.631.21-.403.188-.403-.88-.043-1.781.636-2.033.551-1.152-.402.649-.678 1.425-1.907 1.425-2.267.0-.063-.314.042-.671.233-.377.212-1.215.53-1.844.72l-1.131.361-1.027-.7c-.566-.381-1.361-.805-1.781-.932C39.766 21.902 38.131 21.944 37.167 22.283zM33 64C16.432 64 3 50.569 3 34S16.432 4 33 4s30 13.431 30 30S49.568 64 33 64z" style="fill-rule:evenodd;clip-rule:evenodd"/></svg></span></a></div><h1 class="f1 athelas mt3 mb1">WOZMON - a memory monitor in 256 bytes</h1><time class="f6 mv4 dib tracked" datetime=2018-07-22T00:00:00Z>July 22, 2018</time></header><div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><p>The <a href=https://www.sbprojects.net/projects/apple1/wozmon.php>woz monitor, also known as WOZMON</a>, is a pretty simple memory monitor and was the system software located in the 256 byte PROM on the Apple I. Wozmon is used to inspect and modify memory contents or to execute programs already located in memory. Steve Wozniak managed to squeeze all that functionality into 256 bytes. That&rsquo;s right, bytes. Not megabytes, not kilobytes. Bytes.</p><p>We already had attempted to get wozmon ported to our Steckschwein, but we did not succeed so far. That might have been because the wozmon-code is a little bit hard to read and makes use of some Apple I specific things, which we did not know they were, since we do not have any expertise about the Apple I.</p><p>Fortunately, we got asked by <a href=http://neil.franklin.ch>Neil Franklin</a> to proof-read his in-depth <a href=http://neil.franklin.ch/Info_Texts/Apple_1_Hardware_und_Software.html>article about the Apple I and wozmon</a>, which provided us with the missing background knowledge. So, as a proof of correctness and helpfulness of his article, it was time for a new porting attempt. As it turned out, there had to be 2 bigger changes, one while a char is input, and one while a char is output, and a few smaller but important considerations.</p><p>We started off using <a href=https://github.com/jefftranter/6502/tree/master/asm/wozmon>Jeff Tranter&rsquo;s Version</a>, because Jeff saved us some grunt work by having adapted the code to ca65 syntax.</p><p>So here is our Version of wozmon adapted to run on top of SteckOS in all it&rsquo;s glory:</p><pre tabindex=0><code>;  The WOZ Monitor for the Apple 1
+;  Written by Steve Wozniak in 1976
+
+Credit where credit is due!
+
+.include &#34;common.inc&#34;
+.include &#34;../kernel/kernel.inc&#34;
+.include &#34;../kernel/kernel\_jumptable.inc&#34;
+.include &#34;appstart.inc&#34;
+
+appstart $1000
+</code></pre><p>Our Standard SteckOS includes. The appstart macro takes care of creating a commodore style file &ldquo;header&rdquo; with the load address in the first 2 bytes of the file.</p><pre tabindex=0><code>; Page 0 Variables
+XAML            = $24           ;  Last &#34;opened&#34; location Low
+XAMH            = $25           ;  Last &#34;opened&#34; location High
+STL             = $26           ;  Store address Low
+STH             = $27           ;  Store address High
+L               = $28           ;  Hex value parsing Low
+H               = $29           ;  Hex value parsing High
+YSAV            = $2A           ;  Used to see if hex value is given
+MODE            = $2B           ;  $00=XAM, $7F=STOR, $AE=BLOCK XAM
+</code></pre><p>Nothing changed here.</p><pre tabindex=0><code>; Other Variables
+IN              = $0300         ;  Input buffer to $027F
+; KBD             = $D010         ;  PIA.A keyboard input
+; KBDCR           = $D011         ;  PIA.A keyboard control register
+; DSP             = $D012         ;  PIA.B display output register
+; DSPCR           = $D013         ;  PIA.B display control register
+
+               ; .org $FF00
+               ; .export RESET
+</code></pre><p>We need to put the input buffer from $027F to somewhere else, because $027F collides with our I/O area. $0300 should be fine. We do not use a PIA for i/o, so we can get rid of those labels. Also, the start address is already defined above, and we won&rsquo;t need to export the RESET label.</p><pre tabindex=0><code>RESET:          CLD             ; Clear decimal arithmetic mode.
+                CLI
+                LDY #$7F        ; Mask for DSP data direction register.
+                ; STY DSP         ; Set it up.
+                LDA #$A7        ; KBD and DSP control register mask.
+                ; STA KBDCR       ; Enable interrupts, set CA1, CB1, for
+                ; STA DSPCR       ; positive edge sense/output mode.
+</code></pre><p>No need to initialize the PIA chip which we don&rsquo;t have, but we still need to initialize the A and Y registers.</p><pre tabindex=0><code>NOTCR:          ; CMP #&#39;_&#39;    ; &#34;_&#34;?
+                CMP #$08 + $80
+                BEQ BACKSPACE   ; Yes.
+</code></pre><p>Backspace is $08 on the Steckschwein, not &ldquo;_&rdquo;.</p><pre tabindex=0><code>                CMP #$9B        ; ESC?
+                BEQ ESCAPE      ; Yes.
+                INY             ; Advance text index.
+                BPL NEXTCHAR    ; Auto ESC if &gt; 127.
+ESCAPE:         LDA #&#39;\&#39; + $80   ; &#34;\&#34;.
+                JSR ECHO        ; Output it.
+GETLINE:        LDA #$8A        ; CR.
+                JSR ECHO        ; Output it.
+                LDY #$01        ; Initialize text index.
+BACKSPACE:      DEY             ; Back up text index.
+                BMI GETLINE     ; Beyond start of line, reinitialize.
 NEXTCHAR:
-; LDA KBDCR ; Key ready?
-; BPL NEXTCHAR ; Loop until ready.
-; LDA KBD ; Load character. B7 should be ‘1’.
-keyin
-toupper
-ORA #$80</p><p>Here is our first major code change. Keyboard input is handled using SteckOS means. Then we convert the received character to uppercase, since the Apple I uses uppercase only, hence wozmon does not handle lowercase. Also, and most important, the Apple I keyboard generated ASCII with bit 7 set to &ldquo;1&rdquo;. We need to emulate that. With these modifications, the bulk of the code can remain as is.</p><pre><code>            STA IN,Y        ; Add to text buffer.
-            JSR ECHO        ; Display character.
-            CMP #$8D        ; CR?
-            BNE NOTCR       ; No.
-            LDY #$FF        ; Reset text index.
-            LDA #$00        ; For XAM mode.
-            TAX             ; 0-&gt;X.
-</code></pre><p>SETSTOR: ASL ; Leaves $7B if setting STOR mode.
-SETMODE: STA MODE ; $00=XAM $7B=STOR $AE=BLOK XAM
-BLSKIP: INY ; Advance text index.
-NEXTITEM: LDA IN,Y ; Get character.
-CMP #$8D ; CR?
-BEQ GETLINE ; Yes, done this line.
-CMP #&rsquo;.&rsquo; + $80 ; &ldquo;.&rdquo;?
-BCC BLSKIP ; Skip delimiter.
-BEQ SETMODE ; Yes. Set STOR mode.
-CMP #&rsquo;:&rsquo; + $80 ; &ldquo;:&rdquo;?
-BEQ SETSTOR ; Yes. Set STOR mode.
-CMP #&lsquo;R&rsquo; + $80 ; &ldquo;R&rdquo;?
-BEQ RUN ; Yes. Run user program.
-STX L ; $00-> L.
-STX H ; and H.
-STY YSAV ; Save Y for comparison.
-NEXTHEX: LDA IN,Y ; Get character for hex test.
-EOR #$B0 ; Map digits to $0-9.
-CMP #$0A ; Digit?
-BCC DIG ; Yes.
-ADC #$88 ; Map letter &ldquo;A&rdquo;-&ldquo;F&rdquo; to $FA-FF.
-CMP #$FA ; Hex letter?
-BCC NOTHEX ; No, character not hex.
-DIG: ASL
-ASL ; Hex digit to MSD of A.
-ASL
-ASL
-LDX #$04 ; Shift count.
-HEXSHIFT: ASL ; Hex digit left, MSB to carry.
-ROL L ; Rotate into LSD.
-ROL H ; Rotate into MSD’s.
-DEX ; Done 4 shifts?
-BNE HEXSHIFT ; No, loop.
-INY ; Advance text index.
-BNE NEXTHEX ; Always taken. Check next char for hex.
-NOTHEX: CPY YSAV ; Check if L, H empty (no hex digits).
-BEQ ESCAPE ; Yes, generate ESC sequence.
-BIT MODE ; Test MODE byte.
-BVC NOTSTOR ; B6=0 STOR 1 for XAM & BLOCK XAM
-LDA L ; LSD’s of hex data.
-STA (STL,X) ; Store at current ‘store index’.
-INC STL ; Increment store index.
-BNE NEXTITEM ; Get next item. (no carry).
-INC STH ; Add carry to ‘store index’ high order.
-TONEXTITEM: JMP NEXTITEM ; Get next command item.
-RUN: JMP (XAML) ; Run at current XAM index.
-NOTSTOR: BMI XAMNEXT ; B7=0 for XAM, 1 for BLOCK XAM.
-LDX #$02 ; Byte count.
-SETADR: LDA L-1,X ; Copy hex data to
-STA STL-1,X ; ‘store index’.
-STA XAML-1,X ; And to ‘XAM index’.
-DEX ; Next of 2 bytes.
-BNE SETADR ; Loop unless X=0.
-NXTPRNT: BNE PRDATA ; NE means no address to print.
-LDA #$8A ; CR.
-JSR ECHO ; Output it.
-LDA XAMH ; ‘Examine index’ high-order byte.
-JSR PRBYTE ; Output it in hex format.
-LDA XAML ; Low-order ‘examine index’ byte.
-JSR PRBYTE ; Output it in hex format.
-LDA #&rsquo;:&rsquo; + $80 ; &ldquo;:&rdquo;.
-JSR ECHO ; Output it.
-PRDATA: LDA #$A0 ; Blank.
-JSR ECHO ; Output it.
-LDA (XAML,X) ; Get data byte at ‘examine index’.
-JSR PRBYTE ; Output it in hex format.
-XAMNEXT: STX MODE ; 0->MODE (XAM mode).
-LDA XAML
-CMP L ; Compare ‘examine index’ to hex data.
-LDA XAMH
-SBC H
-BCS TONEXTITEM ; Not less, so no more data to output.
-INC XAML
-BNE MOD8CHK ; Increment ‘examine index’.
-INC XAMH
-MOD8CHK: LDA XAML ; Check low-order ‘examine index’ byte
-AND #$07 ; For MOD 8=0
-BPL NXTPRNT ; Always taken.
-PRBYTE: PHA ; Save A for LSD.
-LSR
-LSR
-LSR ; MSD to LSD position.
-LSR
-JSR PRHEX ; Output hex digit.
-PLA ; Restore A.
-PRHEX: AND #$0F ; Mask LSD for hex print.
-ORA #&lsquo;0&rsquo; + $80 ; Add &ldquo;0&rdquo;.
-CMP #$BA ; Digit?
-BCC ECHO ; Yes, output it.
-ADC #$06 ; Add offset for letter.
+                ; LDA KBDCR       ; Key ready?
+                ; BPL NEXTCHAR    ; Loop until ready.
+                ; LDA KBD         ; Load character. B7 should be ‘1’.
+                keyin
+                toupper
+                ORA #$80
+</code></pre><p>Here is our first major code change. Keyboard input is handled using SteckOS means. Then we convert the received character to uppercase, since the Apple I uses uppercase only, hence wozmon does not handle lowercase. Also, and most important, the Apple I keyboard generated ASCII with bit 7 set to &ldquo;1&rdquo;. We need to emulate that. With these modifications, the bulk of the code can remain as is.</p><pre tabindex=0><code>                STA IN,Y        ; Add to text buffer.
+                JSR ECHO        ; Display character.
+                CMP #$8D        ; CR?
+                BNE NOTCR       ; No.
+                LDY #$FF        ; Reset text index.
+                LDA #$00        ; For XAM mode.
+                TAX             ; 0-&gt;X.
+SETSTOR:        ASL             ; Leaves $7B if setting STOR mode.
+SETMODE:        STA MODE        ; $00=XAM $7B=STOR $AE=BLOK XAM
+BLSKIP:         INY             ; Advance text index.
+NEXTITEM:       LDA IN,Y        ; Get character.
+                CMP #$8D        ; CR?
+                BEQ GETLINE     ; Yes, done this line.
+                CMP #&#39;.&#39; + $80    ; &#34;.&#34;?
+                BCC BLSKIP      ; Skip delimiter.
+                BEQ SETMODE     ; Yes. Set STOR mode.
+                CMP #&#39;:&#39; + $80   ; &#34;:&#34;?
+                BEQ SETSTOR     ; Yes. Set STOR mode.
+                CMP #&#39;R&#39; + $80   ; &#34;R&#34;?
+                BEQ RUN         ; Yes. Run user program.
+                STX L           ; $00-&gt; L.
+                STX H           ; and H.
+                STY YSAV        ; Save Y for comparison.
+NEXTHEX:        LDA IN,Y        ; Get character for hex test.
+                EOR #$B0        ; Map digits to $0-9.
+                CMP #$0A        ; Digit?
+                BCC DIG         ; Yes.
+                ADC #$88        ; Map letter &#34;A&#34;-&#34;F&#34; to $FA-FF.
+                CMP #$FA        ; Hex letter?
+                BCC NOTHEX      ; No, character not hex.
+DIG:            ASL
+                ASL             ; Hex digit to MSD of A.
+                ASL
+                ASL
+                LDX #$04        ; Shift count.
+HEXSHIFT:       ASL             ; Hex digit left, MSB to carry.
+                ROL L           ; Rotate into LSD.
+                ROL H           ;  Rotate into MSD’s.
+                DEX             ; Done 4 shifts?
+                BNE HEXSHIFT    ; No, loop.
+                INY             ; Advance text index.
+                BNE NEXTHEX     ; Always taken. Check next char for hex.
+NOTHEX:         CPY YSAV        ; Check if L, H empty (no hex digits).
+                BEQ ESCAPE      ; Yes, generate ESC sequence.
+                BIT MODE        ; Test MODE byte.
+                BVC NOTSTOR     ;  B6=0 STOR 1 for XAM &amp; BLOCK XAM
+                LDA L           ; LSD’s of hex data.
+                STA (STL,X)     ; Store at current ‘store index’.
+                INC STL         ; Increment store index.
+                BNE NEXTITEM    ; Get next item. (no carry).
+                INC STH         ; Add carry to ‘store index’ high order.
+TONEXTITEM:     JMP NEXTITEM    ; Get next command item.
+RUN:            JMP (XAML)      ; Run at current XAM index.
+NOTSTOR:        BMI XAMNEXT     ; B7=0 for XAM, 1 for BLOCK XAM.
+LDX #$02        ; Byte count.
+SETADR:         LDA L-1,X       ; Copy hex data to
+                STA STL-1,X     ; ‘store index’.
+                STA XAML-1,X    ; And to ‘XAM index’.
+                DEX             ; Next of 2 bytes.
+                BNE SETADR      ; Loop unless X=0.
+NXTPRNT:        BNE PRDATA      ; NE means no address to print.
+                LDA #$8A        ; CR.
+                JSR ECHO        ; Output it.
+                LDA XAMH        ; ‘Examine index’ high-order byte.
+                JSR PRBYTE      ; Output it in hex format.
+                LDA XAML        ; Low-order ‘examine index’ byte.
+                JSR PRBYTE      ; Output it in hex format.
+                LDA #&#39;:&#39; + $80  ; &#34;:&#34;.
+JSR ECHO        ; Output it.
+PRDATA:         LDA #$A0        ; Blank.
+                JSR ECHO        ; Output it.
+                LDA (XAML,X)    ; Get data byte at ‘examine index’.
+                JSR PRBYTE      ; Output it in hex format.
+XAMNEXT:        STX MODE        ; 0-&gt;MODE (XAM mode).
+                LDA XAML
+                CMP L           ; Compare ‘examine index’ to hex data.
+                LDA XAMH
+                SBC H
+BCS TONEXTITEM  ; Not less, so no more data to output.
+                INC XAML
+BNE MOD8CHK     ; Increment ‘examine index’.
+                INC XAMH
+MOD8CHK:        LDA XAML        ; Check low-order ‘examine index’ byte
+                AND #$07        ; For MOD 8=0
+BPL NXTPRNT     ; Always taken.
+PRBYTE:         PHA             ; Save A for LSD.
+                LSR
+                LSR
+                LSR             ; MSD to LSD position.
+                LSR
+JSR PRHEX       ; Output hex digit.
+                PLA             ; Restore A.
+PRHEX:          AND #$0F        ; Mask LSD for hex print.
+                ORA #&#39;0&#39; + $80  ; Add &#34;0&#34;.
+                CMP #$BA        ; Digit?
+                BCC ECHO        ; Yes, output it.
+                ADC #$06        ; Add offset for letter.
 ECHO:
-; BIT DSP ; bit (B7) cleared yet?
-; BMI ECHO ; No, wait for display.
-; STA DSP ; Output character. Sets DA.
-pha
-and #$7F
-jsr krn_chrout
-pla
-RTS ; Return.</p><p>Second important change. We got rid of the Apple I specific routine to output characters and use the chrout-routine of the SteckOS-kernel. But in order not to output garbage, we need to unset bit 7. Since all comparisons afterwards still rely on bit 7 being set, we save the A register to the stack and restore it afterwards. A faster way would be to just set bit 7 again by doing a ORA #$80 before the RTS, but what the heck.</p><p>; BRK ; unused
-; BRK ; unused</p><p>We don&rsquo;t need those.</p><p>; Interrupt Vectors
-; .WORD $0F00 ; NMI
-; .WORD RESET ; RESET
-; .WORD $0000 ; BRK/IRQ</p><p>We don&rsquo;t need those either since we are not using wozmon as system software. Interrupt handling is still done by the SteckOS kernel.</p><p> </p><p>[caption id=&ldquo;attachment_1113&rdquo; align=&ldquo;alignnone&rdquo; width=&ldquo;1280&rdquo;]<img src=images/wozmon.jpg alt=wozmon> Tada![/caption]</p><ul class=pa0></ul><div class="mt6 instapaper_ignoref"></div></div><aside class="w-30-l mt6-l"></aside></article></main><footer class="bg-black bottom-0 w-100 pa3" role=contentinfo><div class="flex justify-between"><a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href=https://beta.steckschwein.de>&copy; Steckschwein 2022</a><div><div class=ananke-socials><a href=https://twitter.com/steckschwein target=_blank class="twitter ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel=noopener aria-label="follow on Twitter——Opens in a new window"><span class=icon><svg style="enable-background:new 0 0 67 67" viewBox="0 0 67 67" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167 22.283c-2.619.953-4.274 3.411-4.086 6.101l.063 1.038-1.048-.127c-3.813-.487-7.145-2.139-9.974-4.915l-1.383-1.377-.356 1.017c-.754 2.267-.272 4.661 1.299 6.271.838.89.649 1.017-.796.487-.503-.169-.943-.296-.985-.233-.146.149.356 2.076.754 2.839.545 1.06 1.655 2.097 2.871 2.712l1.027.487-1.215.021c-1.173.0-1.215.021-1.089.467.419 1.377 2.074 2.839 3.918 3.475l1.299.444-1.131.678c-1.676.976-3.646 1.526-5.616 1.568C19.775 43.256 19 43.341 19 43.405c0 .211 2.557 1.397 4.044 1.864 4.463 1.377 9.765.783 13.746-1.568 2.829-1.673 5.657-5 6.978-8.221.713-1.716 1.425-4.851 1.425-6.354.0-.975.063-1.102 1.236-2.267.692-.678 1.341-1.419 1.467-1.631.21-.403.188-.403-.88-.043-1.781.636-2.033.551-1.152-.402.649-.678 1.425-1.907 1.425-2.267.0-.063-.314.042-.671.233-.377.212-1.215.53-1.844.72l-1.131.361-1.027-.7c-.566-.381-1.361-.805-1.781-.932C39.766 21.902 38.131 21.944 37.167 22.283zM33 64C16.432 64 3 50.569 3 34S16.432 4 33 4s30 13.431 30 30S49.568 64 33 64z" style="fill-rule:evenodd;clip-rule:evenodd"/></svg></span><span class=new-window><svg height="8" style="enable-background:new 0 0 1000 1000" viewBox="0 0 1e3 1e3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M598 128h298v298h-86V274L392 692l-60-60 418-418H598v-86zM810 810V512h86v298c0 46-40 86-86 86H214c-48 0-86-40-86-86V214c0-46 38-86 86-86h298v86H214v596h596z" style="fill-rule:evenodd;clip-rule:evenodd"/></svg></span></a></div></div></div></footer></body></html>
+                ; BIT DSP         ; bit (B7) cleared yet?
+                ; BMI ECHO        ; No, wait for display.
+                ; STA DSP         ; Output character. Sets DA.
+                pha
+                and #$7F
+                jsr krn\_chrout
+                pla
+                RTS             ; Return.
+</code></pre><p>Second important change. We got rid of the Apple I specific routine to output characters and use the chrout-routine of the SteckOS-kernel. But in order not to output garbage, we need to unset bit 7. Since all comparisons afterwards still rely on bit 7 being set, we save the A register to the stack and restore it afterwards. A faster way would be to just set bit 7 again by doing a ORA #$80 before the RTS, but what the heck.</p><pre tabindex=0><code>; BRK             ; unused
+; BRK             ; unused
+</code></pre><p>We don&rsquo;t need those.</p><pre tabindex=0><code>; Interrupt Vectors
+; .WORD $0F00     ; NMI
+; .WORD RESET     ; RESET
+; .WORD $0000 ; BRK/IRQ
+</code></pre><p>We don&rsquo;t need those either since we are not using wozmon as system software. Interrupt handling is still done by the SteckOS kernel.</p><p> </p><p><img src=images/wozmon.jpg alt=wozmon> Tada!</p><ul class=pa0></ul><div class="mt6 instapaper_ignoref"></div></div><aside class="w-30-l mt6-l"></aside></article></main><footer class="bg-black bottom-0 w-100 pa3" role=contentinfo><div class="flex justify-between"><a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href=https://beta.steckschwein.de>&copy; Steckschwein 2022</a><div><div class=ananke-socials><a href=https://twitter.com/steckschwein target=_blank class="twitter ananke-social-link link-transition stackoverflow link dib z-999 pt3 pt0-l mr1" title="Twitter link" rel=noopener aria-label="follow on Twitter——Opens in a new window"><span class=icon><svg style="enable-background:new 0 0 67 67" viewBox="0 0 67 67" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167 22.283c-2.619.953-4.274 3.411-4.086 6.101l.063 1.038-1.048-.127c-3.813-.487-7.145-2.139-9.974-4.915l-1.383-1.377-.356 1.017c-.754 2.267-.272 4.661 1.299 6.271.838.89.649 1.017-.796.487-.503-.169-.943-.296-.985-.233-.146.149.356 2.076.754 2.839.545 1.06 1.655 2.097 2.871 2.712l1.027.487-1.215.021c-1.173.0-1.215.021-1.089.467.419 1.377 2.074 2.839 3.918 3.475l1.299.444-1.131.678c-1.676.976-3.646 1.526-5.616 1.568C19.775 43.256 19 43.341 19 43.405c0 .211 2.557 1.397 4.044 1.864 4.463 1.377 9.765.783 13.746-1.568 2.829-1.673 5.657-5 6.978-8.221.713-1.716 1.425-4.851 1.425-6.354.0-.975.063-1.102 1.236-2.267.692-.678 1.341-1.419 1.467-1.631.21-.403.188-.403-.88-.043-1.781.636-2.033.551-1.152-.402.649-.678 1.425-1.907 1.425-2.267.0-.063-.314.042-.671.233-.377.212-1.215.53-1.844.72l-1.131.361-1.027-.7c-.566-.381-1.361-.805-1.781-.932C39.766 21.902 38.131 21.944 37.167 22.283zM33 64C16.432 64 3 50.569 3 34S16.432 4 33 4s30 13.431 30 30S49.568 64 33 64z" style="fill-rule:evenodd;clip-rule:evenodd"/></svg></span><span class=new-window><svg height="8" style="enable-background:new 0 0 1000 1000" viewBox="0 0 1e3 1e3" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M598 128h298v298h-86V274L392 692l-60-60 418-418H598v-86zM810 810V512h86v298c0 46-40 86-86 86H214c-48 0-86-40-86-86V214c0-46 38-86 86-86h298v86H214v596h596z" style="fill-rule:evenodd;clip-rule:evenodd"/></svg></span></a></div></div></div></footer></body></html>
