@@ -36,6 +36,7 @@ Zur folgender Logik haben wir uns vom [Waitstate-Generator von Daryl Rictor](htt
 
 Folgende Schaltung erzeugt entsprechend 1 oder 2 Waitstates, und versetzt den Ausgangspin in den Tri-State-Zustand, damit auch andere Bausteine Wait-States anfordern können. Sollten einmal mehr Waitstates nötig werden, lassen sich noch 1 oder 2 Zählerstufen hinzufügen, um 4 oder 8 Waitstates zu erzeugen.
 
+```
 GAL16V8
 RDYGEN
 
@@ -54,6 +55,7 @@ Q1.R = W2 \* /Q1 \* Q0 \* Clear
 
 RDY.T = /Q0 \* /Q1
 RDY.E = W1
+```
 
 DESCRIPTION:
 Generation of /RDY line modeled after http://sbc.rictor.org/parts/wsgen.html
