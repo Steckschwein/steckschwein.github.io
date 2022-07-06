@@ -12,9 +12,9 @@ Our mission is to create a computer that might have existed during the heyday of
 
 The name "Steckschwein" originates to the very early stages of our project, where everything was prototyped on breadboards (german: "Steckbrett"), and we all know that those things can be real pigs.
 
-![steckschwein](images/steckschwein-e1442404875521.jpg) Early days\[/caption\]
+![steckschwein](images/steckschwein-e1442404875521.jpg) Early days
 
-![schweinebande](images/schweinebande.jpg) First PCB based prototypes\[/caption\]
+![schweinebande](images/schweinebande.jpg) First PCB based prototypes
 
 We started off with a very small test circuit, having the 65c02 execute only NOPs, by hard wiring the data lines to $EA. Then,  we started to add new components step by step, such as ROM, RAM, IO interface (65c22 VIA), serial interface (UART 16550), until we arrived at the current specifications:
 
