@@ -24,10 +24,10 @@ E-Mail: info (at) steckschwein.de\
 Fax: +49 3212 115 8877
 
 ### Datenschutzerklärung (DSGVO)
-Auf dieser Webseite werden keine personenbezogenen Daten erhoben, gespeichert oder verarbeitet. Es werden keine Cookies verwendet.
+Auf dieser Webseite werden keine personenbezogenen Daten erhoben, gespeichert oder verarbeitet. 
 
 ### Data Protection Policy (GDPR)
-This website does not collect, store or process Personally Identifiable Information (PII). This website does not require the use of cookies.
+This website does not collect, store or process Personally Identifiable Information (PII).
 
 ### Verweis auf Dritte
 Diese Website wird auf [Github](https://www.github.com/) als [Github Pages](https://pages.github.com/) gehostet. Die Github Privacy Policy ist [hier](https://docs.github.com/en/site-policy/privacy-policies/github-privacy-statement) hinterlegt.
