@@ -30,4 +30,6 @@ Das ist schon ehern spannend, zumal ich hier gerade keinen 3.58Mhz Quartz rumlie
 
 Der DAC und der Opamp wird wie im Datenblatt erst einmal mit dem ganz minimalistischem Aufbau ohne RC-Filter usw. an den YM3812 angeschlossen. Noch nen Kabel dran und in den Audio-Eingang des 1084S Monitor gesteckt. Fertig, fehlt nur noch die Software.
 
+{{< youtube cA7oGLFuxXQ >}}
+
 to be continued...
