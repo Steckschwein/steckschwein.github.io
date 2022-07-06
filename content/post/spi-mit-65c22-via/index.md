@@ -16,106 +16,71 @@ Diese Betriebsart der VIA ist berühmt berüchtigt für einen [Bug](http://en.wi
 
 Mit dem Oszilloskop sehen wir, dass es zwischen den fallenden Flanken beider Takte ausreichend Versatz gibt, sodass wir uns keine Sorgen machen.
 
-<table style="margin-left:auto;margin-right:auto;text-align:center;" cellspacing="0" cellpadding="0" align="center"><tbody><tr><td style="text-align:center;"><a style="margin-left:auto;margin-right:auto;" href="https://steckschwein.files.wordpress.com/2014/07/83d46-tekway128_2.gif"><img src="images/83d46-tekway128_2.gif" width="640" height="384" border="0"></a></td></tr><tr><td style="text-align:center;">Versatz von PHI2 (gelb) und SPICLK (blau)</td></tr></tbody></table>
+![](images/83d46-tekway128_2.gif) Versatz von PHI2 (gelb) und SPICLK (blau)
 
 Jetzt brauchen wir nur noch die Routinen zum Bit-Banging des Ports:
 
 Diese Routine überträgt das Byte im Akku per SPI. Das empfangene Byte wird anschließend aus dem Schieberegister in den Akku geladen.
 
-spi\_rw\_byte
+```
+spi_rw_byte
+    phx
+    phy
+    sta tmp0        ; zu transferierendes byte im akku nach tmp0 retten
+    ldx #$08
+    lda via1portb   ; Port laden
+    and #$fe        ; SPICLK loeschen
+    asl             ; Nach links rotieren, damit das bit nachher an der richtigen stelle steht
+    tay              ; bunkern
 
- phx
+-
 
- phy
+    rol tmp0
+    tya             ; portinhalt
+    ror             ; datenbit reinschieben
+    sta via1portb   ; ab in den port
+    inc via1portb   ; takt an
+    sta via1portb   ; takt aus
+    dex
+    bne -           ; schon acht mal?
 
- sta tmp0        ; zu transferierendes byte im akku nach tmp0 retten
-
- ldx #$08
-
- lda via1portb   ; Port laden
-
- and #$fe        ; SPICLK loeschen
-
- asl             ; Nach links rotieren, damit das bit nachher an der richtigen stelle steht
-
- tay              ; bunkern
-
-\-
-
- rol tmp0
-
- tya             ; portinhalt
-
- ror             ; datenbit reinschieben
-
- sta via1portb   ; ab in den port
-
- inc via1portb   ; takt an
-
- sta via1portb   ; takt aus
-
- dex
-
- bne -           ; schon acht mal?
-
- lda via1sr      ; Schieberegister auslesen
-
- ply
-
- plx
-
- rts
+    lda via1sr      ; Schieberegister auslesen
+    ply
+    plx
+    rts
+```
 
 Da wir eher häufiger lesen als schreiben, gibt es dafür auch noch eine Routine, die nochmal wesentlich schneller arbeitet, da wir uns den Code für das Zerlegen des zu sendenden Bytes ja sparen können. Damit es richtig schnell geht, unrollen wir die Schleife für die Takterzeugung.
 
-spi\_r\_byte
+```
+spi_r_byte
+    phy
+    lda via1portb   ; Port laden
+    AND #$7e        ; * Daten und Takt ausschalten
+    TAY             ; aufheben
 
- phy
+    ORA #$01
+    STA via1portb ; Takt An 1
+    STY via1portb ; Takt aus
+    STA via1portb ; Takt An 2
+    STY via1portb ; Takt aus
+    STA via1portb ; Takt An 3
+    STY via1portb ; Takt aus
+    STA via1portb ; Takt An 4
+    STY via1portb ; Takt aus
+    STA via1portb ; Takt An 5
+    STY via1portb ; Takt aus
+    STA via1portb ; Takt An 6
+    STY via1portb ; Takt aus
+    STA via1portb ; Takt An 7
+    STY via1portb ; Takt aus
+    STA via1portb ; Takt An 8
+    STY via1portb ; Takt aus
 
- lda via1portb   ; Port laden
+    lda via1sr
 
- AND #$7e  ;    \* Daten und Takt ausschalten
-
- TAY             ; aufheben
-
- ORA #$01
-
- STA via1portb ; Takt An 1
-
- STY via1portb ; Takt aus
-
- STA via1portb ; Takt An 2
-
- STY via1portb ; Takt aus
-
- STA via1portb ; Takt An 3
-
- STY via1portb ; Takt aus
-
- STA via1portb ; Takt An 4
-
- STY via1portb ; Takt aus
-
- STA via1portb ; Takt An 5
-
- STY via1portb ; Takt aus
-
- STA via1portb ; Takt An 6
-
- STY via1portb ; Takt aus
-
- STA via1portb ; Takt An 7
-
- STY via1portb ; Takt aus
-
- STA via1portb ; Takt An 8
-
- STY via1portb ; Takt aus
-
- lda via1sr
-
- ply
-
- rts
+    ply
+    rts
+```
 
 An dieser Stelle vielen Dank an [Hans Franke](http://www.vcfe.org/), der uns auf die Idee mit SPI gebracht, die Idee mit dem Schieberegister hatte und mit uns die optimierten SPI-Routinen entwickelt hat.
