@@ -3,6 +3,7 @@ draft: false
 
 title: "Steckschwein emulator"
 date: "2019-12-09"
+featured_image: "images/steckschwein_emulator_vdp-1.jpg"
 categories: 
   - "allgemein"
 ---
