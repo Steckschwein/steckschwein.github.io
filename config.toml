@@ -1,5 +1,4 @@
 baseURL = "https://beta.steckschwein.de"
-#baseURL = "https://steckschwein.github.io"
 languageCode = "en-us"
 title = "Steckschwein"
 theme = "ananke"
@@ -7,6 +6,6 @@ SectionPagesMenu = "main"
 enableRobotsTXT = true
 
 [params]
-featured_image = "/images/cropped-steckos.jpg"
+featured_image = "images/cropped-steckos.jpg"
 twitter = "https://twitter.com/steckschwein"
 description = "Never trust a computer you did not build yourself."
