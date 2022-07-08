@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>uart on</title><link>https://beta.steckschwein.de/categories/uart/</link><description>Recent content in uart on</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 13 Jun 2019 00:00:00 +0000</lastBuildDate><atom:link href="https://beta.steckschwein.de/categories/uart/index.xml" rel="self" type="application/rss+xml"/><item><title>NVRAM improvements</title><link>https://beta.steckschwein.de/post/nvram-improvements/</link><pubDate>Thu, 13 Jun 2019 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/nvram-improvements/</guid><description>As real computer is not a real computer without a real time clock, the Steckschwein is no exception here. As we know, we use the Maxim DS1306 RTC, which is a very common RTC which comes as DIP IC and has an SPI interface. And of course it supports battery backup in various configurations. And this is where things get interesting.
+Apart from timekeeping, the DS1306 also has 96 bytes of battery buffered RAM.</description><content>&lt;p>As real computer is not a real computer without a real time clock, the Steckschwein is no exception here. As &lt;a href="http://steckschwein.de/hardware/via-65c22-as-spi-master/spi-devices/">we know&lt;/a>, we use the Maxim DS1306 RTC, which is a very common RTC which comes as DIP IC and has an SPI interface. And of course it supports battery backup in various configurations. And this is where things get interesting.&lt;/p>
+&lt;p>Apart from timekeeping, the DS1306 also has 96 bytes of battery buffered RAM. The ideal place to store system configuration parameters. As of now, the RTC NVRAM contains the name of the file to be read from sdcard at startup, the line parameters for the serial interface (baud rate, data bits, parity, stopbits), and also a version number and a crc7 checksum:&lt;/p>
+&lt;p>.struct nvram
+version .byte
+filename .byte 11
+uart_baudrate .byte
+uart_lsr .byte
+crc7 .byte
+.endstruct&lt;/p>
+&lt;p>version - The version byte will help tracking changes to the NVRAM data structure so we can maintain backwards compatibility. But for now, it&amp;rsquo;s always $00. filename - The name of the file that will be read from sdcard at system bootup. uart_baudrate - lower byte of the 16 bit divisor of the 16550&amp;rsquo;s baud rate generator. The high byte will always be set to 0, since we do not need baud rates &amp;lt; 600 baud. uart_lsr - contents of the 16550&amp;rsquo;s Line Status Register, to setup the number of data bits, parity, and stop bits. crc7 - crc7 checksum of all the bytes except this last one. If at system startup the crc is not correct, an error message is displayed and fallback defaults are used.&lt;/p>
+&lt;p>To manipulate the contents of the NVRAM in a user friendly way, steckOS provides a tool written in C.&lt;/p>
+&lt;p>&lt;img src="images/nvram-1.jpg" alt=""> nvram tool&lt;/p>
+&lt;p> &lt;/p>
+&lt;p>As of now, we only use 15 bytes out of 96, so there are still 81 bytes left for whatever we might come up. Default text mode (40cols/80cols) comes to mind, also text/background colors&amp;hellip;&lt;/p></content></item><item><title>Neue Hardware - die Platinen sind da</title><link>https://beta.steckschwein.de/post/neue-hardware-die-platinen-sind-da/</link><pubDate>Tue, 28 Nov 2017 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/neue-hardware-die-platinen-sind-da/</guid><description>Die neuen IO-Platinen mit integriertem UART sind fertig und haben ihren Weg von China nach München gefunden.
+Mit dem neuen Layout hat es nicht nur der UART mit aufs IO-Board geschafft, es sind auch etliche kleinere und größere Verbesserungen eingeflossen:
+Die Joystickports wurden komplett neu designed. Die Optokoppler sparen wir uns, stattdessen wählen wir über einen VIA Pin verschiedene Treiber an, die den gewünschten Joystickport mit VIA Port A verbindet. Die Ports lassen sich auch per Software komplett abschalten, damit der User-Port frei verfügbar ist.</description><content>&lt;p>Die neuen IO-Platinen mit integriertem UART sind fertig und haben ihren Weg von China nach München gefunden.&lt;/p>
+&lt;p>Mit dem neuen Layout hat es nicht nur der UART mit aufs IO-Board geschafft, es sind auch etliche kleinere und größere Verbesserungen eingeflossen:&lt;/p>
+&lt;ul>
+&lt;li>Die Joystickports wurden komplett neu designed. Die Optokoppler sparen wir uns, stattdessen wählen wir über einen VIA Pin verschiedene Treiber an, die den gewünschten Joystickport mit VIA Port A verbindet. Die Ports lassen sich auch per Software komplett abschalten, damit der User-Port frei verfügbar ist. Als Schutz für die VIA werden Serienwiderstände verwendet.&lt;/li>
+&lt;li>Der SD-Karten-Footprint und der verwendente Slot passen genau zusammen. Das war beim alten Board nicht der Fall. Jetzt sind die Karten- und die Schreibschutzerkennung endlich nutzbar.&lt;/li>
+&lt;li>Die Datenpins für die PS/2 Schnittstelle am ATmega8 sind gewandert und liegen jetzt an PD6 und 7. Dadurch sind die RX und TX Pins des USART verfügbar geworden und können nun z.B. für das Debugging des Tastaturcontrollers verwendet werden.&lt;/li>
+&lt;li>Zweckmäßigere Plazierung vom SPI-Anschluss des ATmega8 und des freien SPI Ports am Platinenrand. Updates der Tastaturcontrollerfirmware sind nun kein Krampf mehr.&lt;/li>
+&lt;li>Der User-Port hat ein besseres Pinout.&lt;/li>
+&lt;li>Die neue Platine sieht einfach besser aus.
+&lt;img src="images/img_3091.jpg" alt="IMG_3091"> Frisch ausgepackte Platine&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="images/img_3092.jpg" alt="IMG_3092"> Fertig bestückte Platine
+&lt;img src="images/img_3093.jpg" alt="IMG_3093"> Die nun obsolet gewordenen Platinen.&lt;/p></content></item><item><title>Mal wieder neue Hardware</title><link>https://beta.steckschwein.de/post/mal-wieder-neue-hardware/</link><pubDate>Wed, 22 Nov 2017 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/mal-wieder-neue-hardware/</guid><description>Die Zeit ist reif für ein Hardware-Update, und zwar für die IO-Platine 2.0. Vorgesehen war ja schon länger, den UART dort zu integrieren. Ausserdem war das Joystick&amp;ndash;Interface noch unausgegoren, sodass auch hier etwas Neues entwickelt wurde.
+Zum Schutz der VIA-Pins dienen nun keine Optokoppler, sondern simple Serienwiderstände sollen die Ports zumindest vor dem Fall schützen, dass man doch mal die Datenrichtung der Joystick-Pins auf Ausgang schaltet und dann die VIA grillt indem man den Joystick betätigt.</description><content>&lt;p>Die Zeit ist reif für ein Hardware-Update, und zwar für die IO-Platine 2.0. Vorgesehen war ja schon länger, den UART dort zu integrieren. Ausserdem war das Joystick&amp;ndash;Interface noch unausgegoren, sodass auch hier etwas Neues entwickelt wurde.&lt;/p>
+&lt;p>Zum Schutz der VIA-Pins dienen nun keine Optokoppler, sondern simple Serienwiderstände sollen die Ports zumindest vor dem Fall schützen, dass man doch mal die Datenrichtung der Joystick-Pins auf Ausgang schaltet und dann die VIA grillt indem man den Joystick betätigt. Die Widerstände begrenzen den Strom auf 1mA. Das muss die VIA abkönnen. Zudem war im vorigen Design der Userport nicht wirklich nutzbar, weil immer noch die Joysticks daran hingen. Jetzt ist es so, dass jeder Joystick über Tri State Buffer an VIA Port A verbunden wird, und zwar grundsätzlich wahlweise. Ausserdem besteht die Möglichkeit, die Joyports komplett abzuschalten. Dies wird mit dem OUT1-Pin des UART bewerkstelligt. Somit läßt sich per Software konfigurieren, ob man Userport oder Joystick benutzen möchte.&lt;/p>
+&lt;p>Der User-Port hat ein neues, von &lt;a href="http://neil.franklin.ch/">Neil Franklin&lt;/a> vorgeschlagenes Pinout, in dem nun auch die /RESET und /IRQ-Leitungen vorhanden sind. Auch am Tastaturcontroller hat sich eine Kleinigkeit geändert, die Datenpins für den PS/2 Port sind nach PD6 bzw. PD7 gewandert. Somit sind die RX/TX-Pins des AVR USART wieder frei und bereit für neue Schandtaten. Deswegen haben sie auch eine kleine Pinleiste spendiert bekommen.&lt;/p>
+&lt;p>&lt;img src="images/io2_0.png" alt=""> 3D Rendering der neuen IO-Platine&lt;/p></content></item><item><title>FanTASTische Reise II</title><link>https://beta.steckschwein.de/post/fantastische-reise-ii/</link><pubDate>Tue, 22 Sep 2015 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/fantastische-reise-ii/</guid><description>Vor einer Weile haben wir im Beitrag /index.php/2014/12/15/eine-fantastische-reise/ den Weg zu unserem aktuellen Tastaturcontroller beschrieben.
+Wer nicht nochmal nachlesen möchte: Ein ATmega8 dient als SPI Slave als Interface zwischen PS/2-Protokoll, Tastaturmapping und Puffer. Als Basis dient eine angepasste Version des Codes aus AVR Application Note 313, die als Ausgabeschnittstelle den USART des ATmega8 vorsieht. Dies haben wir durch das SPI-Interface des AVR ersetzt.
+Steckschwein-Seitig haben wir die Tastaturabfrage immer im Blank-Interrupt des Videochips vorgenommen, genauer gesagt, jeden zweiten Blank.</description><content>&lt;p>Vor einer Weile haben wir im Beitrag &lt;a href="https://beta.steckschwein.de/index.php/2014/12/15/eine-fantastische-reise/">/index.php/2014/12/15/eine-fantastische-reise/&lt;/a> den Weg zu unserem aktuellen Tastaturcontroller beschrieben.&lt;/p>
+&lt;p>Wer nicht nochmal nachlesen möchte: Ein ATmega8 dient als SPI Slave als Interface zwischen PS/2-Protokoll, Tastaturmapping und Puffer. Als Basis dient eine angepasste Version des Codes aus AVR Application Note 313, die als Ausgabeschnittstelle den USART des ATmega8 vorsieht. Dies haben wir durch das SPI-Interface des AVR ersetzt.&lt;/p>
+&lt;p>Steckschwein-Seitig haben wir die Tastaturabfrage immer im Blank-Interrupt des Videochips vorgenommen, genauer gesagt, jeden zweiten Blank. Damit wurde der AVR auf SPI-Seite relativ wenig gestresst.&lt;/p>
+&lt;p>Eigentlich aber wollen wir nur eine Tastaturabfrage durchführen, wenn wir auch tatsächlich etwas vom User erwarten. Also raus mit der Abfrage aus der IRQ-Routine und das SPI-Interface des AVR gepollt, bis es etwas anderes als $00 liefert. Hierbei trat ein altes Problem wieder zutage, nämlich das sporadisch Tastendrücke &amp;ldquo;verlorengehen&amp;rdquo;. Die ATmega8-Firmware bedarf also noch weiterer Betrachtung.&lt;/p>
+&lt;p>Der Code aus Appnote 313 funktioniert grob so, dass die CLK-Leitung des PS/2-Interfaces einen Interrupt triggert. Hat diese 11 Bit(Startbit, 8 Datenbits, Paritätsbit, Stopbit) empfangen, wird noch in der ISR-Routine die Decodierung der Scancodes zu einem ASCII-Wert aufgerufen und dieser im Puffer abgelegt. Dieser ASCII-Wert wird gepuffert und über den USART per rs232 ausgegeben. Unser Ansatz war, den USART-Teil durch einen SPI-Slave zu ersetzen. Dies haben wir 1:1 getan, sodass der SPI-Slave immer nur an einer bestimmten Stelle innerhalb der main()-Schleife bedient wurde.&lt;/p>
+&lt;p>Erschwerend kommt hinzu, dass der INT0-Interrupt nach erfolgreicher Übertragung eines kompletten Bytes direkt die Dekodierung vorgenommen hat. Diese beinhaltet einen relativ teuren Lookup des Scancodes aus einer Tabelle im NVRAM.&lt;/p>
+&lt;p>Zunächst also haben wir dies entkoppelt, indem wir einen weiteren Puffer für die Scancodes implementiert haben. Der INT0-Interrupt nimmt also nur noch die Scancodes der Tastatur entgegen und stopft sie in einen Puffer. Das Dekodieren der Scancodes haben wir in die Hauptschleife verlegt, denn dieser Vorgang ist nicht zeitkritisch und kann problemlos durch Interrupts unterbrochen werden. Das Ergebnis der Dekodierung landet wie gehabt im Tastaturpuffer.&lt;/p>
+&lt;p>Nun ist es so, das ein SPI-Slave nicht wissen kann, wann der Master einen Transfer initiiert. Ergo muss der Slave jederzeit übertragungsbereit sein. Durch ein Bedienen des SPI-Datenregisters SPDR und Warten (polling) auf einen Zustandswechsel des SPI-Interrupt-Flags kann diese Anforderung nicht erfüllt werden. Also müssen wie die SPI-Schnittstelle auch über Interrupt bedienen. Die SPI-ISR-Routine holt also jetzt jedesmal das aktuelle Zeichen oder eben &amp;ldquo;0&amp;rdquo; aus dem Puffer und legt den Wert ins SPI-Datenegister.&lt;/p>
+&lt;p>Jetzt gehen auch beim direkten Polling keine Tastendrücke mehr verloren. Nach einigen Optimierungen im Code konnte auch die Taktfrequenz des AVR-Controllers von 8MHz auf 4MHz heruntergesetzt werden.&lt;/p>
+&lt;p>Als nächstes wollen wir dem Tastaturcontroller beibringen, wie man Daten zu Tastatur sendet, um etwa die Wiederholrate zu konfigurieren oder die LEDs anzusteuern (Num Lock, Caps Lock, etc.).&lt;/p></content></item><item><title>Verfeinerungen am Design</title><link>https://beta.steckschwein.de/post/verfeinerungen-am-design/</link><pubDate>Tue, 24 Jun 2014 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/verfeinerungen-am-design/</guid><description>So langsam geht es weiter mit der Steckschweinentwicklung.
+Die Timingprobleme mit dem VDP bedürfen einer eingehenden Prüfung und Messung, um genau zu verstehen, wo was nicht passt. Unsere Ideen mit Puffern und/oder versetzten Taktsignalen, um den VDP früher &amp;ldquo;kommen&amp;rdquo; zu lassen stellen wir zurück, bis wir gesicherte Erkenntnisse haben. Ein Herumdoktern aufgrund von Vermutungen halten wir nicht für zielführend. Vorher ist es auch nicht sinnvoll, irgendwelche Platinen zu löten.
+Stattdessen stecken wir ein wenig Hirnschmalz ins aktuelle Design.</description><content>&lt;p>So langsam geht es weiter mit der Steckschweinentwicklung.&lt;/p>
+&lt;p>Die Timingprobleme mit dem VDP bedürfen einer eingehenden Prüfung und Messung, um genau zu verstehen, wo was nicht passt. Unsere Ideen mit Puffern und/oder versetzten Taktsignalen, um den VDP früher &amp;ldquo;kommen&amp;rdquo; zu lassen stellen wir zurück, bis wir gesicherte Erkenntnisse haben. Ein Herumdoktern aufgrund von Vermutungen halten wir nicht für zielführend. Vorher ist es auch nicht sinnvoll, irgendwelche Platinen zu löten.&lt;/p>
+&lt;p>Stattdessen stecken wir ein wenig Hirnschmalz ins aktuelle Design. Die Anbindung des UART fällt negativ auf. Hier wurde der &lt;a href="http://www.6502.org/users/andre/icaphw/c64ser.html">Ansatz von Andre Fachat&lt;/a> quasi 1:1 kopiert, sodass der GAL die Signale /RD und /WR für den UART abhängig von PHI2 und der angelegten Adresse erzeugt, während PHI2 ausserdem an CS1 des UART anliegt. Das funktioniert, fügt sich aber nicht ganz in unser Design ein.&lt;/p>
+&lt;p>Eigentlich sollte es möglich sein, im GAL ein einfaches /CS-Signal für den UART zu erzeugen. Die Aufsplittung von /WR nach /OE und /WE haben wir ja ohnehin schon gemacht, sodass wir diese einfach direkt an /RD und /WR des UART geben können. Dadurch, dass PHI2 und /OE, /WE durch tPROP des 7400 versetzt sind, sollte sich hier dann auch eine Timingfehlerquelle in Luft aufgelöst haben. Als angenehmer Nebeneffekt wird wieder ein Output Pin am GAL frei.&lt;/p>
+&lt;p>Erste Tests haben gezeigt, dass nun auch unser &lt;a href="http://8bit-gefriemel.blogspot.de/2014_04_02_archive.html">&amp;ldquo;OK&amp;rdquo;-Problem&lt;/a>, hinter dem wir lange hinterhergesucht haben, nicht mehr auftritt, egal, ob wir das System wie von WDC empfohlen direkt mit dem Oszillator takten oder ob wir 6502-Oldschool den Taktausgang des Prozessors PHI2O benutzen.&lt;/p></content></item><item><title>Schaltplan</title><link>https://beta.steckschwein.de/post/schaltplan/</link><pubDate>Sat, 05 Apr 2014 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/schaltplan/</guid><description>Damit Klarheit darüber herrscht, worum es überhaupt geht, haben wir den Schaltplan in die einzelnen Gruppen (Prozessor+ Freunde, Speicher, UART) zerlegt.
+Die aktuelle Stückliste liest sich laut Eagle folgendermaßen:
+Part Value Device C1 100n C5/3 C3 1n C-EU025-025X050 C4 10n C-EU025-025X050 C5 10µF CPOL-EUE2,5-6E C6 100n C5/3 C7 100n C5/3 C8 100n C5/3 C12 1µF CPOL-EUE2,5-6E C13 100n C5/3 C14 100n C5/3 C15 100n C5/3 C16 1µF CPOL-EUE2,5-6E C17 1µF CPOL-EUE2,5-6E C18 1µF CPOL-EUE2,5-6E C19 1µF CPOL-EUE2,5-6E IC1 CY62256LL-PC CY62256LL-PC IC3 CY62256LL-PC CY62256LL-PC IC4 NE555 NE555 IC5 28c64 2864 IC6 16550 UART XR-16C550P IC8 74LS06N 74LS06N IC9 GAL22V10 22V10 IC10 MAX232 MAX232 QG1 2MHz XO-14 QG2 1.</description><content>&lt;p>Damit Klarheit darüber herrscht, worum es überhaupt geht, haben wir den Schaltplan in die einzelnen Gruppen (Prozessor+ Freunde, Speicher, UART) zerlegt.&lt;/p>
+&lt;p>Die aktuelle Stückliste liest sich laut Eagle folgendermaßen:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Part    &lt;/th>
+&lt;th>Value          &lt;/th>
+&lt;th>Device&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>C1      &lt;/td>
+&lt;td>100n          &lt;/td>
+&lt;td>C5/3          &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>C3      &lt;/td>
+&lt;td>1n            &lt;/td>
+&lt;td>C-EU025-025X050&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>C4      &lt;/td>
+&lt;td>10n            &lt;/td>
+&lt;td>C-EU025-025X050&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>C5      &lt;/td>
+&lt;td>10µF          &lt;/td>
+&lt;td>CPOL-EUE2,5-6E&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>C6      &lt;/td>
+&lt;td>100n          &lt;/td>
+&lt;td>C5/3          &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>C7      &lt;/td>
+&lt;td>100n          &lt;/td>
+&lt;td>C5/3          &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>C8      &lt;/td>
+&lt;td>100n          &lt;/td>
+&lt;td>C5/3          &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>C12      &lt;/td>
+&lt;td>1µF            &lt;/td>
+&lt;td>CPOL-EUE2,5-6E&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>C13      &lt;/td>
+&lt;td>100n          &lt;/td>
+&lt;td>C5/3          &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>C14      &lt;/td>
+&lt;td>100n          &lt;/td>
+&lt;td>C5/3          &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>C15      &lt;/td>
+&lt;td>100n          &lt;/td>
+&lt;td>C5/3           &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>C16      &lt;/td>
+&lt;td>1µF            &lt;/td>
+&lt;td>CPOL-EUE2,5-6E&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>C17      &lt;/td>
+&lt;td>1µF            &lt;/td>
+&lt;td>CPOL-EUE2,5-6E&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>C18      &lt;/td>
+&lt;td>1µF            &lt;/td>
+&lt;td>CPOL-EUE2,5-6E&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>C19      &lt;/td>
+&lt;td>1µF            &lt;/td>
+&lt;td>CPOL-EUE2,5-6E&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>IC1      &lt;/td>
+&lt;td>CY62256LL-PC  &lt;/td>
+&lt;td>CY62256LL-PC  &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>IC3      &lt;/td>
+&lt;td>CY62256LL-PC  &lt;/td>
+&lt;td>CY62256LL-PC  &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>IC4      &lt;/td>
+&lt;td>NE555          &lt;/td>
+&lt;td>NE555        &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>IC5      &lt;/td>
+&lt;td>28c64          &lt;/td>
+&lt;td>2864          &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>IC6      &lt;/td>
+&lt;td>16550 UART    &lt;/td>
+&lt;td>XR-16C550P    &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>IC8      &lt;/td>
+&lt;td>74LS06N        &lt;/td>
+&lt;td>74LS06N      &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>IC9      &lt;/td>
+&lt;td>GAL22V10      &lt;/td>
+&lt;td>22V10        &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>IC10    &lt;/td>
+&lt;td>MAX232        &lt;/td>
+&lt;td>MAX232         &lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>QG1      &lt;/td>
+&lt;td>2MHz          &lt;/td>
+&lt;td>XO-14&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>QG2      &lt;/td>
+&lt;td>1.8432MHz      &lt;/td>
+&lt;td>XO-14&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>R2      &lt;/td>
+&lt;td>3.3k          &lt;/td>
+&lt;td>R-EU_0204/7&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>R3      &lt;/td>
+&lt;td>1M            &lt;/td>
+&lt;td>R-EU_0204/7&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>R4      &lt;/td>
+&lt;td>1M            &lt;/td>
+&lt;td>R-EU_0204/7&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>R5      &lt;/td>
+&lt;td>3.3k          &lt;/td>
+&lt;td>R-EU_0204/7&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>R6      &lt;/td>
+&lt;td>3.3k          &lt;/td>
+&lt;td>R-EU_0204/7&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>R7      &lt;/td>
+&lt;td>3.3k          &lt;/td>
+&lt;td>R-EU_0204/7&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>R8      &lt;/td>
+&lt;td>3.3k          &lt;/td>
+&lt;td>R-EU_0204/7&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>R9      &lt;/td>
+&lt;td>4.7k          &lt;/td>
+&lt;td>R-EU_0204/7&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>S1      &lt;/td>
+&lt;td>DTE6          &lt;/td>
+&lt;td>DTE6&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>U1      &lt;/td>
+&lt;td>65c02          &lt;/td>
+&lt;td>G65SC02P&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>U3      &lt;/td>
+&lt;td>65c22          &lt;/td>
+&lt;td>G65SC22P&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>V1      &lt;/td>
+&lt;td>74138N        &lt;/td>
+&lt;td>74138N&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>V2      &lt;/td>
+&lt;td>74LS00N        &lt;/td>
+&lt;td>74LS00N&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>X2      &lt;/td>
+&lt;td>RS232          &lt;/td>
+&lt;td>F09HP&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>&lt;img src="images/28878-cpu.png" alt="CPU">
+Der 65c02-Prozessor nebst Oszillator und RESET-Schaltung, welche aus dem Commodore-PET übernommen wurde und dem GAL, der zu Dekodierung des Adressbereichs von $8000 bis $ffff dient. Nicht zu sehen ist der Pull-Up-Widerstand für die BE (Bus Enable)-Leitung der WDC-Variante des 65x02, ohne den der Prozessor in einen Tri-State-Zustand geht und sich vom Bus abkoppelt.&lt;/p>
+&lt;p>&lt;img src="images/e4c5e-romram.png" alt="ROMRAM">
+Das EEPROM und die beiden 32k SRAM-Bausteine. Etwas schwer zu erkennen: die Adressleitung A15 des Prozessors dient den &amp;ldquo;unteren&amp;rdquo; 32k (IC1) als CS-Signal. Das CS_HIRAM-Signal hingegen erzeugt der GAL (siehe oben). Der Schaltplan unterschlägt, dass wir in Wirklichkeit ein 28c256-EEPROM verwendet haben, welches wir durch auf Masse legen von A14 und A13 auf 8k &amp;ldquo;kastriert&amp;rdquo; haben.&lt;/p>
+&lt;p>&lt;img src="images/e0273-uart.png" alt="UART">
+Der UART + Glue Logic, um dessen Bus-Interface an das des 65c02 anzupassen. Die Invertierung von RESET und INT(IRQ) übernimmt ein 74ls06. Beim RESET-Signal ist aufgrund dessen Open Collector-Treibers noch ein Pull-Up-Widerstand nötig.&lt;/p>
+&lt;p>&lt;img src="images/b3061-rs232.png" alt="rs232">
+Der Vollständigkeit halber.&lt;/p>
+&lt;p>&lt;img src="images/9ee9c-via.png" alt="VIA"> Die Anbindung der 65x22 VIA gestaltet sich trivial und erweitert unseren kleinen Rechner um vielseitige IO-Möglichkeiten.&lt;/p></content></item><item><title>Exkurs: Wie kommt Code aufs Steckschwein?</title><link>https://beta.steckschwein.de/post/exkurs-wie-kommt-code-aufs-steckschwein/</link><pubDate>Thu, 03 Apr 2014 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/exkurs-wie-kommt-code-aufs-steckschwein/</guid><description>Die Programmierung eines Computers, der nur aus einer gesteckten Schaltung besteht und weder Tastatur noch Speichermöglichkeit hat, ist eine mühsame Angelegenheit. Die allerersten Experimente bekamen ihr Futter auf einem 27128-EPROM serviert. Bekanntlich wollen diese vor dem Beschreiben mit neuem Code mit UV-Licht gelöscht werden. Also wurde für jedes Update ein EPROM mit neuem Code gebrannt, um die EPROMS anschließend in 10er-Packen ins Löschgerät zu schieben. 15 Minuten Kaffeepause.
+Überhaupt, Code: Für die ersten Experimente hat es genügt, die reinen Hexcodes in einen Hexeditor zu tippen und die Daten dann zu brennen.</description><content>&lt;p>Die Programmierung eines Computers, der nur aus einer gesteckten Schaltung besteht und weder Tastatur noch Speichermöglichkeit hat, ist eine mühsame Angelegenheit. Die allerersten Experimente bekamen ihr Futter auf einem 27128-EPROM serviert. Bekanntlich wollen diese vor dem Beschreiben mit neuem Code mit UV-Licht gelöscht werden. Also wurde für jedes Update ein EPROM mit neuem Code gebrannt, um die EPROMS anschließend in 10er-Packen ins Löschgerät zu schieben. 15 Minuten Kaffeepause.&lt;/p>
+&lt;p>Überhaupt, Code: Für die ersten Experimente hat es genügt, die reinen Hexcodes in einen Hexeditor zu tippen und die Daten dann zu brennen. Dies war vertretbar, da die ersten Programme etwa so aussahen: EA EA EA EA EA EA EA EA C9 C9 C9 C9 C9 C9 C9 C9 4C 00 0E&lt;/p>
+&lt;p>Der Erwerb einiger EEPROMS des Typs 28c256 stellten eine große Erleichterung dar, als das Steckschwein langsam zu einem &amp;ldquo;richtigen&amp;rdquo; Computer und der Testcode damit immer umfangreicher würde. Die UV-Kaffeepausen entfielen, der Chip konnte einfach wieder neu gebrannt werden. Moderne Zeiten.&lt;/p>
+&lt;p>Auch der komplexere Code erforderte langsam neue Herangehensweisen. Komplexere Routinen wurden auf dem C64 im Maschinensprachemonitor vorgeschrieben und die Hexcodes dann abgetippt und auf EEPROM gebrannt (ja, echt). Aber auch mühselig. Neues Werkzeug musste her. Und zwar in Form des &lt;a href="https://sourceforge.net/projects/acme-crossass/">ACME-Crossassemblers&lt;/a>. Nach kurzer Eingewöhnung (warum haben wir das nicht gleich so gemacht?) konnte nun drauflosgecoded werden dass die Schwarte kracht. Wenn nur dieses leidige Chip Umstecken nicht wäre.&lt;/p>
+&lt;p>Unser Steckschwein verfügte inzwischen über eine 65c51 ACIA und damit über eine RS232-Schnittstelle. Das mußte sich doch irgendwie nutzen lassen. Steckschwein-seitig sollte das BIOS nur die Hardware initialisieren, im Falle der ACIA die Verbindungsparameter (Baudrate, Stopbit..) setzen, und dann einfach nur die Schnittstelle pollen und auf Futter warten. Und dieses dann Byte für Byte in den Speicher schreiben und am Ende an diese Adresse springen.&lt;/p>
+&lt;p>Auf der anderen Seite des rs232-Kabels entschieden wir uns, ein kleines Python-Programm zu schreiben, welches mittels &lt;a href="http://pyserial.sourceforge.net/">Pyserial&lt;/a> die Kommunikation übernehmen sollte. Als rätselhaft schwierig gestaltete es sich, Daten &amp;ldquo;am Stück&amp;rdquo; an das Steckschwein zu senden, die Kommunikation brach nach wenigen Bytes ab. Wir hielten das zunächst für eine Macke der an Macken nicht armen ACIA, und programmierten drum herum. Die Laderoutine auf dem Steckschwein quittierte jedes empfangene Byte mit einem &amp;ldquo;*&amp;rdquo;. Das Python programm schrieb ein Byte, und las ein &amp;ldquo;*&amp;rdquo;. Als &amp;ldquo;Ende-Markierung&amp;rdquo; dienten 5 Null-Bytes am Ende des Programms. Wurde also das fünfte $00 empfangen, nahm die Laderoutine keine Daten mehr entgegen und führte ein JMP $1000 aus, wo der Code auch seine Startadresse zu haben hatte. Diese Methode war auch bei 19200 baud ziemlich lahm, aber tat ihren Job erstmal. Kein elendes Chip umstecken mehr. Den angeblichen ACIA-Macken wurde keine weitere Beachtung mehr geschenkt, sollte die ACIA doch schließlich durch einen 16550 UART abgelöst werden. Vorher den Code nochmal anzufassen wäre nicht sinnvoll.&lt;/p>
+&lt;p>Nachdem also besagter 16550 einige Nerven gekostet hatte (hierzu an anderer Stelle mehr), war es Zeit, die Uploadroutine zu überarbeiten. Zum Einen sollte nach einem berechtigen Einwand von Marko die Endmarkierung mit den 5 Nullbytes weg. Sowas kommt nämlich durchaus vor, wenn man mal Zeichensätze oder sowas hochladen will. Zum anderen wäre es praktisch, wenn man die Ladeadresse wählen könnte. Doch zuallererst sollte dieser *-Hack weg. Denn dieser war auch mit dem UART noch nötig. Also sind entweder ACIA und UART beide gleich bescheuert, oder wir machen irgendwas falsch.&lt;/p>
+&lt;p>Eigentlich sollte es möglich sein, mittels&lt;/p>
+&lt;p>ser.write(code)&lt;/p>
+&lt;p>unseren ganzen Code komplett rüberzuschieben, ohne zwischendrin irgendeinen Pseudo-Handshake veranstalten zu müssen. Trotzdem kommen immer nur ein paar Bytes an, dann ist Schluß. Experimentieren mit irgendwelchen Timeout-Parametern von pyserial brachte keine Abhilfe. Nach einigem Probieren ging dann ein Licht an. Wir hatten folgendes probiert:&lt;/p>
+&lt;p>ser.write(code) time.sleep(1)&lt;/p>
+&lt;p>Und siehe da - der Code wurde komplett übertragen. Anscheinend ist es so, dass in pyserial write nicht blockiert, read nach eingestelltem Timeout aber schon. Jedenfalls ist das auf dem Mac so, zu testen ob sich pyserial auf anderen Systemen anders verhält, haben wir uns erspart.&lt;/p>
+&lt;p>Ich schreibe die Uploadroutine so um, dass sie 2 Bytes erwartet, nämlich die Ladeadresse, dies dann mit &amp;ldquo;OK&amp;rdquo; quittiert, dann nochmal 2 Bytes, nämlich die Länge der zu übertragenden Daten, wieder &amp;ldquo;OK&amp;rdquo;, dann die Daten selbst, bis die entsprechende Anzahl Bytes empfangen wurde, dann wieder &amp;ldquo;OK&amp;rdquo;.&lt;/p>
+&lt;p>Das Python-Programm macht demnach einfach bytes = ser.write(struct.pack(&amp;rsquo;&amp;lt;h&amp;rsquo;, startaddr))         if ser.read(2) == &amp;lsquo;OK&amp;rsquo;:                 print &amp;ldquo;Start address %d bytes&amp;rdquo; % (bytes, ) bytes = ser.write(struct.pack(&amp;rsquo;&amp;lt;h&amp;rsquo;, length))         if ser.read(2) == &amp;lsquo;OK&amp;rsquo;:                 print &amp;ldquo;Length %d bytes&amp;rdquo; % (bytes, ) bytes = ser.write(content)         if ser.read(2) == &amp;lsquo;OK&amp;rsquo;:                 print &amp;ldquo;Length %d bytes&amp;rdquo; % (bytes, )&lt;/p>
+&lt;p>Das war&amp;rsquo;s. Einfacher gehts fast nicht, die Ladeaddresse ist frei wählbar, und wir übertragen den Code dank UART jetzt mit 115200 baud statt mit 19200.&lt;/p></content></item><item><title>Murphy II</title><link>https://beta.steckschwein.de/post/murphy-ii/</link><pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/murphy-ii/</guid><description>Flugs also ein ROM gebrannt mit der memtest-routine, in die nach der Reset-Routine eingesprungen wird. Gleiches Ergebnis. Beim ersten Auftreten des &amp;ldquo;K statt OK&amp;rdquo;-Fehlers ist erstmal die doch etwas windig anmutende Verdrahtung der Adressleitungen zwischen Prozessor, den RAM-Bausteinen und dem ROM mit &amp;ldquo;richtigen&amp;rdquo; Steckbrettstrippen statt Klingeldraht nachverdrahtet worden. Das war vermutlich etwas voreilig, schließlich hats vorher ja auch schon funktioniert. Schließlich stellt sich heraus, dass sich hier in der Tat ein paar Fehler eingeschlichen haben, die auch beim Durchklingeln der einzelnen Adressleitungen nicht aufgefallen sind: Kurzschlüsse.</description><content>&lt;p>Flugs also ein ROM gebrannt mit der memtest-routine, in die nach der Reset-Routine eingesprungen wird. Gleiches Ergebnis. Beim ersten Auftreten des &amp;ldquo;K statt OK&amp;rdquo;-Fehlers ist erstmal die doch etwas windig anmutende Verdrahtung der Adressleitungen zwischen Prozessor, den RAM-Bausteinen und dem ROM mit &amp;ldquo;richtigen&amp;rdquo; Steckbrettstrippen statt Klingeldraht nachverdrahtet worden. Das war vermutlich etwas voreilig, schließlich hats vorher ja auch schon funktioniert. Schließlich stellt sich heraus, dass sich hier in der Tat ein paar Fehler eingeschlichen haben, die auch beim Durchklingeln der einzelnen Adressleitungen nicht aufgefallen sind: Kurzschlüsse.  Nachdem diese behoben wurden, läuft unser Speichertest auch wieder komplett durch.  Zeit also, sich dem eigentlichen Problem anzunehmen. Wo bleibt das &amp;ldquo;O&amp;rdquo;? Interessanterweise scheint das Empfangen von Daten nicht betroffen zu sein, denn die memtest-Routine funktioniert hochgeladen genauso wie aus dem ROM.  Also schaue ich mir die Routine an, die Daten (bytes) über den UART sendet.&lt;/p>
+&lt;p>i_uart_tx         pha -       lda uart1lsr         and #$20         beq - pla         sta uart1rxtx&lt;/p>
+&lt;p>rts&lt;/p>
+&lt;p>Sieht doch erstmal nicht verkehrt aus. Ich mache trotzdem ein Experiment, und ersetze die Stackoperationen, indem ich stattdessen auf das X-Register ausweiche:&lt;/p>
+&lt;p>i_uart_tx         tax -       lda uart1lsr         and #$20         beq - stx uart1rxtx rts Und auf einmal kriege ich mein &amp;ldquo;OK&amp;rdquo;. Schnall ich jetzt nicht. Ist der Stack kaputt? Ich mache mir ein paar grundsätzliche Gedanken und halte die Idee, den Stack Pointer einfach mal zu initialisieren, für gut. Ich packe entsprechenden Code an den Beginn der RESET-Routine, und lösche auch gleich das Dezimal-Flag. ; disable interrupt        sei ; clear decimal flag cld ; init stack pointer ldx #$ff&lt;/p>
+&lt;p>txs&lt;/p>
+&lt;p>Ich baue die uart_tx-Routine zurück und bekomme wieder nur &amp;ldquo;K&amp;rdquo;. Während also das Initialisieren des Stack-Pointers richtig und wichtig ist, ist unser Problem noch ein anderes. Die uart_tx-Routine sieht jetzt so aus, und bleibt so: i_uart_tx         pha         phx tax -       lda uart1lsr         and #$20         beq - stx uart1rxtx plx         pla&lt;/p>
+&lt;p>rts&lt;/p>
+&lt;p>Der Stack wird nach einem kurzen Testprogramm für fehlerfrei befunden. Trotzdem funktioniert die serielle Kommunikation noch nicht. Es kommt nicht das an, was gesendet wird. Das hat doch eigentlich schon funktioniert. Die Initialisierung des UART wird nochmal unter die Lupe genommen.&lt;/p>
+&lt;p>lda #0        sta uart1fcr    ; FIFO off Das FCR-Register ist das FIFO-Control-Register. Die FIFO schalten wir durch das ablegen von 0 ab, da wir gerade nur Polling nutzen. Das Register bietet auch Bits zum löschen der Empfangs- und Sende-FIFO sowie setzen des &amp;ldquo;Füllstandes&amp;rdquo; bei welchen ein Interrupt ausgelöst werden soll. Laut Datenblatt aktiviert bzw. deaktiviert das Bit 0 dieses Registers die FIFO. Alle anderen Bits werden nur dann berücksichtigt, wenn Bit 0 auf 1 ist. Also vielleicht einfach mal pauschal die FIFOs löschen, und dann abschalten? lda #7            sta uart1fcr         lda #0       sta uart1fcr    ; FIFO off&lt;/p>
+&lt;p>Das scheint richtig gewesen zu sein, wir haben wieder eine funktionierende Upload-Routine.&lt;/p>
+&lt;p>Da ich mich inzwischen genug über den 16550 geärgert habe, beschließe ich, dass er mir ruhig was Gutes tun könnte, und setze den Baudraten-Divisor auf &amp;ldquo;1&amp;rdquo; und damit eine Baudrate von 115200.&lt;/p>
+&lt;p>Die Feststellung, dass das sogar stabil funktioniert versöhnt mich fürs erste wieder und ich gehe zufrieden ins Bett.&lt;/p></content></item><item><title>... kein Spaß - Murphy schlägt zu</title><link>https://beta.steckschwein.de/post/kein-spass-murphy-schlaegt-zu/</link><pubDate>Mon, 31 Mar 2014 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/kein-spass-murphy-schlaegt-zu/</guid><description>Neben all den ermutigenden Experimenten gibt es natürlich auch immer mal wieder Rückschläge. Mittlerweile haben wir schon ein durchaus komplexes Gebilde auf dem Steckbrett, welches ja per se nicht die ideale Plattform ist, um so etwas zu bauen.
+So wie aktuell gerade mein &amp;ldquo;Steckschwein&amp;rdquo; ein sehr merkwürdiges Verhalten an den Tag legt, ohne dass an der Schaltung etwas geändert worden wäre (Marko ist Zeuge).
+Vorab nochmal der Ablauf unserer Upload-Routine, mit der wir das Steckschwein via RS232 mit Code befüttern:</description><content>&lt;p>Neben all den ermutigenden Experimenten gibt es natürlich auch immer mal wieder Rückschläge. Mittlerweile haben wir schon ein durchaus komplexes Gebilde auf dem Steckbrett, welches ja per se nicht die ideale Plattform ist, um so etwas zu bauen.&lt;/p>
+&lt;p>So wie aktuell gerade mein &amp;ldquo;Steckschwein&amp;rdquo; ein sehr merkwürdiges Verhalten an den Tag legt, ohne dass an der Schaltung etwas geändert worden wäre (Marko ist Zeuge).&lt;/p>
+&lt;p>Vorab nochmal der Ablauf unserer Upload-Routine, mit der wir das Steckschwein via RS232 mit Code befüttern:&lt;/p>
+&lt;ol>
+&lt;li>Transferprogramm sendet die Ladeaddresse (2 bytes)&lt;/li>
+&lt;li>Upload-Routine quittiert mit &amp;ldquo;OK&amp;rdquo;&lt;/li>
+&lt;li>Anzeige der Ladeaddresse im LCD&lt;/li>
+&lt;li>Transferprogramm übermittelt die Länge der zu sendenden Daten (2 bytes)&lt;/li>
+&lt;li>Upload-Routine quittiert mit &amp;ldquo;OK&amp;rdquo;&lt;/li>
+&lt;li>Anzeige der Länge in Bytes im LCD&lt;/li>
+&lt;li>Upload-Routine addiert Startaddresse + Länge in Bytes und errechnet so die Endadresse&lt;/li>
+&lt;li>Anzeige der Endaddresse im LCD&lt;/li>
+&lt;li>Transferprogramm sendet den Code (n bytes)&lt;/li>
+&lt;li>Upload-Routine quittiert mit &amp;ldquo;OK&amp;rdquo;&lt;/li>
+&lt;/ol>
+&lt;p>Völlig unprovoziert wird auf einmal das &amp;ldquo;O&amp;rdquo; unterschlagen, sodass wir nur noch ein &amp;ldquo;K&amp;rdquo; erhalten. Dies läßt sich gut mit einem Terminalprogramm nachvollziehen. Um weiter debuggen zu können, passen wir das Transferprogramm an, dass es sich auch mit &amp;ldquo;K&amp;rdquo; zufriedengibt und laden eine echo-Routine, die die empfangenen Zeichen wieder über RS232 zurückschreibt und außerdem auf dem Display ausgibt.&lt;/p>
+&lt;p>Wir beobachten, wie einige Zeichen wieder ge-echo-t werden, andere nicht, während sie nebst einigem Müll sowie der Ziffer 0 auf dem Display ausgegeben werden.&lt;/p>
+&lt;p>Ein ähnliches Phänomen haben wir schon beim Einbau/Programmierung des UART beobachtet. Damals war der Fehler, dass die FIFO aktiviert war. Da wir den UART aktuell nur mittels Polling betreiben, gab es Probleme, die sich mit der Deaktivierung der FIFO beheben ließen. Das ist hier anders. Und zu allem Überfluss scheint das Phänomen zeitweilig auch wieder zu verschwinden. Will heissen: Ohne unser Zutun kam auch wieder ein &amp;ldquo;OK&amp;rdquo;. Dann wieder nicht mehr. Die zugegeben bis dato etwas windige Verdrahtung der Speicherchips wurde bei der Gelegenheit durch &amp;ldquo;richtige&amp;rdquo; Steckstrippen ersetzt. Die dabei entstandenen Fehler wurden schließlich auch gefunden, sodass wir mit einem Tag Verzug wieder so weit waren, das eigentliche Problem zu erforschen.&lt;/p>
+&lt;p>Unsere Mem-Test-Routine läßt sich hochladen, zeigt aber immer denselben Fehler. Da wir nicht sicher sein können, ob die Routine tatsächlich korrekt hochgeladen wurde, macht weiteres Testen nur Sinn, wenn die dazu notwendigen Routinen bereits im ROM liegen.&lt;/p></content></item><item><title>ACIA muss wieder raus</title><link>https://beta.steckschwein.de/post/acia-muss-wieder-raus/</link><pubDate>Fri, 28 Mar 2014 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/acia-muss-wieder-raus/</guid><description>Die 65x51 ACIA erschien uns als die am tiefsten hängende Frucht, um eine RS232 Schnittstelle zu implementieren, nachdem wir Bit Banging nach C64 Vorbild ziemlich schnell verworfen hatten.
+Auch programmiertechnisch mach die ACIA einen simplen Eindruck, ganze drei Register wollen beherrscht werden.
+Die rs232-Schnittstelle ermöglicht uns, Code auf den Steckbrettrechner zu laden, ohne jedesmal das EEPROM neu brennen zu müssen. Eine gewaltige Erleichterung.
+Aber - wir haben es bereits erwähnt - die ACIA hat keine Zukunft bei uns.</description><content>&lt;p>Die 65x51 ACIA erschien uns als die am tiefsten hängende Frucht, um eine RS232 Schnittstelle zu implementieren, nachdem wir Bit Banging nach C64 Vorbild ziemlich schnell verworfen hatten.&lt;br>
+Auch programmiertechnisch mach die ACIA einen simplen Eindruck, ganze drei Register wollen beherrscht werden.&lt;br>
+Die rs232-Schnittstelle ermöglicht uns, Code auf den Steckbrettrechner zu laden, ohne jedesmal das EEPROM neu brennen zu müssen. Eine gewaltige Erleichterung.&lt;/p>
+&lt;p>Aber - wir haben es bereits erwähnt - die ACIA hat keine Zukunft bei uns. Die uns vorliegenden Chips können mit bis zu 2 MHz getaktet werden. Wir aber wollen hoch hinaus. Mit den aktuellen 65cXX-Chips von WDC sind schließlich bis zu 14MHz möglich.&lt;br>
+Darüberhinaus sind mit der ACIA ohne Hacks nur 19200 baud möglich, und selbst hochgezüchtet sind mehr als 38400 baud nicht drin. Dazu kommt, dass es keinen Puffer gibt und für jedes empfangene Byte ein Interrupt ausgelöst werden müßte.&lt;/p>
+&lt;p>Die Entscheidung ist gefallen. Die ACIA hat uns viel Spass gemacht, aber noch mehr Spass macht ein modernerer Schnittstellenchip: der 16550 UART, bekannt aus der Welt der IBM-kompatiblen.&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;p>Der 16550 kann zunächst einmal seine niedere Herkunft als PC-Chip nicht verbergen. Reset und Interrupt-Signal sind active high, sodass hier schonmal ein wenig Glue Logic vonnöten ist. Das Reset-Signal wird durch einen freien Inverter des 74ls04 geschickt. Um die IRQ-Leitung bei einem Interrupt auf L ziehen zu können, benötigen wir hier einen Inverter mit Open Collector-Ausgang. Dazu kommt ein 74ls06 zu Einsatz, der auch bis jetzt nichts anderes macht als das IRQ-Signal des UART zu verarbeiten.&lt;br>
+Das Businterface erfordert weitere Anpassungen. Der 16550 hat ein jeweils separates Signal für RD (read) und WR (write), und zwar wahlweise eins als active high und eins als active low. Irgendwie muss man 40 Pins ja voll kriegen. Das jeweils nicht benötigte Signal wird entsprechend auf Potential gelegt. Also legen wir RD und WR auf Masse und kümmern uns nur noch um /RD und /WR.&lt;br>
+Einen dedizierten Takteingang, wie wir es von den Chips der 65xx-Serie gewohnt sind, gibt es auch nicht.&lt;br>
+Wir lassen uns von &lt;a href="http://www.6502.org/users/andre/icaphw/c64ser.html">Andre Fachats Umbau eines C64 auf 16550&lt;/a> inspirieren und legen CS0 auf High, CS2 auf Low und geben den Systemtakt PHI2 auf CS1. Somit ist der Chip immer nur selektiert, wenn PHI2 H ist. Die Adressdekodierung übernimmt hier wieder der GAL. Das CS-Signal von dort dient als Enable-Signal für einen 74ls138, der aus /RW und PHI2 separate /RD und /RW Signale dient. Der 74ls138 hat sogar noch einen Eingang und zwei Ausgänge frei, sodass sich unter Dazunahme einer weiteren Adressleitung sehr einfach ein zweiter UART unterbringen ließe. Auch hier dient die Arbeit von Andre Fachat als Vorbild.&lt;/p>
+&lt;p>Richtig spassig wird der 16550 aber, wenn es an die Programmierung geht. Er verfügt über 12 Register, die an 8 Adressen ansprechbar sind. Auch Nicht-Mathematiker erkennen hier sofort, dass hier Registeradressen doppelt belegt sind. Registeradresse A beherbergt, wenn gelesen, also Register X, wenn geschrieben wird, ist es aber Register Y. Wahnsinn.&lt;br>
+Quasi als kleiner Trost und Bonbon verfügt der 16550 dafür aber über das &amp;ldquo;Scratchpad&amp;rdquo;-Register. Dort kann man ein Byte ablegen und auch wieder lesen. Ansonsten beeinflusst es das Verhalten des Chips in keiner Weise. Die Bezeichnung &amp;ldquo;Scratchpad&amp;rdquo; legt nahe, dass dort Registerinhalte &amp;ldquo;entworfen&amp;rdquo; werden könnten, um sie dann von dort in das entsprechde Register zu übertragen. Nur verfügt der 16550 über keinerlei Möglichkeit, den Inhalt eines seiner Register ins Scratchpad zu legen oder von dort zu holen, sodass es jede andere Specherstelle genauso tut. Was bleibt ist, dass man quasi mit jedem verbauten 16550 ein Byte RAM gratis erhält. Sogesehen kann man gar nicht genug UARTs haben.&lt;/p></content></item></channel></rss>

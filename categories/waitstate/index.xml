@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>waitstate on</title><link>https://beta.steckschwein.de/categories/waitstate/</link><description>Recent content in waitstate on</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 22 Oct 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://beta.steckschwein.de/categories/waitstate/index.xml" rel="self" type="application/rss+xml"/><item><title>V9958 - "The WAIT" - investigation of the CPU/VDP /WAIT interface</title><link>https://beta.steckschwein.de/post/v9958-the-wait-investigation-of-the-cpu-vdp-wait-interface/</link><pubDate>Mon, 22 Oct 2018 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/v9958-the-wait-investigation-of-the-cpu-vdp-wait-interface/</guid><description>&amp;hellip; on the way back to munich, we had some time to do a little code review of our gfx library. thinking about the cpu to video chip timings and again read the well known datasheets of the V9938/V9958. suddenly i got an enlightenment and we came to the following conclusion.
+as described in the datasheet (V9958-Technical-manual_v1.0.pdf) of the V9958 there are different timings given for different kind of writes. so as far as we understand there are the following timings</description><content>&lt;p>&amp;hellip; on the way back to munich, we had some time to do a little code review of our gfx library. thinking about the cpu to video chip timings and again read the well known datasheets of the V9938/V9958. suddenly i got an enlightenment and we came to the following conclusion.&lt;/p>
+&lt;p>as described in the datasheet (V9958-Technical-manual_v1.0.pdf) of the V9958 there are different timings given for different kind of writes. so as far as we understand there are the following timings&lt;/p>
+&lt;ol>
+&lt;li>the first 2 bytes send to vdp during a write are always register writes which require a short delay of at least 2µs in between each byte&lt;/li>
+&lt;li>the write of the 3rd byte (after the 2nd) requires a delay of 8µs. any further &amp;ldquo;single byte transfer&amp;rdquo; - during a vram write - also requires the 8µs delay. the same is true if we want to initiate a register write direclty after a vram write.&lt;/li>
+&lt;li>the 3rd and n-th byte write to port #3 (index register port) during a bulk register write requires only the 2µs between each byte&lt;/li>
+&lt;/ol>
+&lt;p>With this in mind, we can optimize our library a little bit by using different &amp;ldquo;nop slides&amp;rdquo; for address setup and vram writes.&lt;/p>
+&lt;p>We enhance our vdp.inc and built two macros which provide the different delay we need.&lt;/p>
+&lt;p>.macro vdp_wait_s
+jsr vdp_nopslide_2m ; 2m for 2µs wait
+&amp;hellip;&lt;/p>
+&lt;p>.macro vdp_wait_l
+jsr vdp_nopslide_8m ; 8m for 8µs wait
+&amp;hellip;&lt;/p>
+&lt;p>steckSchwein is running at 8Mhz, so we also defined some equations and used ca65 macros to build our nop slides.&lt;/p>
+&lt;p>.define CLOCK_SPEED_MHZ 8&lt;/p>
+&lt;p>; long delay with 6µ+2µs (below)
+MAX_NOPS_8M = (6 * 1000 / (1000 / CLOCK_SPEED_MHZ)) / 2
+; 8Mhz, 125ns per cycle, wait 6µs = 6000ns
+; = 6000ns / 125ns = 48cl / 2 =&amp;gt; 24 NOP&lt;/p>
+&lt;p>; short delay with 2µs wait
+MAX_NOPS_2M = (2 * 1000 / (1000 / CLOCK_SPEED_MHZ) -12) / 2
+; -12 =&amp;gt; jsr/rts = 2 * 6cl = 12cl must be subtract&lt;/p>
+&lt;p>.macro m_vdp_nopslide
+vdp_nopslide_8m:
+; long delay with 6+2 2µs wait
+.repeat MAX_NOPS_8M
+nop
+.endrepeat
+vdp_nopslide_2m:
+.repeat MAX_NOPS_2M
+nop
+.endrepeat
+rts
+.endmacro&lt;/p>
+&lt;p>Another interesting thing would be, &amp;ldquo;how does the /WAIT&amp;rdquo; behave in this situation? the assumption here is, that the /WAIT will behave in the way as specified. so /WAIT will be go low at least after 130ns from CSW. so to handover the /RDY handling to the vdp via the /WAIT pin, we have to apply only 1 wait state from our WS-Gen. after one wait state, we can release the /RDY low from our WS so that the vdp /WAIT can drive /RDY as needed.&lt;/p>
+&lt;p>Back home, Thomas did the test and changed the waitstate generator firmware for the GAL16V8.&lt;/p>
+&lt;p>The equation was&lt;/p>
+&lt;p>W2 = ROM * UART * SND * /VDP
+W1 = W2
++ /ROM * UART * VDP&lt;/p>
+&lt;p>and was changed to&lt;/p>
+&lt;p>W2 = /SND
+W1 = W2
++ /ROM ; /ROM wait state if ROM is cs
++ /VDP ; /VDP wait state if VDP is cs&lt;/p>
+&lt;p>So finally, we only need one wait state from the waitstate generator to access the VDP. If the VDP requires more time - surely - during a video memory access it will drive /WAIT to low as long as needed. So after the explcit 1WS from our wait state generator we now hand over the /RDY control to the VDP. How our /RDY and /WAIT really work together is subject to one of our next sessions where we&amp;rsquo;re going to measure the things with a logic analyzer and oscilloscope. Nevertheless, it works in this way and it works exaclty as specified within the datasheet.&lt;/p></content></item><item><title>Das Steckschwein auf dem VCFe 17</title><link>https://beta.steckschwein.de/post/das-steckschwein-auf-dem-vcfe-17/</link><pubDate>Fri, 22 Apr 2016 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/das-steckschwein-auf-dem-vcfe-17/</guid><description>Am Wochenende vom 30. April und 1. Mai 2016 findet zum 17. Mal das Vintage Computer Festival Europe (VCFe) in München statt.
+Das Steckschwein ist natürlich wieder dabei. Unter anderem wird es unsere neue CPU-Platine mit integriertem Waitstate-Generator und dadurch möglichen 8MHz Takt gezeigt.
+Ausserdem wird es getreu des diesjährigen VCFe-Mottos &amp;ldquo;Irgendwas mit Medien&amp;rdquo; einen Vortrag zum Speichermedium des Steckschweins geben, speziell über dessen FAT32-Unterstützung.</description><content>&lt;p>&lt;img src="images/vcflogo.gif" alt="VCFe 17 Logo">&lt;/p>
+&lt;p>Am Wochenende vom 30. April und 1. Mai 2016 findet zum 17. Mal das &lt;a href="http://www.vcfe.org/D/">Vintage Computer Festival Europe (VCFe)&lt;/a> in München statt.&lt;/p>
+&lt;p>Das Steckschwein ist natürlich wieder dabei. Unter anderem wird es unsere neue CPU-Platine mit integriertem Waitstate-Generator und dadurch möglichen 8MHz Takt gezeigt.&lt;/p>
+&lt;p>Ausserdem wird es getreu des diesjährigen VCFe-Mottos &amp;ldquo;Irgendwas mit Medien&amp;rdquo; einen Vortrag zum Speichermedium des Steckschweins geben, speziell über dessen FAT32-Unterstützung.&lt;/p></content></item><item><title>Neue CPU-Boards</title><link>https://beta.steckschwein.de/post/neue-cpu-boards/</link><pubDate>Tue, 08 Mar 2016 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/neue-cpu-boards/</guid><description>Wir haben vor, eine neue Revision der Steckschwein-Prototyp-Platinen herzustellen. Den Anfang macht ein neues CPU-Board mit einigen Bugfixes und den in Chiptuning beschriebenen zusätzlichen GAL als Waitstate-Generator, sowie einem geändertem Stromanschluss: In Zukunft wird es möglich sein, das Steckschwein mit nur 5V per USB, über einen Rundstecker oder wie gehabt über einen Pin-Header zu versorgen. Die Layouts sind schon fertig:
+Bestückungsseite
+Lötseite</description><content>&lt;p>Wir haben vor, eine neue Revision der Steckschwein-Prototyp-Platinen herzustellen. Den Anfang macht ein neues CPU-Board mit einigen Bugfixes und den in &lt;a href="http://www.steckschwein.de/index.php/2016/01/30/chiptuning/">Chiptuning&lt;/a> beschriebenen zusätzlichen GAL als Waitstate-Generator, sowie einem geändertem Stromanschluss: In Zukunft wird es möglich sein, das Steckschwein mit nur 5V per USB, über einen Rundstecker oder wie gehabt über einen Pin-Header zu versorgen. Die Layouts sind schon fertig:&lt;/p>
+&lt;p>&lt;img src="images/top.png" alt=""> Bestückungsseite&lt;/p>
+&lt;p>&lt;img src="images/bottom.png" alt=""> Lötseite&lt;/p></content></item><item><title>Chiptuning</title><link>https://beta.steckschwein.de/post/chiptuning/</link><pubDate>Sat, 30 Jan 2016 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/chiptuning/</guid><description>An den Heimcomputern von &amp;ldquo;damals&amp;rdquo; gemessen ist das Steckschwein mit 4 MHz durchaus einer der schnelleren 6502-Rechner. Damals waren zumeist Taktraten von 1 MHz üblich. Einige wenige hatten deutlich mehr, wie z.B. der Apple IIgs (65816) mit 2.8 MHz. Einen 4 MHz-65(C)02-Heimcomputer hat es damals nach unserem Informationsstand nicht gegeben.
+Nun ist es aber so, dass aktuell erhältliche 65c02-CPUs von WDC offiziell mit bis zu 14MHz getaktet werden können, inoffiziell wurden schon problemlos Taktraten von 20 MHz erreicht.</description><content>&lt;p>An den Heimcomputern von &amp;ldquo;damals&amp;rdquo; gemessen ist das Steckschwein mit 4 MHz durchaus einer der schnelleren 6502-Rechner. Damals waren zumeist Taktraten von 1 MHz üblich. Einige wenige hatten deutlich mehr, wie z.B. der Apple IIgs (65816) mit 2.8 MHz. Einen 4 MHz-65(C)02-Heimcomputer hat es damals nach unserem Informationsstand nicht gegeben.&lt;/p>
+&lt;p>Nun ist es aber so, dass aktuell erhältliche 65c02-CPUs von WDC offiziell mit bis zu 14MHz getaktet werden können, inoffiziell wurden schon problemlos Taktraten von 20 MHz erreicht. Da ist also noch Raum für eine Prise Größenwahn. Den Takt des Steckschweins pauschal zu erhöhen funktioniert nicht. Zu viele Bausteine kommen dann nicht mehr mit. Das verwendete Atmel 28c256 EEPROM hat eine Zugriffszeit von 150ns. Im WDC-Datenblatt ist tACC des Prozessors bei 4MHz mit 145ns angegeben. Also ist das stand jetzt schon etwas eng. Schneller takten geht also schon allein deswegen auf keinen Fall. Für den Videochip TMS9929 und den Soundchip gilt ähnliches. Das SRAM hingegen läßt sich problemlos gegen Bausteine von Alliance Memory mit 55ns Zugriffzeit austauschen. Damit sollten Taktraten von um die 10 MHz möglich sein.&lt;/p>
+&lt;p>Was wir also brauchen ist eine Möglichkeit, auf RAM und VIA (sofern auch WDC und damit gleich schnell)  mit voller Geschwindigkeit zuzugreifen, währen wir den Prozessor bei Zugriffen auf ROM, Video- und Soundchip für 1-2 Zyklen stoppen. Schließlich ist man geschätzt zu 99% im RAM unterwegs.&lt;/p>
+&lt;p>Erste Überlegungen gingen in die Richtung, die Taktfrequenz umschaltbar zu machen, je nachdem, welcher Baustein auf dem Bus von der CPU angesprochen wird. Dieses Prinzip birgt zwei entscheidende Nachteile:&lt;/p>
+&lt;ol>
+&lt;li>Man darf den Takt nicht einfach so umschalten. Erwischt man einen ungünstigen Moment, kann dies die CPU zum Absturz bringen. Näheres kann in einem &lt;a href="http://www.6502.org/mini-projects/clock-switching/clock-switching.html">entsprechenden Artikel auf 6502.org&lt;/a> nachgelesen werden.&lt;/li>
+&lt;li>Die VIA-Timer sind direkt abhängig von der Taktfrequenz. Software, die diese benutzt, könnte sich nicht mehr auf diese verlassen, wenn sich die Taktfrequenz ständig ändert.&lt;/li>
+&lt;/ol>
+&lt;p>Zum Glück bietet der 6502 auch hier genau das, was wir brauchen: Den RDY-Pin. Wird dieser auf LOW gezogen, &amp;ldquo;friert&amp;rdquo; der 6502 ein. Kehrt RDY wieder auf HIGH zurück, macht die CPU dort weiter, wo sie unterbrochen wurde. Durch geschicktes Ansteuern dieser Leitung können wir den Prozessor also veranlassen, auf langsamere Bausteine zu warten. Dieses Konzept nennt sich Wait States (eben Wartezyklen) und ist bei aktuellen Computern gang und gäbe.&lt;/p>
+&lt;p>Im Grunde genommen brauchen wir also einen Zähler, der die Taktfrequenz des Systems herunterteilt, und eine Selektionslogik, über die sich wählen läßt, welcher Ausgang des Zählers die Grundlage für das RDY-Signal bilden soll, und damit die Anzahl der Wait States bestimmt. Dieses Signal bildet invertiert das RDY-Signal.&lt;/p>
+&lt;p>&lt;img src="images/tekway331_2.gif" alt=""> Gelb: RDY, Blau: PHI2 (Systemtakt) - 2 Wait States für den Videochip&lt;/p>
+&lt;p>Zur folgender Logik haben wir uns vom &lt;a href="http://sbc.rictor.org/parts/wsgen.html">Waitstate-Generator von Daryl Rictor&lt;/a>  stark inspirieren lassen. Im Wesentlichen haben wir die Adressdekoderlogik zugunsten der bereits ausdekodierten /CS_&amp;hellip; Leitungen entfernt, sowie die Syntax von CUPL nach GALasm überführt.&lt;/p>
+&lt;p>&lt;img src="images/img_20160130_144611.jpg" alt=""> Waitstate-Generator-Prototyp auf dem Steckbrett&lt;/p>
+&lt;p>Folgende Schaltung erzeugt entsprechend 1 oder 2 Waitstates, und versetzt den Ausgangspin in den Tri-State-Zustand, damit auch andere Bausteine Wait-States anfordern können. Sollten einmal mehr Waitstates nötig werden, lassen sich noch 1 oder 2 Zählerstufen hinzufügen, um 4 oder 8 Waitstates zu erzeugen.&lt;/p>
+&lt;pre tabindex="0">&lt;code>GAL16V8
+RDYGEN
+Clock ROM VIA UART VDP SND NC NC Clear GND
+/OE RDY W1 W2 NC NC NC Q1 Q0 VCC
+W2 = ROM \* VIA \* UART \* SND \* /VDP
++ ROM \* VIA \* UART \* /SND \* VDP
+W1 = W2
++ /ROM \* VIA \* UART \* VDP
+Q0.R = W1 \* /Q0 \* /Q1 \* Clear
++ W2 \* /Q0 \* /Q1 \* Clear
+Q1.R = W2 \* /Q1 \* Q0 \* Clear
+RDY.T = /Q0 \* /Q1
+RDY.E = W1
+&lt;/code>&lt;/pre>&lt;p>DESCRIPTION:
+Generation of /RDY line modeled after &lt;a href="http://sbc.rictor.org/parts/wsgen.html">http://sbc.rictor.org/parts/wsgen.html&lt;/a>
+and adapted to galasm syntax&lt;/p>
+&lt;p>Wir freuen uns jetzt über ein 8MHz-Steckschwein. Das Tolle ist, dass die VIA ebenfalls mit 8 MHz und ohne Waitstates betrieben werden kann, sodass sich die erhöhte Geschwindigkeit 1:1 auf den SPI-Bus auswirkt. Zugriffe auf die SD-Karte sind damit gleich doppelt so schnell.&lt;/p></content></item></channel></rss>
