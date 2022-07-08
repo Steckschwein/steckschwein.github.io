@@ -1,6 +1,7 @@
 ---
 title: "The Project"
 date: "2015-09-15"
+url: "/"
 menu:
   main:
     weight: 10
