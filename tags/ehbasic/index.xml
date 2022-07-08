@@ -1,4 +1,81 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>ehbasic on Steckschwein</title><link>https://beta.steckschwein.de/tags/ehbasic/</link><description>Recent content in ehbasic on Steckschwein</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 22 Jan 2017 00:00:00 +0000</lastBuildDate><atom:link href="https://beta.steckschwein.de/tags/ehbasic/index.xml" rel="self" type="application/rss+xml"/><item><title>EhBASIC nochmal</title><link>https://beta.steckschwein.de/post/ehbasic-nochmal/</link><pubDate>Sun, 22 Jan 2017 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/ehbasic-nochmal/</guid><description>Vor geraumer Zeit hatten wir ja bereits EhBASIC auf dem Steckschwein zum Laufen gebracht. Diese Version war im Wesentlichen eine Machbarkeitsstudie. Diese setzte auch noch nicht auf unseren SteckOS-Kernel auf, sondern auf BIOS-Routinen. Hier lag also noch ein wenig Arbeit vor uns.
 Die EhBASIC-Dokumentation setzt bei einem potentiellen Portierungsziel nicht sehr viel voraus, und dies sind schon die &amp;ldquo;Preferred requirements&amp;rdquo;:
-6502 or better processor (65c02, CCU3000, M38xx). 10k ROM or RAM for the interpreter code.</description></item><item><title>Umständliche Portierung von EhBasic</title><link>https://beta.steckschwein.de/post/umstaendliche-portierung-von-ehbasic/</link><pubDate>Fri, 16 Oct 2015 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/umstaendliche-portierung-von-ehbasic/</guid><description>Es ist manchmal schon sehr mühselig bereits kleinere Probleme mit Assembler lösen zu müssen. Was uns für das Steckschwein fehlt ist eine einfache Sprache mit der man kleine Dinge erledigen und zeigen kann.
-Also, warum nicht ein einfaches Basic für das Steckschwein portieren? Die Auswahl an guten Basic-Implementierungen ist überschaubar und unsere Wahl fiel in dem Fall auf EhBasic von LeeDavison. Warum? Nun, es hat sich gezeigt, dass EhBasic von vielen Homebrew-Projekten verwendet wird, die eine 6502-CPU-Basis benutzen.</description></item></channel></rss>
+6502 or better processor (65c02, CCU3000, M38xx). 10k ROM or RAM for the interpreter code.</description><content>&lt;p>&lt;img src="images/img_2287.jpg" alt="img_2287">&lt;/p>
+&lt;p>Vor geraumer Zeit hatten wir ja bereits EhBASIC auf dem Steckschwein zum Laufen gebracht. Diese Version war im Wesentlichen eine Machbarkeitsstudie. Diese setzte auch noch nicht auf unseren SteckOS-Kernel auf, sondern auf BIOS-Routinen. Hier lag also noch ein wenig Arbeit vor uns.&lt;/p>
+&lt;p>Die EhBASIC-Dokumentation setzt bei einem potentiellen Portierungsziel nicht sehr viel voraus, und dies sind schon die &amp;ldquo;Preferred requirements&amp;rdquo;:&lt;/p>
+&lt;ol>
+&lt;li>6502 or better processor (65c02, CCU3000, M38xx).&lt;/li>
+&lt;li>10k ROM or RAM for the interpreter code.&lt;/li>
+&lt;li>RAM from $0000 to $BFFF (more with changes).&lt;/li>
+&lt;li>Any character based I/O (e.g. RS232, LCD/keyboard etc).&lt;/li>
+&lt;/ol>
+&lt;p>Punkte 1 und 2 sind schnell abgehakt. Einen 65c02 hat das Steckschwein ja. 10k ROM haben wir nicht am Stück, jedoch wollen wir das Basic ja als Programm im RAM ausführen, und davon haben wir 64k. Alles klar.&lt;/p>
+&lt;p>Die Punkte 3 und 4 erfordern jedoch ein paar kleine Anpassungen. RAM von $0000 bis $BFFF gibt es im Steckschwein nicht durchgehend, denn von $0200 bis $027F liegt ja der IO-Bereich. Hier gilt es also zunächst zu prüfen, ob EhBASIC zufällig in diesem Bereich irgendetwas tut. Im EhBASIC-eigenen Monitor min_mon wird zwar ein IO-Bereich angegeben, dieser wird jedoch in unserer Version nicht angesprochen, da wir zur Ein- und Ausgabe unserer SteckOS-Kernel-Routinen verwenden wollen.&lt;/p>
+&lt;p>Jetzt müssen wir sicherstellen, dass sich der Basic-Start, also die Adresse, an der die eigentlichen Basic-Programme im Speicher liegen, mit nichts überschneidet. EhBASIC wird ja offenbar eher ROM-basiert  verwendet und liegt damit meist im oberen Adressbereich. Im Quellcode gibt es die Konstanten Ram_base und Ram_top. Hier gab es schon das erste Problem, dass Ram_top nicht größer sein konnte als die Startadresse des eigentlichen EhBASIC-Codes. Mit Hilfe der äußerst hilfreichen Community im Forum auf 6502.org konnten wir &amp;ldquo;unser&amp;rdquo; Basic aber patchen: &lt;a href="http://forum.6502.org/viewtopic.php?p=48368#p48368">http://forum.6502.org/viewtopic.php?p=48368#p48368&lt;/a>&lt;/p>
+&lt;p>EhBASIC benötigt außerdem eine Routine zur Zeicheneingabe. Laut Dokumentation:&lt;/p>
+&lt;blockquote>
+&lt;p>This is a non halting scan of the input device. If a character is ready it should be placed in A and the carry flag set, if there is no character then A, and the carry flag, should be cleared.&lt;/p>
+&lt;/blockquote>
+&lt;p>Einen non-halting Scan der Tastatur haben wir schon, die Routine &amp;ldquo;krn_getkey&amp;rdquo;. Die geforderte Mimik mit dem Carry Flag haben wir dort noch eingebaut und nutzen diese auch selbst in krn_keyin. So kann krn_getkey direkt in EhBasic verwendet werden.&lt;/p>
+&lt;p>Auch unsere krn_chrout-Routine können wir direkt in EhBasic nutzen.&lt;/p>
+&lt;p>Damit haben wir endlich ein lauffähiges Basic auf unserem Steckschwein!&lt;/p>
+&lt;p>Relativ schnell fiel allerdings etwas störend ins Gewicht, dass der Tokenizer von EhBasic die Eingabe von BASIC-Schlüsselwörtern in Großbuchstaben erwartet, was auf Dauer etwas anstrengend ist. Das Steckschwein, unterstützt bekanntlich Groß- und Kleinschreibung mit Kleinschreibung als Default.&lt;/p>
+&lt;p>Es wäre doch nett, wenn der Tokenizer beides akzeptieren würde. Dies würde ja nichtmal die Ausführungsgeschwindigkeit negativ beeinträchtigen, da nur für das Parsen ein weiterer Schritt nötig wäre.&lt;/p>
+&lt;p>Ganz so trivial wie angenommen war der Patch dann doch nicht. Der EhBASIC tokenizer sucht zunächst nach dem ersten Zeichen des Dictionary-Eintrags. Das zu suchende Zeichen liegt hierbei im Akku. Das Dictionary liegt schon in Großschreibung vor, sodass es an dieser Stelle reicht, den Akkuinhalt zu prüfen, ob es sich um einen Buchstaben handelt, und diesen dann in den entsprechenden Großbuchstaben zu verwandeln. Unser toupper-Makro tut genau das!&lt;/p>
+&lt;p>Jetzt funktioniert der Tokenizer zumindest schon einmal für das erste Zeichen case-insensitiv. Für den Rest des Schlüsselworts galt es, ein wenig zu knobeln, denn das zu vergleichende Zeichen liegt hier nicht im Akku. Der Hack besteht nun darin, nach einem Nichttreffer den Akkuinhalt in einen Kleinbuchstaben zu verwandeln und einfach nochmal zu vergleichen: &lt;a href="https://bitbucket.org/steckschwein/steckschwein-code/commits/7729b971379f4ec022e9c98a3154ff6b0a20653f">https://bitbucket.org/steckschwein/steckschwein-code/commits/7729b971379f4ec022e9c98a3154ff6b0a20653f&lt;/a>&lt;/p>
+&lt;p>Das macht den Tokenizer für in Kleinbuchstaben geringfügig langsamer, was aber auf die Ausführungsgeschwindigkeit keinen Einfluss. Als Extra-Bonus können Variablennamen jetzt groß oder klein geschrieben sein, also i ist nicht gleich I.&lt;/p>
+&lt;p>Zuletzt wurde noch eine weitere Anregung aus dem 6502.org-Forum umgesetzt, denn zwar ist der Tokenizer jetzt case-insensitive, aber Buchstaben, die nicht im Dictionary stehen, werden weiterhin immer als Großbuchstaben dargestellt. Auch hier gibt es einen kleinen Patch: &lt;a href="http://forum.6502.org/viewtopic.php?p=50271#p50271">http://forum.6502.org/viewtopic.php?p=50271#p50271&lt;/a>&lt;/p>
+&lt;p>Jetzt fehlen nur noch Implementationen für LOAD und SAVE, damit wir unsere BASIC-Kunstwerke auch im Filesystem speichern können und evtl. das ein oder andere BASIC-Spiel vom C64 portieren können.&lt;/p></content></item><item><title>Umständliche Portierung von EhBasic</title><link>https://beta.steckschwein.de/post/umstaendliche-portierung-von-ehbasic/</link><pubDate>Fri, 16 Oct 2015 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/umstaendliche-portierung-von-ehbasic/</guid><description>Es ist manchmal schon sehr mühselig bereits kleinere Probleme mit Assembler lösen zu müssen. Was uns für das Steckschwein fehlt ist eine einfache Sprache mit der man kleine Dinge erledigen und zeigen kann.
+Also, warum nicht ein einfaches Basic für das Steckschwein portieren? Die Auswahl an guten Basic-Implementierungen ist überschaubar und unsere Wahl fiel in dem Fall auf EhBasic von LeeDavison. Warum? Nun, es hat sich gezeigt, dass EhBasic von vielen Homebrew-Projekten verwendet wird, die eine 6502-CPU-Basis benutzen.</description><content>&lt;p>Es ist manchmal schon sehr mühselig bereits kleinere Probleme mit Assembler lösen zu müssen. Was uns für das Steckschwein fehlt ist eine einfache Sprache mit der man kleine Dinge erledigen und zeigen kann.&lt;/p>
+&lt;p>Also, warum nicht ein einfaches Basic für das Steckschwein portieren? Die Auswahl an guten Basic-Implementierungen ist überschaubar und unsere Wahl fiel in dem Fall auf EhBasic von LeeDavison. Warum? Nun, es hat sich gezeigt, dass EhBasic von vielen Homebrew-Projekten verwendet wird, die eine 6502-CPU-Basis benutzen. Darüber hinaus scheint EhBasic sogar eine sehr gute Implementierung zu sein, weil die Performance und Erweiterbarkeit gegenüber anderen Basics für diese Zielplattform herausragend ist.&lt;/p>
+&lt;p>Dann sollte das doch für uns und das Steckschwein auch kein Problem sein, oder?&lt;/p>
+&lt;p>Nun, schaut man sich an was zu tun ist, so sind im wesentlichen folgende Dinge zu tun&lt;/p>
+&lt;ul>
+&lt;li>EhBasic Assembler-Sourcen nach Acme-Assembler übersetzen&lt;/li>
+&lt;li>VEC_IN - Pointer und Code für eine Tastatur-Eingabe Routine bereitstellen&lt;/li>
+&lt;li>VEC_OUT - Pointer und Code für eine Ausgabe-Routine (Display) bereitstellen&lt;/li>
+&lt;li>VEC_LD - Pointer und Code für eine Basic-Datei Lade-Routine bereitstellen&lt;/li>
+&lt;li>VEC_SV - Pointer auf und Code für eine Basic-Datei Speicher-Routine bereitstellen&lt;/li>
+&lt;li>Adressen anpassen und konfigurieren&lt;/li>
+&lt;li>Spass haben mit EhBasic&lt;/li>
+&lt;/ul>
+&lt;p>Nach aktuellem Stand der Entwicklung haben wir bereits die Möglichkeit VEC_IN und VEC_OUT problemlos bereitzustellen. Für LOAD und SAVE wird das schon etwas kniffeliger, aber wir können ja erstmal ohne Laden und Speichern auskommen.&lt;/p>
+&lt;p>Wir nehmen also die Sourcen des min_mon.a portieren auch die nach Acme-Assembler und setzen in der Sprungtabelle einfach unsere Routinen für Input/Output ein.&lt;/p>
+&lt;p>LAB_vec
+   !word .getkey ; byte in
+   !word .chrout ; byte out
+   !word LOAD ; load vector for EhBASIC
+   !word SAVE ; save vector for EhBASIC&lt;/p>
+&lt;p>Wir benötigen noch eine .getkey und .chrout Implementierung, da derartige Routinen mittlerweile in den Steckschwein-Kernel verlagert wurden. Wir setzen mit EhBasic also direkt auf das Steckschwein-Bios auf und müssen daher die Ein- und Ausgabe nochmal selber stricken.&lt;/p>
+&lt;p>Die Zeichenausgabe ist einfach, lediglich X-Register und Akku retten, da die Bios-Methode dies nicht tut.&lt;/p>
+&lt;p>.chrout
+pha
+phx
+jsr chrout
+plx
+pla
+rts&lt;/p>
+&lt;p>Die Zeicheneingabe ist ein Aufruf an die Tastatur per SPI über die VIA. Die Basis-Methoden liegen im Bios vor.&lt;/p>
+&lt;p>.getkey
+phx
+lda #%01111010
+sta via1portb
+jsr spi_r_byte
+ldx #%11111110
+stx via1portb
+plx
+cmp #$00; restore zero flag
+rts&lt;/p>
+&lt;p>Aufpassen muss man hier, dass das Zero-Flag entsprechend gelöscht/gesetzt ist. Dies wird von EhBasic so erwaret. Nach dem plx ist dies aber &amp;ldquo;zerstärt&amp;rdquo; und wir machen daher den Vergleich auf 0-Byte - keine Taste gedrückt - explizit bevor wir die Funktion verlassen.&lt;/p>
+&lt;p>Das ist auch schon alles, wir Laden das Basic und siehe da&amp;hellip; es erscheint die Einschaltmeldung des EhBasic.&lt;/p>
+&lt;p>&lt;img src="images/img_12281-1024x768.jpg" alt="img_12281-1024x768">&lt;/p>
+&lt;p>&lt;strong>Aber, weiter geht es leider nicht&lt;/strong>, irgendwas passt noch nicht. Aber was?!? Ok, wir schauen uns das Basic nun genauer an. Wir stellen schnell fest das die gesamte Zeropage (ZP) durch das Basic benötigt wird und gleichzeitig im Konflikt mit der ZP-Belegung vom Steckschwein-Bios steht. Das geht so natürlich nicht! Hier liegen beispielsweise die Pointer für die Ein-/Ausgabe Sprungvektoren oder die Speicheradressen für die Cursor-Position. Genau da, wo sich das EhBasic sich austobt.&lt;/p>
+&lt;p>Mit dieser Erkenntnis und der Tatsache das bereits das Steckschwein-Bios große Bereiche der Zeropage beansprucht lehnen wir uns zurück und überlegen wie wir das Schweine-Bios schlanker machen können. Puh&amp;hellip;. jetzt artet das ja doch in Arbeitet aus :/&lt;/p>
+&lt;p>Ich berate mich also mit Thomas und wir können einige Vektoren aus der ZP entfernen, da für Sprungvektoren - via JMP ($xxyy) - ja nicht zwangsweise die ZP verschwendet werden muss.&lt;/p>
+&lt;p>Wir überlegen wo wir diese Sprung-Vektoren ablegen, bestenfalls speichermäßig in die Nähe der ZP. Nach der ZP kommt der Stack danach der I/O-Bereich. Also bleibt nur Bereich ab $0300. Aber warum denn erst dort?&lt;/p>
+&lt;p>Irgendwie sind wir wohl bei unserem Adress-Decoder im GAL auf halben Wege abgestorben. Warum haben wir hier eine ganze Page für I/O vorgesehen? Wir wissen es nicht mehr und beschließen den Decoder nochmal auf &amp;ldquo;links&amp;rdquo; zu drehen. Wir &amp;ldquo;defragmentieren&amp;rdquo; den I/O-Bereich, so dass wir einen zusammenhängenden I/O-Bereich von $0200 - $027f erhalten. Ab $0280 bis $02ff wird frei adressierbarer RAM frei, also insgesamt 128 Byte. Genug, um unsere Vektoren hier abzulegen. Der Bereich ist quasi eine &amp;ldquo;Extended Zeropage&amp;rdquo; und wir sind glücklich damit. Sieht jetzt so aus&amp;hellip;&lt;/p>
+&lt;p>&lt;img src="images/steckschwein_lowram.png" alt="steckschwein_lowram">&lt;/p>
+&lt;p>Mit dieser neuen Speicheraufteilung können wir die Konflikte zwischen EhBasic und Steckschwein-Bios in der ZP problemlos lösen. Ab $0300 liegen einige Vektoren für das Basic selbst gefolgt vom Eingabepuffer. Wir passen die Start- und Endadresse für den Basic Programm-Speicher auf $0400 bis $b700 an und erhalten somit $b300 Bytes freien Basic-Speicher. Das EhBasic selbst wird nach b700 geladen, also direkt vor das ROM.&lt;/p>
+&lt;p>Wir laden das Basic erneut, es erscheint die Cold-Start Meldung. Wir drücken &amp;lsquo;c&amp;rsquo; und geben den verfügbaren Speicher mit $b300 an. Das Basic initialisiert und wir können endlich loslegen&amp;hellip;&lt;/p>
+&lt;p>&lt;img src="images/foto.jpg" alt="foto">&lt;/p>
+&lt;p>Bei dem hier gezeigten Bild manipulieren wir die Rahmenfarbe des Video-Chips mittels einer einfachen Schleife und Basic-POKE. Das funktioniert sogar, obwohl der VDP ja diese eigenartige Adressierung der Register und der Daten hat. In dem Fall geht das gerade, weil Zwischendurch keine Zeichenausgabe erfolgt. Glück gehabt&amp;hellip;&lt;/p></content></item></channel></rss>

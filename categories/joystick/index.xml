@@ -1,5 +1,159 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>joystick on Steckschwein</title><link>https://beta.steckschwein.de/categories/joystick/</link><description>Recent content in joystick on Steckschwein</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 15 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="https://beta.steckschwein.de/categories/joystick/index.xml" rel="self" type="application/rss+xml"/><item><title>Connecting SNES Controller to the Steckschwein</title><link>https://beta.steckschwein.de/post/connecting-snes-controller-to-the-steckschwein/</link><pubDate>Wed, 15 Jan 2020 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/connecting-snes-controller-to-the-steckschwein/</guid><description>Recently, Michael Steil published a blog post about connecting NES and SNES Controller to a 6502-based system showing how to use NES and SNES controllers on a C64 without the need for any special hardware, by just connecting them to the C64&amp;rsquo;s user port.
-Why not use his approach and adapt it to the Steckschwein? The Steckschwein has a User Port, too, albeit a very different one as the C64. Basically, the Steckschwein-User-Port consists of the complete Port A of the VIA, plus the /RESET and /IRQ lines.</description></item><item><title>Neue Hardware - die Platinen sind da</title><link>https://beta.steckschwein.de/post/neue-hardware-die-platinen-sind-da/</link><pubDate>Tue, 28 Nov 2017 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/neue-hardware-die-platinen-sind-da/</guid><description>Die neuen IO-Platinen mit integriertem UART sind fertig und haben ihren Weg von China nach München gefunden.
+Why not use his approach and adapt it to the Steckschwein? The Steckschwein has a User Port, too, albeit a very different one as the C64. Basically, the Steckschwein-User-Port consists of the complete Port A of the VIA, plus the /RESET and /IRQ lines.</description><content>&lt;p>Recently, Michael Steil published a &lt;a href="https://www.pagetable.com/?p=1365">blog post about connecting NES and SNES Controller to a 6502-based system&lt;/a> showing how to use NES and SNES controllers on a C64 without the need for any special hardware, by just connecting them to the C64&amp;rsquo;s user port.&lt;/p>
+&lt;p>Why not use his approach and adapt it to the Steckschwein? The Steckschwein has a User Port, too, albeit a very different one as the C64. Basically, the Steckschwein-User-Port consists of the complete Port A of the VIA, plus the /RESET and /IRQ lines. Also of course, VCC and GND.&lt;/p>
+&lt;pre tabindex="0">&lt;code>User Port:
+|---------GND
+| |-------PA6
+| | |-----PA4
+| | | |---PA2 (DATA1)
+| | | | |-PA0 (CLK)
+o o X o o o o o
+o o X o o o o o
+| | | | |-PA1 (LATCH)
+| | | |---PA3 (DATA2)
+| | |-----PA5
+| | |-----PA7
+|---------VCC
+SNES Controller:
+/---------------------
+| 7 6 5 | 4 3 2 1 |
+\\---------------------
+Pin Description
+1 +5V
+2 CLK
+3 LATCH
+4 DATA
+5 –
+6 –
+7 GND
+&lt;/code>&lt;/pre>&lt;p>&lt;img src="images/snes.jpg" alt="snes"> Simple adapter to connect one SNES controller&lt;/p>
+&lt;p>As for the code, we use Michael&amp;rsquo;s code with only a few modifications respective to the different pinout, and with a handful of optimizations. Having a 65c02 instead of the 6510 in the C64 gives us the STZ instruction, also using PA0 as clock pin takes just an INC instruction followed by STZ to pulse the clock line.&lt;/p>
+&lt;pre tabindex="0">&lt;code>nes_data = via1porta
+nes_ddr = via1ddra
+; zero page
+controller1 = $00 ; 3 bytes
+controller2 = $03 ; 3 bytes
+bit_clk = %00000001 ; PA0 : CLK (both controllers)
+bit_latch = %00000010 ; PA1 : LATCH (both controllers)
+bit_data1 = %00000100 ; PA2 : DATA (controller #1)
+bit_data2 = %00001000 ; PA3 : DATA (controller #2)
+query_controllers:
+lda #$ff-bit_data1-bit_data2
+sta nes_ddr
+lda #$00
+sta nes_data
+; pulse latch
+lda #bit_latch
+sta nes_data
+;lda #0
+;sta nes_data
+stz nes_data
+; read 3x 8 bits
+ldx #0
+l2: ldy #8
+l1: lda nes_data
+cmp #bit_data2
+rol controller2,x
+and #bit_data1
+cmp #bit_data1
+rol controller1,x
+;lda #bit_clk
+;sta nes_data
+inc nes_data
+;lda #0
+;sta nes_data
+stz nes_data
+dey
+bne l1
+inx
+cpx #3
+bne l2
+rts
+&lt;/code>&lt;/pre>&lt;p>Small test program to output a different character for each button:&lt;/p>
+&lt;p>
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/GgCyrkfQ8-o" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div>
+ &lt;/p>
+&lt;p>Also, instead of the original Nintendo SNES controller, I use an &lt;a href="https://www.8bitdo.com/">8bitdo SN30&lt;/a> Bluetooth controller with the SNES receiver. One could say this is the first time a Bluetooth device has been connected to the Steckschwein.&lt;/p>
+&lt;p>&lt;img src="images/img_5814.jpg" alt="IMG_5814"> Bluetooth SNES receiver from 8bitdo&lt;/p>
+&lt;p>Up next: Patching our games!&lt;/p></content></item><item><title>Neue Hardware - die Platinen sind da</title><link>https://beta.steckschwein.de/post/neue-hardware-die-platinen-sind-da/</link><pubDate>Tue, 28 Nov 2017 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/neue-hardware-die-platinen-sind-da/</guid><description>Die neuen IO-Platinen mit integriertem UART sind fertig und haben ihren Weg von China nach München gefunden.
 Mit dem neuen Layout hat es nicht nur der UART mit aufs IO-Board geschafft, es sind auch etliche kleinere und größere Verbesserungen eingeflossen:
-Die Joystickports wurden komplett neu designed. Die Optokoppler sparen wir uns, stattdessen wählen wir über einen VIA Pin verschiedene Treiber an, die den gewünschten Joystickport mit VIA Port A verbindet. Die Ports lassen sich auch per Software komplett abschalten, damit der User-Port frei verfügbar ist.</description></item><item><title>Mal wieder neue Hardware</title><link>https://beta.steckschwein.de/post/mal-wieder-neue-hardware/</link><pubDate>Wed, 22 Nov 2017 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/mal-wieder-neue-hardware/</guid><description>Die Zeit ist reif für ein Hardware-Update, und zwar für die IO-Platine 2.0. Vorgesehen war ja schon länger, den UART dort zu integrieren. Ausserdem war das Joystick&amp;ndash;Interface noch unausgegoren, sodass auch hier etwas Neues entwickelt wurde.
-Zum Schutz der VIA-Pins dienen nun keine Optokoppler, sondern simple Serienwiderstände sollen die Ports zumindest vor dem Fall schützen, dass man doch mal die Datenrichtung der Joystick-Pins auf Ausgang schaltet und dann die VIA grillt indem man den Joystick betätigt.</description></item><item><title>Ein Spiel entsteht...</title><link>https://beta.steckschwein.de/post/ein-spiel-entsteht/</link><pubDate>Fri, 11 Sep 2015 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/ein-spiel-entsteht/</guid><description>Im Chrome Browser gibt es einen netten Zeitvertreib in Form des Games &amp;ldquo;Dinosaur&amp;rdquo;. Das Spiel wird immer dann eingeblendet, wenn keine Internet-Verbindung verfügbar ist. Das Spiel ist sehr einfach aufgebaut, kann aber leicht süchtig machen und ist ein netter Zeitvertreib bis die Verbindung wieder verfügbar ist. Genau diese Einfachheit der Grafik und des Gameplays brachte mich auf die Idee das Spiel für das Steckschwein umzusetzen. Wie ich dabei vorgegangen bin, möchte ich Euch hier schildern.</description></item></channel></rss>
+Die Joystickports wurden komplett neu designed. Die Optokoppler sparen wir uns, stattdessen wählen wir über einen VIA Pin verschiedene Treiber an, die den gewünschten Joystickport mit VIA Port A verbindet. Die Ports lassen sich auch per Software komplett abschalten, damit der User-Port frei verfügbar ist.</description><content>&lt;p>Die neuen IO-Platinen mit integriertem UART sind fertig und haben ihren Weg von China nach München gefunden.&lt;/p>
+&lt;p>Mit dem neuen Layout hat es nicht nur der UART mit aufs IO-Board geschafft, es sind auch etliche kleinere und größere Verbesserungen eingeflossen:&lt;/p>
+&lt;ul>
+&lt;li>Die Joystickports wurden komplett neu designed. Die Optokoppler sparen wir uns, stattdessen wählen wir über einen VIA Pin verschiedene Treiber an, die den gewünschten Joystickport mit VIA Port A verbindet. Die Ports lassen sich auch per Software komplett abschalten, damit der User-Port frei verfügbar ist. Als Schutz für die VIA werden Serienwiderstände verwendet.&lt;/li>
+&lt;li>Der SD-Karten-Footprint und der verwendente Slot passen genau zusammen. Das war beim alten Board nicht der Fall. Jetzt sind die Karten- und die Schreibschutzerkennung endlich nutzbar.&lt;/li>
+&lt;li>Die Datenpins für die PS/2 Schnittstelle am ATmega8 sind gewandert und liegen jetzt an PD6 und 7. Dadurch sind die RX und TX Pins des USART verfügbar geworden und können nun z.B. für das Debugging des Tastaturcontrollers verwendet werden.&lt;/li>
+&lt;li>Zweckmäßigere Plazierung vom SPI-Anschluss des ATmega8 und des freien SPI Ports am Platinenrand. Updates der Tastaturcontrollerfirmware sind nun kein Krampf mehr.&lt;/li>
+&lt;li>Der User-Port hat ein besseres Pinout.&lt;/li>
+&lt;li>Die neue Platine sieht einfach besser aus.
+&lt;img src="images/img_3091.jpg" alt="IMG_3091"> Frisch ausgepackte Platine&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="images/img_3092.jpg" alt="IMG_3092"> Fertig bestückte Platine
+&lt;img src="images/img_3093.jpg" alt="IMG_3093"> Die nun obsolet gewordenen Platinen.&lt;/p></content></item><item><title>Mal wieder neue Hardware</title><link>https://beta.steckschwein.de/post/mal-wieder-neue-hardware/</link><pubDate>Wed, 22 Nov 2017 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/mal-wieder-neue-hardware/</guid><description>Die Zeit ist reif für ein Hardware-Update, und zwar für die IO-Platine 2.0. Vorgesehen war ja schon länger, den UART dort zu integrieren. Ausserdem war das Joystick&amp;ndash;Interface noch unausgegoren, sodass auch hier etwas Neues entwickelt wurde.
+Zum Schutz der VIA-Pins dienen nun keine Optokoppler, sondern simple Serienwiderstände sollen die Ports zumindest vor dem Fall schützen, dass man doch mal die Datenrichtung der Joystick-Pins auf Ausgang schaltet und dann die VIA grillt indem man den Joystick betätigt.</description><content>&lt;p>Die Zeit ist reif für ein Hardware-Update, und zwar für die IO-Platine 2.0. Vorgesehen war ja schon länger, den UART dort zu integrieren. Ausserdem war das Joystick&amp;ndash;Interface noch unausgegoren, sodass auch hier etwas Neues entwickelt wurde.&lt;/p>
+&lt;p>Zum Schutz der VIA-Pins dienen nun keine Optokoppler, sondern simple Serienwiderstände sollen die Ports zumindest vor dem Fall schützen, dass man doch mal die Datenrichtung der Joystick-Pins auf Ausgang schaltet und dann die VIA grillt indem man den Joystick betätigt. Die Widerstände begrenzen den Strom auf 1mA. Das muss die VIA abkönnen. Zudem war im vorigen Design der Userport nicht wirklich nutzbar, weil immer noch die Joysticks daran hingen. Jetzt ist es so, dass jeder Joystick über Tri State Buffer an VIA Port A verbunden wird, und zwar grundsätzlich wahlweise. Ausserdem besteht die Möglichkeit, die Joyports komplett abzuschalten. Dies wird mit dem OUT1-Pin des UART bewerkstelligt. Somit läßt sich per Software konfigurieren, ob man Userport oder Joystick benutzen möchte.&lt;/p>
+&lt;p>Der User-Port hat ein neues, von &lt;a href="http://neil.franklin.ch/">Neil Franklin&lt;/a> vorgeschlagenes Pinout, in dem nun auch die /RESET und /IRQ-Leitungen vorhanden sind. Auch am Tastaturcontroller hat sich eine Kleinigkeit geändert, die Datenpins für den PS/2 Port sind nach PD6 bzw. PD7 gewandert. Somit sind die RX/TX-Pins des AVR USART wieder frei und bereit für neue Schandtaten. Deswegen haben sie auch eine kleine Pinleiste spendiert bekommen.&lt;/p>
+&lt;p>&lt;img src="images/io2_0.png" alt=""> 3D Rendering der neuen IO-Platine&lt;/p></content></item><item><title>Ein Spiel entsteht...</title><link>https://beta.steckschwein.de/post/ein-spiel-entsteht/</link><pubDate>Fri, 11 Sep 2015 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/ein-spiel-entsteht/</guid><description>Im Chrome Browser gibt es einen netten Zeitvertreib in Form des Games &amp;ldquo;Dinosaur&amp;rdquo;. Das Spiel wird immer dann eingeblendet, wenn keine Internet-Verbindung verfügbar ist. Das Spiel ist sehr einfach aufgebaut, kann aber leicht süchtig machen und ist ein netter Zeitvertreib bis die Verbindung wieder verfügbar ist. Genau diese Einfachheit der Grafik und des Gameplays brachte mich auf die Idee das Spiel für das Steckschwein umzusetzen. Wie ich dabei vorgegangen bin, möchte ich Euch hier schildern.</description><content>&lt;p>Im Chrome Browser gibt es einen netten Zeitvertreib in Form des Games &amp;ldquo;Dinosaur&amp;rdquo;. Das Spiel wird immer dann eingeblendet, wenn keine Internet-Verbindung verfügbar ist. Das Spiel ist sehr einfach aufgebaut, kann aber leicht süchtig machen und ist ein netter Zeitvertreib bis die Verbindung wieder verfügbar ist. Genau diese Einfachheit der Grafik und des Gameplays brachte mich auf die Idee das Spiel für das Steckschwein umzusetzen. Wie ich dabei vorgegangen bin, möchte ich Euch hier schildern.&lt;/p>
+&lt;p> &lt;/p>
+&lt;p>[wpvideo ZwYBENYj]&lt;/p>
+&lt;h3 id="vorbereitung">Vorbereitung&lt;/h3>
+&lt;p>Zunächst habe ich einige Zeit mit &amp;ldquo;zocken&amp;rdquo; verbracht, um das Gameplay genau zu studieren.&lt;/p>
+&lt;h3 id="grafik">Grafik&lt;/h3>
+&lt;p>Die Grafik habe ich direkt aus dem Spiel genommen. Was heißt das? Nichts besonderes, ich habe Screenshots gemacht, die Grafik vergrößert, den Farbraum reduziert und die Feinheiten mit einem IconMaker-Tool bearbeitet. Wichtig war mir, dass ich die Assets im Bild-Format XPM speichern konnte.&lt;/p>
+&lt;p>So habe ich nach und nach, den Dino, die Kakteen, den Hintergrund und die Wolken in XPM gegossen. Vielleicht etwas umständlich, da die Sprites auch direkt auf &lt;a href="https://chromium.googlesource.com/chromium/src.git/">https://chromium.googlesource.com/chromium/src.git/&lt;/a> verfügbar sind.&lt;/p>
+&lt;p>Nimmt man die Sprites in Originalgröße wird der Dino auf dem TMS9918/29 riesig sein, denn wir haben ja nut 192 Pixel vertikal zur Verfügung. Ich habe die Grafik daher entsprechend skaliert, damit diese für das Steckschwein eine sinnvolle Größe hat.&lt;/p>
+&lt;p>Mit dem Icon-Tool ging das wunderbar und ich habe so entsprechende xpm-Dateien für die Grafik erstellt. Diese konnte ich dann leicht mittels ein paar einfacher Shell-Befehle in eine Acme-Assembler Source-Datei konvertieren. Die Grafik steht also zur Verfügung.&lt;/p>
+&lt;p>Für den Dino werden Sprites verwendet, es kommen dabei 2x2 Sprites mit 16x16px zum Einsatz.&lt;/p>
+&lt;p>Die vorbeiziehenden Wolken werden ebenfalls mit Sprites realisiert, wobei jede Wolke aus 2 Sprites nebeneinander liegenden Sprites besteht. Die Wolken werden mit 1px/frame bewegt.&lt;/p>
+&lt;p>Jetzt fehlt noch der Hintergrund, also die Wüste, Berge und natürlich die Hindernisse in Form der Kakteen.&lt;/p>
+&lt;p>Mit Sprites kann man den Hintergrund auch nicht realisieren, da man mit 4 Sprites keinen ganzen Bildschirm voll bekommt. Es sind ja nur 4 Sprites pro Scanline erlaubt.&lt;/p>
+&lt;p>Daher kann es nur Cursor-Grafik sein. Damit das ganze aber &amp;ldquo;smooth&amp;rdquo; scrollt muss man sich was überlegen.&lt;/p>
+&lt;h3 id="soft-scrolling">Soft-Scrolling&lt;/h3>
+&lt;p>Das größte Problem beim TMS9918/TMS9929 ist, dass dieser kein Soft-Scrolling für Cursor-Grafik (mode1/mode2) unterstützt. Damit das ganze also &amp;ldquo;smooth&amp;rdquo; scrollt müsste man pro Frame ein Zeichen verschieben. Bei 50Hz (PAL) Steckschwein, sind das 400 Pixel pro Sekunde. Das ist viel zu schnell und nicht spielbar!&lt;/p>
+&lt;p>Nach ein paar Tests habe ich mich für 4px/frame entschieden, dass sind 200 Pixel pro Sekunde und damit gut 3/4 des Screens. Das ist nahezu optimal und macht das Game spannend.&lt;/p>
+&lt;p>Aber wie kann ich jetzt 4 Pixel Soft-Scrolling realisieren?&lt;/p>
+&lt;p>Für das 4px Soft-Scrolling werden 2 Paletten der Cursor-Grafik erstellt, wobei bei einer Palette die Grafik um exakt 4 Pixel nach links versetzt ist. Nach dem 1. Frame schalte ich einfach die 2. Palette ein. Das passiert über Video-Register 4 des TMS9929.&lt;/p>
+&lt;p>lda #(.A_GX_PAT_2 / $800) ;VRAM-Adresse schreiben sta a_vreg&lt;/p>
+&lt;p>lda #$84               ;Gfx-Register 4 -&amp;gt; $80 für write, 4 für 4. Registersta a_vreg&lt;/p>
+&lt;p>Nach dem 2. Frame schalte ich wieder auf die 1. Palette und anschließend kopiere ich die Zeichen auf dem Bildschirm um eine Cursor-Position (8px) nach links. So erhält man ein butterweiches 4px/frame Scrolling, womit man arbeiten kann. Will man 3px/frame soft scrollen wird&amp;rsquo;s schon eklig, da man hier 7 Paletten benötigt. Man würde ja eine Palette benötigen die 3px verschoben ist, dann eine mit 6px, dann eine mit 9px was also eine Palette mit 1px Versatz entspricht, denn die 8px werden umkopiert. Dann eine mit 4px - die haben wir ja schon - usw&amp;hellip; 2px/frame ist wieder einfach, da braucht man wieder &amp;ldquo;nur&amp;rdquo; 4 Paletten ;)&lt;/p>
+&lt;h3 id="steuerung">Steuerung&lt;/h3>
+&lt;p>Gespielt wird über Joystick in Port 2, der Code dafür die Abfrage ist einfach.&lt;/p>
+&lt;p>lda #PORT_SEL_2 ;port 2, Joystick-Port 2 einschalten sta via1porta lda via1porta ;Port lesen und entsprechend vergleichen and #JOY_UP&lt;/p>
+&lt;p>Mit Joystick nach oben springt der Dino, mit Joystick nach unten duckt sich dieser ab. Der jeweilige Zustand des Dinos wird in einem ZP-Speicherplatz abgelegt und darauf reagiert dann die Animations-Routine.&lt;/p>
+&lt;p>In dieser wird auf den Status reagiert und die Sprite-Pointers des Dinos entsprechend verändert.&lt;/p>
+&lt;h3 id="gameplay">Gameplay&lt;/h3>
+&lt;p>Nach starten des Spiels mit &amp;ldquo;Feuer&amp;rdquo; gehts also los, der Dino wird animiert, dabei werden alle paar Frames die Sprite-Pointer des Dinos geändert. Dadurch entsteht der Eindruck wie im Original, das der Dino durch die Wüste rennt.&lt;/p>
+&lt;p>Das Scrolling erfolgt wie oben beschrieben, nach jedem 2. Frame sind genau 8 Pixel nach links verschoben. Am rechten Rand entsteht eine Lücke. Hier kommt der Level-Generator zum Einsatz.&lt;/p>
+&lt;p>Der Level-Generator geht eine konfigurierte Liste von 0 und 1 durch. Eine 0 in der Liste bedeutet, es soll eine Wüste- oder Berg-Gruppe ausgegeben werden. Eine 1 bedeutet, es soll eine Kakteen-Gruppe ausgegeben werden. Die Auswahl ob Wüsten- oder Berg-Gruppe erfolgt per Zufall. Die Ausgabe einer der 4 Kakteen-Gruppen erfolgt ebenfalls per Zufall.&lt;/p>
+&lt;p>Per Zufall wird lediglich der Offset berechnet, womit dann aus einer Adresstabelle die einzelnen Hintergrund-Gruppen selektiert werden kann. Da jede Hintergrund-Gruppe unterschiedlich lang sein kann, ist das 1. Byte reserviert und gibt die &amp;ldquo;Skript&amp;rdquo;-Länge an.&lt;/p>
+&lt;h3 id="scoreboard">Scoreboard&lt;/h3>
+&lt;p>Das Scoreboard besteht wie im Original aus dem 5-stelligen Highscore und dem aktuellem Score des Spiels.&lt;/p>
+&lt;p>Der aktuelle Score wird alle 5 Frames erhöht, so dass man nach 1 Sekunde spielen 10 Punkte/Meter zurückgelegt hat. Es werden 3 Byte pro Score verwendet.&lt;/p>
+&lt;p>sed                ;add in decimal mode
+lda .score_value+2
+clc
+adc #$01
+sta .score_value+2
+bcc +
+adc .score_value+1
+sta .score_value+1
+bcc +
+adc .score_value
+sta .score_value&lt;/p>
+&lt;ul>
+&lt;li>cld&lt;/li>
+&lt;/ul>
+&lt;h3 id="gezählt-wird-einfach-im-bcd-mode-des-65c02-unter-berücksichtigung-des-übertrags">Gezählt wird einfach im BCD-Mode des 65c02 unter Berücksichtigung des Übertrags.&lt;/h3>
+&lt;h3 id="die-ausgabe-erfolgt-des-score-erfolgt-über-abbilden-des-dezimalwertes-jeder-stelle-auf-numerische-zeichen-der-ascii-tabelle-da-ich-beim-scrolling-permanent-die-palette-umschalte-liegt-der-zeichensatz-quasi-in-jeder-palette-vor-hier-natürlich-ohne-verschiebung-der-pixel">Die Ausgabe erfolgt des Score erfolgt über Abbilden des Dezimalwertes jeder Stelle auf numerische Zeichen der ASCII-Tabelle. Da ich beim Scrolling permanent die Palette umschalte liegt der Zeichensatz quasi in jeder Palette vor, hier natürlich ohne Verschiebung der Pixel!&lt;/h3>
+&lt;p>lda .score_value
+jsr .digit_out
+&amp;hellip;
+.digit_out
+and #$0f
+ora #&amp;lsquo;0&amp;rsquo;
+sta a_vram
+rts&lt;/p>
+&lt;h3 id="wie-gehts-weiter">Wie gehts weiter?&lt;/h3>
+&lt;p>Nach dem Update meines Chromes, gab es plötzlich auch einen Pterodactylus der mir im Chrome nach einiger Zeit spielen entgegen geflogen kam. Das hab ich vorher noch nicht gehabt, muss also mit dem letzten Update zu tun gehabt haben. Ich bin dran&amp;hellip;&lt;/p></content></item></channel></rss>
