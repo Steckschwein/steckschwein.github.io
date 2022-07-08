@@ -4,3 +4,6 @@
 [submodule "themes/garden"]
 	path = themes/garden
 	url = https://github.com/apvarun/digital-garden-hugo-theme
+[submodule "themes/terminal"]
+	path = themes/terminal
+	url = https://github.com/panr/hugo-theme-terminal.git
