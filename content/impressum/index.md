@@ -3,7 +3,7 @@ title: "Impressum"
 date: "2015-09-17"
 menu:
   main:
-    weight: 1000
+    weight: 0
 ---
 
 ## Angaben gemäß § 5 TMG:

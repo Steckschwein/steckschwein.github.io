@@ -1,9 +1,9 @@
-baseurl = "https://beta.steckschwein.de"
+baseurl = "https://example.com/"
 languageCode = "en-us"
 theme = "terminal"
 paginate = 5
-enableRobotsTXT = true
-sectionPagesMenu = "main"
+SectionPagesMenu = "main"
+
 
 [params]
   contentTypeName = "posts"
@@ -12,13 +12,10 @@ sectionPagesMenu = "main"
   fullWidthTheme = false
   centerTheme = false
 
-[params.twitter]
-  creator = "steckschwein"
-  site = ""
-
 [languages]
   [languages.en]
-    subtitle = "A simple, retro theme for Hugo"
+    title = "Steckschwein"
+    subtitle = "An 8bit computer for the 21st century"
     keywords = ""
     copyright = ""
     menuMore = "Show more"
@@ -29,4 +26,3 @@ sectionPagesMenu = "main"
       logoText = "Steckschwein"
       logoHomeLink = "/"
 
-    
