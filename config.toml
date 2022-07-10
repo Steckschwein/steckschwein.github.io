@@ -8,8 +8,8 @@ paginate = 5
   contentTypeName = "post"
   themeColor = "green"
   showMenuItems = 5
-  fullWidthTheme = false
-  centerTheme = false
+  fullWidthTheme = true
+  centerTheme = true
 
 [languages]
   [languages.en]
