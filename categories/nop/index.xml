@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>nop on Steckschwein</title><link>https://beta.steckschwein.de/categories/nop/</link><description>Recent content in nop on Steckschwein</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 22 Oct 2018 00:00:00 +0000</lastBuildDate><atom:link href="https://beta.steckschwein.de/categories/nop/index.xml" rel="self" type="application/rss+xml"/><item><title>V9958 - "The WAIT" - investigation of the CPU/VDP /WAIT interface</title><link>https://beta.steckschwein.de/post/v9958-the-wait-investigation-of-the-cpu-vdp-wait-interface/</link><pubDate>Mon, 22 Oct 2018 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/v9958-the-wait-investigation-of-the-cpu-vdp-wait-interface/</guid><description>&amp;hellip; on the way back to munich, we had some time to do a little code review of our gfx library. thinking about the cpu to video chip timings and again read the well known datasheets of the V9938/V9958. suddenly i got an enlightenment and we came to the following conclusion.
+as described in the datasheet (V9958-Technical-manual_v1.0.pdf) of the V9958 there are different timings given for different kind of writes. so as far as we understand there are the following timings</description><content>&lt;p>&amp;hellip; on the way back to munich, we had some time to do a little code review of our gfx library. thinking about the cpu to video chip timings and again read the well known datasheets of the V9938/V9958. suddenly i got an enlightenment and we came to the following conclusion.&lt;/p>
+&lt;p>as described in the datasheet (V9958-Technical-manual_v1.0.pdf) of the V9958 there are different timings given for different kind of writes. so as far as we understand there are the following timings&lt;/p>
+&lt;ol>
+&lt;li>the first 2 bytes send to vdp during a write are always register writes which require a short delay of at least 2µs in between each byte&lt;/li>
+&lt;li>the write of the 3rd byte (after the 2nd) requires a delay of 8µs. any further &amp;ldquo;single byte transfer&amp;rdquo; - during a vram write - also requires the 8µs delay. the same is true if we want to initiate a register write direclty after a vram write.&lt;/li>
+&lt;li>the 3rd and n-th byte write to port #3 (index register port) during a bulk register write requires only the 2µs between each byte&lt;/li>
+&lt;/ol>
+&lt;p>With this in mind, we can optimize our library a little bit by using different &amp;ldquo;nop slides&amp;rdquo; for address setup and vram writes.&lt;/p>
+&lt;p>We enhance our vdp.inc and built two macros which provide the different delay we need.&lt;/p>
+&lt;p>.macro vdp_wait_s
+jsr vdp_nopslide_2m ; 2m for 2µs wait
+&amp;hellip;&lt;/p>
+&lt;p>.macro vdp_wait_l
+jsr vdp_nopslide_8m ; 8m for 8µs wait
+&amp;hellip;&lt;/p>
+&lt;p>steckSchwein is running at 8Mhz, so we also defined some equations and used ca65 macros to build our nop slides.&lt;/p>
+&lt;p>.define CLOCK_SPEED_MHZ 8&lt;/p>
+&lt;p>; long delay with 6µ+2µs (below)
+MAX_NOPS_8M = (6 * 1000 / (1000 / CLOCK_SPEED_MHZ)) / 2
+; 8Mhz, 125ns per cycle, wait 6µs = 6000ns
+; = 6000ns / 125ns = 48cl / 2 =&amp;gt; 24 NOP&lt;/p>
+&lt;p>; short delay with 2µs wait
+MAX_NOPS_2M = (2 * 1000 / (1000 / CLOCK_SPEED_MHZ) -12) / 2
+; -12 =&amp;gt; jsr/rts = 2 * 6cl = 12cl must be subtract&lt;/p>
+&lt;p>.macro m_vdp_nopslide
+vdp_nopslide_8m:
+; long delay with 6+2 2µs wait
+.repeat MAX_NOPS_8M
+nop
+.endrepeat
+vdp_nopslide_2m:
+.repeat MAX_NOPS_2M
+nop
+.endrepeat
+rts
+.endmacro&lt;/p>
+&lt;p>Another interesting thing would be, &amp;ldquo;how does the /WAIT&amp;rdquo; behave in this situation? the assumption here is, that the /WAIT will behave in the way as specified. so /WAIT will be go low at least after 130ns from CSW. so to handover the /RDY handling to the vdp via the /WAIT pin, we have to apply only 1 wait state from our WS-Gen. after one wait state, we can release the /RDY low from our WS so that the vdp /WAIT can drive /RDY as needed.&lt;/p>
+&lt;p>Back home, Thomas did the test and changed the waitstate generator firmware for the GAL16V8.&lt;/p>
+&lt;p>The equation was&lt;/p>
+&lt;p>W2 = ROM * UART * SND * /VDP
+W1 = W2
++ /ROM * UART * VDP&lt;/p>
+&lt;p>and was changed to&lt;/p>
+&lt;p>W2 = /SND
+W1 = W2
++ /ROM ; /ROM wait state if ROM is cs
++ /VDP ; /VDP wait state if VDP is cs&lt;/p>
+&lt;p>So finally, we only need one wait state from the waitstate generator to access the VDP. If the VDP requires more time - surely - during a video memory access it will drive /WAIT to low as long as needed. So after the explcit 1WS from our wait state generator we now hand over the /RDY control to the VDP. How our /RDY and /WAIT really work together is subject to one of our next sessions where we&amp;rsquo;re going to measure the things with a logic analyzer and oscilloscope. Nevertheless, it works in this way and it works exaclty as specified within the datasheet.&lt;/p></content></item><item><title>Am Anfang war das NOP</title><link>https://beta.steckschwein.de/post/am-anfang-war-das-nop/</link><pubDate>Wed, 12 Feb 2014 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/am-anfang-war-das-nop/</guid><description>Wenn man 20 Jahre lang den Jugendtraum mit sich rumträgt, einen 8bit-Rechner selber zu bauen, dann hat man 20 Jahre Zeit, einzurosten. Langsames Rantasten an das große Ziel ist angesagt.
+In diesem Fall soll unser 65c02 erstmal nur NOPs ausführen und wir wollen zuschauen, was auf dem Adressbus passiert. Der Datenbus ist hart verdrahtet auf NOP ($EA, 11101010) . Als Reset-Schaltung kommt eine auf Basis des allseits beliebten NE555 zum Einsatz.</description><content>&lt;p>Wenn man 20 Jahre lang den Jugendtraum mit sich rumträgt, einen 8bit-Rechner selber zu bauen, dann hat man 20 Jahre Zeit, einzurosten. Langsames Rantasten an das große Ziel ist angesagt.&lt;/p>
+&lt;p>In diesem Fall soll unser 65c02 erstmal nur NOPs ausführen und wir wollen zuschauen, was auf dem Adressbus passiert. Der Datenbus ist hart verdrahtet auf NOP ($EA, 11101010) . Als Reset-Schaltung kommt eine auf Basis des allseits beliebten NE555 zum Einsatz. Die gleiche Schaltung verrichtet auch im legendären Commodore PET ihren Dienst, also eine Chance, eine kleine Hommage mit einzubauen:&lt;/p>
+&lt;p>&lt;img src="images/80cba-pet_reset.png" alt="">&lt;/p>
+&lt;p>Als Taktgenerator missbrauchen wir den Kalibrierausgang des Oszilloskops, der unsere Computer-Keimzelle mit 1 kHz taktet.&lt;/p>
+&lt;p>Am Adressbus sind nun, über 74ls245-Treiber, 16 LEDs angeschlossen, an denen wir erkennen können, welche Adresse anliegt:&lt;/p>
+&lt;p> 
+&lt;div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+&lt;iframe src="https://www.youtube.com/embed/ZLhVni8Wy5Y" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video">&lt;/iframe>
+&lt;/div>
+&lt;/p>
+&lt;p>Was wir also spannendes hier sehen ist folgendes:&lt;/p>
+&lt;p>Nach dem Reset sprint der 65c02 an seinen Reset-Vektor, nämlich $fffc, liest dort die Adresse $EAEA (der Datenbus ist ja auf $EA hart verdrahtet), springt nach $EAEA, liest die erste Instruktion ein, nämlich ein NOP ($EA) und so weiter. Könnte man sich stundenlang ansehen.&lt;/p></content></item></channel></rss>

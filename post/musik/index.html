@@ -1,0 +1,52 @@
+<!doctype html><html lang=en><head><title>Musik :: Steckschwein</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Das Programmieren von Soundchips ist nicht trivial. Das habe ich damals auf dem C64 schon nicht kapiert. Mit dem Yamaha YM3812 oder auch OPL2 hat das Steckschwein einen weit komplexeren Chip als den SID, denn OPL2 kennt gleich ganze 9 Stimmen statt drei, und jede ist über eine Unzahl Parameter konfigurierbar.
+Wie funktioniert der YM3812? Wie kriegt man also einen Ton aus diesem Monstrum? Die beste Quelle zum Thema OPL2 ist wohl &amp;ldquo;Programming the AdLib/Sound Blaster FM Music Chips&amp;rdquo; von Jeffrey S."><meta name=keywords content><meta name=robots content="noodp"><link rel=canonical href=https://beta.steckschwein.de/post/musik/><link rel=stylesheet href=https://beta.steckschwein.de/assets/style.css><link rel=stylesheet href=https://beta.steckschwein.de/assets/green.css><link rel=apple-touch-icon href=https://beta.steckschwein.de/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=https://beta.steckschwein.de/img/favicon/green.png><meta name=twitter:card content="summary"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Musik"><meta property="og:description" content="Das Programmieren von Soundchips ist nicht trivial. Das habe ich damals auf dem C64 schon nicht kapiert. Mit dem Yamaha YM3812 oder auch OPL2 hat das Steckschwein einen weit komplexeren Chip als den SID, denn OPL2 kennt gleich ganze 9 Stimmen statt drei, und jede ist über eine Unzahl Parameter konfigurierbar.
+Wie funktioniert der YM3812? Wie kriegt man also einen Ton aus diesem Monstrum? Die beste Quelle zum Thema OPL2 ist wohl &amp;ldquo;Programming the AdLib/Sound Blaster FM Music Chips&amp;rdquo; von Jeffrey S."><meta property="og:url" content="https://beta.steckschwein.de/post/musik/"><meta property="og:site_name" content="Steckschwein"><meta property="og:image" content="https://beta.steckschwein.de/img/favicon/green.png"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:section" content="allgemein"><meta property="article:section" content="opl2"><meta property="article:section" content="sound"><meta property="article:section" content="ym3812"><meta property="article:published_time" content="2017-07-13 00:00:00 +0000 UTC"></head><body class=green><div class="container headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>Steckschwein</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/about/>About</a></li><li><a href=/hardware/>Hardware</a></li><li><a href=/software/>Software</a></li><li><a href=/impressum/>Impressum</a></li></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/about/>About</a></li><li><a href=/hardware/>Hardware</a></li><li><a href=/software/>Software</a></li><li><a href=/impressum/>Impressum</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://beta.steckschwein.de/post/musik/>Musik</a></h1><div class=post-meta><span class=post-date>2017-07-13</span></div><div class=post-content><div><p>Das Programmieren von Soundchips ist nicht trivial. Das habe ich damals auf dem C64 schon nicht kapiert. Mit dem Yamaha YM3812 oder auch OPL2 hat das Steckschwein einen weit komplexeren Chip als den SID, denn OPL2 kennt gleich ganze 9 Stimmen statt drei, und jede ist über eine Unzahl Parameter konfigurierbar.</p><h2 id=wie-funktioniert-der-ym3812>Wie funktioniert der YM3812?<a href=#wie-funktioniert-der-ym3812 class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Wie kriegt man also einen Ton aus diesem Monstrum? Die beste Quelle zum Thema OPL2 ist wohl &ldquo;<a href=http://www.shipbrook.net/jeff/sb.html>Programming the AdLib/Sound Blaster FM Music Chips</a>&rdquo; von Jeffrey S. Lee. Zumindest wird einem hier schnell klar, was auf einen zukommt, will man auch nur einen einfachen Ton ausgeben. So hat der OPL2-Chip insgesamt 244 Register, die neben den Stimmen auch die integrierten Timer konfigurieren, und belegt 2 Portadressen. Konkret bedeutet das, dass man in Adresse 1 die Nummer des gewünschen Registers schreibt. Nach 3.3µs liegt an Adresse 2 das gewählte Register zum Beschreiben an. Lesen läßt sich nur das Statusregister. Hat man also das gewählte Register beschrieben, ist der Chip dann 23µs nicht ansprechbar.</p><p>Zunächst müssen wir also dafür sorgen, dass der Soundchip seine Daten mit dem richtigen Timing bekommt. Der Einfachheit halber machen wir das nicht über Timer, sondern mit NOPs. Die Länge der Nopslides zu berechnen, überlassen wir dem Assembler. Um Platz zu sparen, nutzen wir eine Nopslide mit zwei Einsprüngen.</p><p>opl2_data_delay_time = 25000
+opl2_reg_delay_time = 5000</p><p>opl2_data_delay = ((opl2_data_delay_time - opl2_reg_delay_time) / (1000/clockspeed)) / 2 -12
+opl2_reg_delay = (opl2_reg_delay_time / (1000/clockspeed)) / 2 -12</p><p>Und die entsprechenden Subroutinen. Die je 6 Zyklen für JSR und RTS sind ja oben schon abgezogen:</p><p>opl2_delay_data: ; 23000ns / 0
+.repeat opl2_data_delay
+nop
+.endrepeat</p><p>opl2_delay_register: ; 3300 ns
+.repeat opl2_reg_delay
+nop
+.endrepeat
+rts</p><p>Das wäre also geklärt.</p><h2 id=futter-für-den-soundchip>Futter für den Soundchip<a href=#futter-für-den-soundchip class=hanchor arialabel=Anchor>&#8983;</a></h2><p>Nachdem also schonmal klar ist, auf welch umständliche Weise der Chip mit Daten betankt werden will, bleibt nur noch die Frage: Betanken womit? FM-Synthese ist ein zu weites Feld, als dass wir dort jetzt tief einsteigen wollen. Viel naheliegender wäre ein Player für eingängige Musikfiles. Erste <a href=http://steckschwein.de/2015/01/04/das-schwein-kann-singen/>Experimente von Marko mit den von DosBox erzeugten DRO Files</a> waren schon recht vielversprechend. Leider ist es etwas umständlich, mit DosBox neue Musikstücke zu konvertieren, und auch die Trefferquote für lauffähige Stücke ist nicht besonders hoch. Zudem ist der von uns verwendete Player ein ziemlicher Hack mit per NOP grob hingefummelten Timings. Dieser war ursprünglich mal für ein OPL2-Modul für den C64 geschrieben worden. Was es nicht alles gibt. MIDI-Files wollen wir uns auch noch nicht antun, weil wir hier eine Umsetzung der verwendeten MIDI-Instrumente in OPL2-Parameter hätten bauen müssen. Ideal wäre ein Dateiformat, das die OPL2-Registerwerte bereits enthält.</p><p>Zum Glück hat sich damals id-Software zu Zeiten der Commander Keen-Spiele etwas entsprechendes ausgedacht: Das <a href=http://www.shikadi.net/moddingwiki/IMF_Format>IMF-Format</a>. Dieses Format wurde für eine Reihe früher id-Software-Spiele und deren Ableger verwendet, von Commander Keen 4-6 über Duke Nukem II bis hin zu Wolfenstein 3D. Dementsprechend groß ist die Anzahl der verfügbaren Musikstücke.</p><p>IMF-Dateien sind äußerst simpel aufgebaut, jede Datei ist im Prinzip eine Abfolge von 4byte-Paketen, die Registernummer, Registerwert und die Dauer der Pause bis zum nächsten Wert enthalten:</p><p>Register (8bit) | Wert (8bit) | Pause (16bit)</p><p>Die &ldquo;Pause&rdquo; ist in &ldquo;Ticks&rdquo; angegeben, welche sich auf die Abspielfrequenz des jeweiligen Stückes bezieht. Diese ist meist entweder 560Hz oder 700Hz. Hier kommt dann ein Timer-Interrupt zum Einsatz, der 560 oder 700mal in der Sekunde ausgeführt wird. Hierzu verwenden wir Timer 1 des 6522 VIA. Der OPL2 Chip hat zwar auch Timer, aber diese basieren auf festen Intervallen von 80µs bzw 320µs, was in unserem Fall nicht so richtig aufgeht.</p><p>Der Plan ist folgender: Das IMF-File wird komplett in den Speicher geladen. Dann positionieren wir einen Zeiger auf den Anfang der im Speicher befindlichen Daten.</p><p>In der Zeropage benutzen wir 2 Bytes als unseren Delay-Zähler. Diesen setzen wir inital auf 0. In der Interrupt-Routine prüfen wir als erstes, ob der Delay-Zähler 0 ist. Wenn nicht, dekrementieren wir ihn und verlassen die Routine wieder. Ist der Zähler 0, setzen wir das Datenbyte aus unseren IMF-Daten in das vorgesehene Register. Dann rücken wir den Datenzeiger um 4 Bytes weiter, setzen den Delay-Zähler neu, und verlassen den Interrupt.</p><p>player_isr:
+pha
+phy</p><p>bit via1ifr ; Interrupt from VIA?
+bpl @isr_end</p><p>bit via1t1cl ; Acknowledge timer interrupt by reading channel low</p><p>; delay counter zero?
+lda delayh
+clc
+adc delayl
+beq @l1</p><p>; if no, 16bit decrement and exit routine
+dec16 delayh</p><p>bra @isr_end
+@l1:</p><p>ldy #$00
+lda (imf_ptr),y
+sta opl_stat</p><p>iny
+lda (imf_ptr),y</p><p>jsr opl2_delay_register</p><p>sta opl_data</p><p>iny
+lda (imf_ptr),y
+sta delayh</p><p>iny
+lda (imf_ptr),y
+sta delayl</p><p>; song data end reached? then set state to 80 so loop will terminate
+lda imf_ptr_h
+cmp imf_end+1
+bne @l3
+lda imf_ptr
+cmp imf_end+0
+bne @l3</p><p>lda #$80
+sta state</p><p>bra @isr_end
+@l3:</p><p>;advance pointer by 4 bytes
+clc
+lda #$04
+adc imf_ptr
+sta imf_ptr
+bcc @isr_end
+inc imf_ptr_h
+@isr_end:
+; jump to kernel isr
+ply
+pla
+jmp (old_isr)</p><p><a href="https://bitbucket.org/steckschwein/steckschwein-code/src/074d9f378daeedeb45166a346cafd39907be22c9/imfplayer/?at=default">Der vollständige Player</a> ist in unserem <a href=https://bitbucket.org/steckschwein/steckschwein-code>Bitbucket-Repository</a> zu finden. Wir gehen jetzt den Wolfenstein 3D-Soundtrack hören.</p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button previous"><a href=https://beta.steckschwein.de/post/mal-wieder-neue-hardware/><span class=button__icon>←</span>
+<span class=button__text>Mal wieder neue Hardware</span></a></span>
+<span class="button next"><a href=https://beta.steckschwein.de/post/logikanalyse-ii/><span class=button__text>Logikanalyse II [UPDATE]</span>
+<span class=button__icon>→</span></a></span></div></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span></div></div></footer><script src=https://beta.steckschwein.de/assets/main.js></script>
+<script src=https://beta.steckschwein.de/assets/prism.js></script></div></body></html>

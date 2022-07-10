@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>vhdl on Steckschwein</title><link>https://beta.steckschwein.de/categories/vhdl/</link><description>Recent content in vhdl on Steckschwein</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 16 Mar 2014 00:00:00 +0000</lastBuildDate><atom:link href="https://beta.steckschwein.de/categories/vhdl/index.xml" rel="self" type="application/rss+xml"/><item><title>Das Design wird erweitert</title><link>https://beta.steckschwein.de/post/das-design-wird-erweitert/</link><pubDate>Sun, 16 Mar 2014 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/das-design-wird-erweitert/</guid><description>Sinn der Sache ist ja nicht, etwas 1:1 nachzubauen, sondern ein möglichst eigenes Design. Nachdem wir mit Chris&amp;rsquo; Design - bzw. dessen, was wir davon übernommen haben (Adressdekodierung, ACIA, VIA) - genug herumgespielt hatten, galt es, &amp;ldquo;unser&amp;rdquo; Ding draus zu machen. Der erste Schritt war ein Sprung ins kalte Wasser in die uns bislang noch unbekannte Welt der Programmierbaren Logik. Dazu haben wir zunächst die Adressdekodierung bestehend aus 74ls138/74ls154 sowie etwas glue Logic in VHDL implementiert und auf ein GAL22V10D gebrannt.</description><content>&lt;p>Sinn der Sache ist ja nicht, etwas 1:1 nachzubauen, sondern ein möglichst eigenes Design. Nachdem wir mit Chris&amp;rsquo; Design - bzw. dessen, was wir davon übernommen haben (Adressdekodierung, ACIA, VIA) - genug herumgespielt hatten, galt es, &amp;ldquo;unser&amp;rdquo; Ding draus zu machen. Der erste Schritt war ein Sprung ins kalte Wasser in die uns bislang noch unbekannte Welt der Programmierbaren Logik. Dazu haben wir zunächst die Adressdekodierung bestehend aus 74ls138/74ls154 sowie etwas glue Logic in VHDL implementiert und auf ein GAL22V10D gebrannt. Somit haben wir 3 TTL-ICs durch einen GAL ersetzt und wieder Platz auf dem Steckbrett geschaffen. Und das Beste: Änderungen an der Dekodierungslogik laufen ab sofort minimalinvasiv.&lt;/p>
+&lt;!-- raw HTML omitted -->
+&lt;p>Die erste Erweiterung ist ein /CS-Signal für den 2. 62256-Chip, der sich seinen Adressbereich mit 4k IO-Bereich und 8K ROM teilen darf und uns immerhin noch 20k nutzbares RAM beschert. Anfängliche Pläne, das unter dem ROM und IO liegende RAM nach Vorbild des C64 nutzbar zu machen stellen wir erstmal zurück. Zu viel Aufwand für lumpige 12k.&lt;/p>
+&lt;p>Inzwischen gibt es auch eine rs232-Schnittstelle auf Basis einer 65x51 ACIA. Der vorliegende Chip kann mit max. 2MHz getaktet werden, daher ist der diskret aufgebaute 3MHz-Oszillator wieder arbeitslos. An seiner Stelle betaktet ein 2MHz-TTL-Oszillator unseren Rechner.&lt;/p>
+&lt;p>Diese Begrenzung auf 2MHz gefällt uns nicht, eigentlich wollten wir den Rechner später so hoch wie möglich takten, auf jeden Fall mit 4MHz. Modernere CPUs sowie VIAs von WDC, die bis zu 14MHz Taktfrequenz vertragen, sind so gut wie geordert. Einzig die ACIA soll komplett durch einen moderneren Chip ersetzt werden, da sie uns nicht nur auf 2MHz, sondern auch auf 19200 baud begrenzt. Ein bisschen zu vintage, darum soll als nächtes die ACIA einem zeitgemäßeren Chip weichen.&lt;/p></content></item><item><title>Doppelt hält besser</title><link>https://beta.steckschwein.de/post/doppelt-haelt-besser/</link><pubDate>Sat, 22 Feb 2014 00:00:00 +0000</pubDate><guid>https://beta.steckschwein.de/post/doppelt-haelt-besser/</guid><description>Damit sich ein &amp;ldquo;Steckschwein&amp;rdquo; nicht so einsam fühlt, haben wir das ganze nochmal geklont. Jetzt hat jeder sein eigenes Steckschwein und kann daran rumschrauben oder besser gesagt rumstecken.
+Da wir das Tooling &amp;ldquo;leichtgewichtig&amp;rdquo; halten wollen, gabs auch gleich ein kleines Problem zu lösen. Die Dekoder-Logik für den GAL wurde bisher in VHDL definiert und mit dem Hersteller-Produkt http://www.latticesemi.com/ispleverclassic ein entsprechendes JEDEC-File erzeugt. Das war uns dann doch viel zu unhandlich und wir haben uns nach Alternativen umgetan.</description><content>&lt;p>Damit sich ein &amp;ldquo;Steckschwein&amp;rdquo; nicht so einsam fühlt, haben wir das ganze nochmal geklont. Jetzt hat jeder sein eigenes Steckschwein und kann daran rumschrauben oder besser gesagt rumstecken.&lt;/p>
+&lt;p>Da wir das Tooling &amp;ldquo;leichtgewichtig&amp;rdquo; halten wollen, gabs auch gleich ein kleines Problem zu lösen. Die Dekoder-Logik für den GAL wurde bisher in VHDL definiert und mit dem Hersteller-Produkt &lt;a href="http://www.latticesemi.com/ispleverclassic">http://www.latticesemi.com/ispleverclassic&lt;/a> ein entsprechendes JEDEC-File erzeugt. Das war uns dann doch viel zu unhandlich und wir haben uns nach Alternativen umgetan. Die Wahl fiel auf &lt;a href="https://github.com/daveho/GALasm">https://github.com/daveho/GALasm&lt;/a>, ein kleines aber feines Tool mit dem aus einigen booleschen Ausdrücken für die Dekoder-Logik genauso gut ein JEDEC-File erzeugt werden kann.&lt;/p>
+&lt;pre tabindex="0">&lt;code>GAL22V10    ; first line : used GAL 8Bit Dekoder   
+; second line: any text (max. 8 char.)
+; PIN assignment
+; G1       ; A15 of 6502 (Pin 25)
+A2       ; A14 of 6502 (Pin 24)
+A1       ; A13 of 6502 (Pin 23)
+A0       ; A12 of 6502 (Pin 22)
+B0       ; A08 of 6502 (Pin 20)
+B1       ; A09 of 6502 (Pin 19)
+B2       ; A10 of 6502 (Pin 18)
+B3       ; A11 of 6502 (Pin 17)
+RW       ; RW of 6502 (Pin 34)
+PHI2     ; PHI2 of 6502 (Pin 39)
+NC
+GND
+NC
+CSROM    ;CS signal for ROM at $e000-$ffff
+OE
+WE       ;with PHI2 synchronized WE
+CSHIRAM  ;CS for ram between  $8000-$cfff
+CSACIA   ;6551 ACIA   at $d000
+CSVIA    ;6522 VIA    at $d100
+ELCD     ;LCD-Display at $d200
+VDPCSR   ;Read VDP at $d400
+VDPCSW   ;Write VDP at $d400
+CSUART   ;CS for UART at $d300
+VCC
+;
+;  boolean expressions
+;
+OE       = /RW  ; - output enable (active low, read from adress)
+/WE      = /RW * PHI2     ; - write enable, combined with PHI2 (Pin 39) for synchronisation
+/CSHIRAM = G1*/A2         ; $8000-$cfff + G1\*/A1\*/A0
+/CSROM   = G1*A2*A1*A0   ; $e000-$ffff + G1\*A2\*A1\*/A0
+/CSACIA  = G1 * A2*/A1*A0 * /B3*/B2*/B1*/B0  ; $d000
+/CSVIA   = G1 * A2*/A1*A0 * /B3*/B2*/B1*B0   ; $d100
+ELCD     = PHI2 * G1 * A2*/A1*A0 * /B3*/B2*B1*/B0  ; $d200 - LCD-Display at $d200
+/CSUART  = G1 * A2*/A1*A0* /B3*/B2*B1*B0           ; $d300 - UART
+&lt;/code>&lt;/pre>&lt;p>Mehr ist&amp;rsquo;s dann auch nicht, ganz oben der Typ des GAL&amp;rsquo;s in dem Fall ein 10-er, d.h. 10-Input, 10-Output-Pins. Darunter das PIN-Assignment, einfach in aufsteigender Reihenfolge deklarieren, also Pin1 - G1, Pin2 A2 usw.. bis VCC Pin 24. Dann noch die Boolschen-Ausdrücke, wobei * ein AND darstellt und + ein logisches OR. Negation mit /. Compiler anwerfen mittels.&lt;/p>
+&lt;p>Jetzt noch das ganze auf den GAL brutzeln, am besten mit dem Universal programmer TL866C und schon läuft&amp;rsquo;s.&lt;/p></content></item></channel></rss>

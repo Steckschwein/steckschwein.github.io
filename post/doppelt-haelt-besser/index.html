@@ -1,0 +1,47 @@
+<!doctype html><html lang=en><head><title>Doppelt hält besser :: Steckschwein</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="Damit sich ein &amp;ldquo;Steckschwein&amp;rdquo; nicht so einsam fühlt, haben wir das ganze nochmal geklont. Jetzt hat jeder sein eigenes Steckschwein und kann daran rumschrauben oder besser gesagt rumstecken.
+Da wir das Tooling &amp;ldquo;leichtgewichtig&amp;rdquo; halten wollen, gabs auch gleich ein kleines Problem zu lösen. Die Dekoder-Logik für den GAL wurde bisher in VHDL definiert und mit dem Hersteller-Produkt http://www.latticesemi.com/ispleverclassic ein entsprechendes JEDEC-File erzeugt. Das war uns dann doch viel zu unhandlich und wir haben uns nach Alternativen umgetan."><meta name=keywords content><meta name=robots content="noodp"><link rel=canonical href=https://beta.steckschwein.de/post/doppelt-haelt-besser/><link rel=stylesheet href=https://beta.steckschwein.de/assets/style.css><link rel=stylesheet href=https://beta.steckschwein.de/assets/green.css><link rel=apple-touch-icon href=https://beta.steckschwein.de/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=https://beta.steckschwein.de/img/favicon/green.png><meta name=twitter:card content="summary"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="Doppelt hält besser"><meta property="og:description" content="Damit sich ein &amp;ldquo;Steckschwein&amp;rdquo; nicht so einsam fühlt, haben wir das ganze nochmal geklont. Jetzt hat jeder sein eigenes Steckschwein und kann daran rumschrauben oder besser gesagt rumstecken.
+Da wir das Tooling &amp;ldquo;leichtgewichtig&amp;rdquo; halten wollen, gabs auch gleich ein kleines Problem zu lösen. Die Dekoder-Logik für den GAL wurde bisher in VHDL definiert und mit dem Hersteller-Produkt http://www.latticesemi.com/ispleverclassic ein entsprechendes JEDEC-File erzeugt. Das war uns dann doch viel zu unhandlich und wir haben uns nach Alternativen umgetan."><meta property="og:url" content="https://beta.steckschwein.de/post/doppelt-haelt-besser/"><meta property="og:site_name" content="Steckschwein"><meta property="og:image" content="https://beta.steckschwein.de/img/favicon/green.png"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:section" content="adressdekoder"><meta property="article:section" content="gal"><meta property="article:section" content="galasm"><meta property="article:section" content="steckschwein"><meta property="article:section" content="vhdl"><meta property="article:published_time" content="2014-02-22 00:00:00 +0000 UTC"></head><body class=green><div class="container headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>Steckschwein</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/about/>About</a></li><li><a href=/hardware/>Hardware</a></li><li><a href=/software/>Software</a></li><li><a href=/impressum/>Impressum</a></li></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/about/>About</a></li><li><a href=/hardware/>Hardware</a></li><li><a href=/software/>Software</a></li><li><a href=/impressum/>Impressum</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://beta.steckschwein.de/post/doppelt-haelt-besser/>Doppelt hält besser</a></h1><div class=post-meta><span class=post-date>2014-02-22</span></div><div class=post-content><div><p>Damit sich ein &ldquo;Steckschwein&rdquo; nicht so einsam fühlt, haben wir das ganze nochmal geklont. Jetzt hat jeder sein eigenes Steckschwein und kann daran rumschrauben oder besser gesagt rumstecken.</p><p>Da wir das Tooling &ldquo;leichtgewichtig&rdquo; halten wollen, gabs auch gleich ein kleines Problem zu lösen. Die Dekoder-Logik für den GAL wurde bisher in VHDL definiert und mit dem Hersteller-Produkt <a href=http://www.latticesemi.com/ispleverclassic>http://www.latticesemi.com/ispleverclassic</a> ein entsprechendes JEDEC-File erzeugt. Das war uns dann doch viel zu unhandlich und wir haben uns nach Alternativen umgetan. Die Wahl fiel auf <a href=https://github.com/daveho/GALasm>https://github.com/daveho/GALasm</a>, ein kleines aber feines Tool mit dem aus einigen booleschen Ausdrücken für die Dekoder-Logik genauso gut ein JEDEC-File erzeugt werden kann.</p><pre tabindex=0><code>GAL22V10    ; first line : used GAL 8Bit Dekoder    
+            ; second line: any text (max. 8 char.)
+
+; PIN assignment 
+; G1       ; A15 of 6502 (Pin 25) 
+A2       ; A14 of 6502 (Pin 24) 
+A1       ; A13 of 6502 (Pin 23) 
+A0       ; A12 of 6502 (Pin 22) 
+B0       ; A08 of 6502 (Pin 20) 
+B1       ; A09 of 6502 (Pin 19) 
+B2       ; A10 of 6502 (Pin 18) 
+B3       ; A11 of 6502 (Pin 17) 
+RW       ; RW of 6502 (Pin 34) 
+PHI2     ; PHI2 of 6502 (Pin 39) 
+NC 
+GND 
+NC 
+CSROM    ;CS signal for ROM at $e000-$ffff 
+OE 
+WE       ;with PHI2 synchronized WE 
+CSHIRAM  ;CS for ram between  $8000-$cfff 
+CSACIA   ;6551 ACIA   at $d000 
+CSVIA    ;6522 VIA    at $d100 
+ELCD     ;LCD-Display at $d200 
+VDPCSR   ;Read VDP at $d400 
+VDPCSW   ;Write VDP at $d400 
+CSUART   ;CS for UART at $d300 
+VCC 
+; 
+;  boolean expressions 
+; 
+OE       = /RW  ; - output enable (active low, read from adress) 
+/WE      = /RW * PHI2     ; - write enable, combined with PHI2 (Pin 39) for synchronisation 
+/CSHIRAM = G1*/A2         ; $8000-$cfff + G1\*/A1\*/A0 
+/CSROM   = G1*A2*A1*A0    ; $e000-$ffff + G1\*A2\*A1\*/A0 
+/CSACIA  = G1 * A2*/A1*A0 * /B3*/B2*/B1*/B0  ; $d000 
+/CSVIA   = G1 * A2*/A1*A0 * /B3*/B2*/B1*B0   ; $d100 
+ELCD     = PHI2 * G1 * A2*/A1*A0 * /B3*/B2*B1*/B0  ; $d200 - LCD-Display at $d200 
+/CSUART  = G1 * A2*/A1*A0* /B3*/B2*B1*B0           ; $d300 - UART
+</code></pre><p>Mehr ist&rsquo;s dann auch nicht, ganz oben der Typ des GAL&rsquo;s in dem Fall ein 10-er, d.h. 10-Input, 10-Output-Pins. Darunter das PIN-Assignment, einfach in aufsteigender Reihenfolge deklarieren, also Pin1 - G1, Pin2 A2 usw.. bis VCC Pin 24. Dann noch die Boolschen-Ausdrücke, wobei * ein AND darstellt und + ein logisches OR. Negation mit /. Compiler anwerfen mittels.</p><p>Jetzt noch das ganze auf den GAL brutzeln, am besten mit dem Universal programmer TL866C und schon läuft&rsquo;s.</p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button previous"><a href=https://beta.steckschwein.de/post/tms9929-wir-wollen-was-sehen/><span class=button__icon>←</span>
+<span class=button__text>TMS9929 - Wir wollen was sehen...</span></a></span>
+<span class="button next"><a href=https://beta.steckschwein.de/post/am-anfang-war-das-nop/><span class=button__text>Am Anfang war das NOP</span>
+<span class=button__icon>→</span></a></span></div></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span></div></div></footer><script src=https://beta.steckschwein.de/assets/main.js></script>
+<script src=https://beta.steckschwein.de/assets/prism.js></script></div></body></html>

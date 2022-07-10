@@ -1,0 +1,177 @@
+<!doctype html><html lang=en><head><title>WOZMON - a memory monitor in 256 bytes :: Steckschwein</title><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="The woz monitor, also known as WOZMON, is a pretty simple memory monitor and was the system software located in the 256 byte PROM on the Apple I. Wozmon is used to inspect and modify memory contents or to execute programs already located in memory. Steve Wozniak managed to squeeze all that functionality into 256 bytes. That&amp;rsquo;s right, bytes. Not megabytes, not kilobytes. Bytes.
+We already had attempted to get wozmon ported to our Steckschwein, but we did not succeed so far."><meta name=keywords content><meta name=robots content="noodp"><link rel=canonical href=https://beta.steckschwein.de/post/wozmon-a-memory-monitor-in-256-bytes/><link rel=stylesheet href=https://beta.steckschwein.de/assets/style.css><link rel=stylesheet href=https://beta.steckschwein.de/assets/green.css><link rel=apple-touch-icon href=https://beta.steckschwein.de/img/apple-touch-icon-192x192.png><link rel="shortcut icon" href=https://beta.steckschwein.de/img/favicon/green.png><meta name=twitter:card content="summary"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="og:title" content="WOZMON - a memory monitor in 256 bytes"><meta property="og:description" content="The woz monitor, also known as WOZMON, is a pretty simple memory monitor and was the system software located in the 256 byte PROM on the Apple I. Wozmon is used to inspect and modify memory contents or to execute programs already located in memory. Steve Wozniak managed to squeeze all that functionality into 256 bytes. That&amp;rsquo;s right, bytes. Not megabytes, not kilobytes. Bytes.
+We already had attempted to get wozmon ported to our Steckschwein, but we did not succeed so far."><meta property="og:url" content="https://beta.steckschwein.de/post/wozmon-a-memory-monitor-in-256-bytes/"><meta property="og:site_name" content="Steckschwein"><meta property="og:image" content="https://beta.steckschwein.de/img/favicon/green.png"><meta property="og:image:width" content="2048"><meta property="og:image:height" content="1024"><meta property="article:section" content="debugging"><meta property="article:section" content="experiment"><meta property="article:section" content="hexdump"><meta property="article:section" content="software"><meta property="article:published_time" content="2018-07-22 00:00:00 +0000 UTC"></head><body class=green><div class="container headings--one-size"><header class=header><div class=header__inner><div class=header__logo><a href=/><div class=logo>Steckschwein</div></a></div><div class=menu-trigger>menu</div></div><nav class=menu><ul class="menu__inner menu__inner--desktop"><li><a href=/about/>About</a></li><li><a href=/hardware/>Hardware</a></li><li><a href=/software/>Software</a></li><li><a href=/impressum/>Impressum</a></li></ul><ul class="menu__inner menu__inner--mobile"><li><a href=/about/>About</a></li><li><a href=/hardware/>Hardware</a></li><li><a href=/software/>Software</a></li><li><a href=/impressum/>Impressum</a></li></ul></nav></header><div class=content><div class=post><h1 class=post-title><a href=https://beta.steckschwein.de/post/wozmon-a-memory-monitor-in-256-bytes/>WOZMON - a memory monitor in 256 bytes</a></h1><div class=post-meta><span class=post-date>2018-07-22</span></div><div class=post-content><div><p>The <a href=https://www.sbprojects.net/projects/apple1/wozmon.php>woz monitor, also known as WOZMON</a>, is a pretty simple memory monitor and was the system software located in the 256 byte PROM on the Apple I. Wozmon is used to inspect and modify memory contents or to execute programs already located in memory. Steve Wozniak managed to squeeze all that functionality into 256 bytes. That&rsquo;s right, bytes. Not megabytes, not kilobytes. Bytes.</p><p>We already had attempted to get wozmon ported to our Steckschwein, but we did not succeed so far. That might have been because the wozmon-code is a little bit hard to read and makes use of some Apple I specific things, which we did not know they were, since we do not have any expertise about the Apple I.</p><p>Fortunately, we got asked by <a href=http://neil.franklin.ch>Neil Franklin</a> to proof-read his in-depth <a href=http://neil.franklin.ch/Info_Texts/Apple_1_Hardware_und_Software.html>article about the Apple I and wozmon</a>, which provided us with the missing background knowledge. So, as a proof of correctness and helpfulness of his article, it was time for a new porting attempt. As it turned out, there had to be 2 bigger changes, one while a char is input, and one while a char is output, and a few smaller but important considerations.</p><p>We started off using <a href=https://github.com/jefftranter/6502/tree/master/asm/wozmon>Jeff Tranter&rsquo;s Version</a>, because Jeff saved us some grunt work by having adapted the code to ca65 syntax.</p><p>So here is our Version of wozmon adapted to run on top of SteckOS in all it&rsquo;s glory:</p><pre tabindex=0><code>;  The WOZ Monitor for the Apple 1
+;  Written by Steve Wozniak in 1976
+
+Credit where credit is due!
+
+.include &#34;common.inc&#34;
+.include &#34;../kernel/kernel.inc&#34;
+.include &#34;../kernel/kernel\_jumptable.inc&#34;
+.include &#34;appstart.inc&#34;
+
+appstart $1000
+</code></pre><p>Our Standard SteckOS includes. The appstart macro takes care of creating a commodore style file &ldquo;header&rdquo; with the load address in the first 2 bytes of the file.</p><pre tabindex=0><code>; Page 0 Variables
+XAML            = $24           ;  Last &#34;opened&#34; location Low
+XAMH            = $25           ;  Last &#34;opened&#34; location High
+STL             = $26           ;  Store address Low
+STH             = $27           ;  Store address High
+L               = $28           ;  Hex value parsing Low
+H               = $29           ;  Hex value parsing High
+YSAV            = $2A           ;  Used to see if hex value is given
+MODE            = $2B           ;  $00=XAM, $7F=STOR, $AE=BLOCK XAM
+</code></pre><p>Nothing changed here.</p><pre tabindex=0><code>; Other Variables
+IN              = $0300         ;  Input buffer to $027F
+; KBD             = $D010         ;  PIA.A keyboard input
+; KBDCR           = $D011         ;  PIA.A keyboard control register
+; DSP             = $D012         ;  PIA.B display output register
+; DSPCR           = $D013         ;  PIA.B display control register
+
+               ; .org $FF00
+               ; .export RESET
+</code></pre><p>We need to put the input buffer from $027F to somewhere else, because $027F collides with our I/O area. $0300 should be fine. We do not use a PIA for i/o, so we can get rid of those labels. Also, the start address is already defined above, and we won&rsquo;t need to export the RESET label.</p><pre tabindex=0><code>RESET:          CLD             ; Clear decimal arithmetic mode.
+                CLI
+                LDY #$7F        ; Mask for DSP data direction register.
+                ; STY DSP         ; Set it up.
+                LDA #$A7        ; KBD and DSP control register mask.
+                ; STA KBDCR       ; Enable interrupts, set CA1, CB1, for
+                ; STA DSPCR       ; positive edge sense/output mode.
+</code></pre><p>No need to initialize the PIA chip which we don&rsquo;t have, but we still need to initialize the A and Y registers.</p><pre tabindex=0><code>NOTCR:          ; CMP #&#39;_&#39;    ; &#34;_&#34;?
+                CMP #$08 + $80
+                BEQ BACKSPACE   ; Yes.
+</code></pre><p>Backspace is $08 on the Steckschwein, not &ldquo;_&rdquo;.</p><pre tabindex=0><code>                CMP #$9B        ; ESC?
+                BEQ ESCAPE      ; Yes.
+                INY             ; Advance text index.
+                BPL NEXTCHAR    ; Auto ESC if &gt; 127.
+ESCAPE:         LDA #&#39;\&#39; + $80   ; &#34;\&#34;.
+                JSR ECHO        ; Output it.
+GETLINE:        LDA #$8A        ; CR.
+                JSR ECHO        ; Output it.
+                LDY #$01        ; Initialize text index.
+BACKSPACE:      DEY             ; Back up text index.
+                BMI GETLINE     ; Beyond start of line, reinitialize.
+NEXTCHAR:
+                ; LDA KBDCR       ; Key ready?
+                ; BPL NEXTCHAR    ; Loop until ready.
+                ; LDA KBD         ; Load character. B7 should be ‘1’.
+                keyin
+                toupper
+                ORA #$80
+</code></pre><p>Here is our first major code change. Keyboard input is handled using SteckOS means. Then we convert the received character to uppercase, since the Apple I uses uppercase only, hence wozmon does not handle lowercase. Also, and most important, the Apple I keyboard generated ASCII with bit 7 set to &ldquo;1&rdquo;. We need to emulate that. With these modifications, the bulk of the code can remain as is.</p><pre tabindex=0><code>                STA IN,Y        ; Add to text buffer.
+                JSR ECHO        ; Display character.
+                CMP #$8D        ; CR?
+                BNE NOTCR       ; No.
+                LDY #$FF        ; Reset text index.
+                LDA #$00        ; For XAM mode.
+                TAX             ; 0-&gt;X.
+SETSTOR:        ASL             ; Leaves $7B if setting STOR mode.
+SETMODE:        STA MODE        ; $00=XAM $7B=STOR $AE=BLOK XAM
+BLSKIP:         INY             ; Advance text index.
+NEXTITEM:       LDA IN,Y        ; Get character.
+                CMP #$8D        ; CR?
+                BEQ GETLINE     ; Yes, done this line.
+                CMP #&#39;.&#39; + $80    ; &#34;.&#34;?
+                BCC BLSKIP      ; Skip delimiter.
+                BEQ SETMODE     ; Yes. Set STOR mode.
+                CMP #&#39;:&#39; + $80   ; &#34;:&#34;?
+                BEQ SETSTOR     ; Yes. Set STOR mode.
+                CMP #&#39;R&#39; + $80   ; &#34;R&#34;?
+                BEQ RUN         ; Yes. Run user program.
+                STX L           ; $00-&gt; L.
+                STX H           ; and H.
+                STY YSAV        ; Save Y for comparison.
+NEXTHEX:        LDA IN,Y        ; Get character for hex test.
+                EOR #$B0        ; Map digits to $0-9.
+                CMP #$0A        ; Digit?
+                BCC DIG         ; Yes.
+                ADC #$88        ; Map letter &#34;A&#34;-&#34;F&#34; to $FA-FF.
+                CMP #$FA        ; Hex letter?
+                BCC NOTHEX      ; No, character not hex.
+DIG:            ASL
+                ASL             ; Hex digit to MSD of A.
+                ASL
+                ASL
+                LDX #$04        ; Shift count.
+HEXSHIFT:       ASL             ; Hex digit left, MSB to carry.
+                ROL L           ; Rotate into LSD.
+                ROL H           ;  Rotate into MSD’s.
+                DEX             ; Done 4 shifts?
+                BNE HEXSHIFT    ; No, loop.
+                INY             ; Advance text index.
+                BNE NEXTHEX     ; Always taken. Check next char for hex.
+NOTHEX:         CPY YSAV        ; Check if L, H empty (no hex digits).
+                BEQ ESCAPE      ; Yes, generate ESC sequence.
+                BIT MODE        ; Test MODE byte.
+                BVC NOTSTOR     ;  B6=0 STOR 1 for XAM &amp; BLOCK XAM
+                LDA L           ; LSD’s of hex data.
+                STA (STL,X)     ; Store at current ‘store index’.
+                INC STL         ; Increment store index.
+                BNE NEXTITEM    ; Get next item. (no carry).
+                INC STH         ; Add carry to ‘store index’ high order.
+TONEXTITEM:     JMP NEXTITEM    ; Get next command item.
+RUN:            JMP (XAML)      ; Run at current XAM index.
+NOTSTOR:        BMI XAMNEXT     ; B7=0 for XAM, 1 for BLOCK XAM.
+LDX #$02        ; Byte count.
+SETADR:         LDA L-1,X       ; Copy hex data to
+                STA STL-1,X     ; ‘store index’.
+                STA XAML-1,X    ; And to ‘XAM index’.
+                DEX             ; Next of 2 bytes.
+                BNE SETADR      ; Loop unless X=0.
+NXTPRNT:        BNE PRDATA      ; NE means no address to print.
+                LDA #$8A        ; CR.
+                JSR ECHO        ; Output it.
+                LDA XAMH        ; ‘Examine index’ high-order byte.
+                JSR PRBYTE      ; Output it in hex format.
+                LDA XAML        ; Low-order ‘examine index’ byte.
+                JSR PRBYTE      ; Output it in hex format.
+                LDA #&#39;:&#39; + $80  ; &#34;:&#34;.
+JSR ECHO        ; Output it.
+PRDATA:         LDA #$A0        ; Blank.
+                JSR ECHO        ; Output it.
+                LDA (XAML,X)    ; Get data byte at ‘examine index’.
+                JSR PRBYTE      ; Output it in hex format.
+XAMNEXT:        STX MODE        ; 0-&gt;MODE (XAM mode).
+                LDA XAML
+                CMP L           ; Compare ‘examine index’ to hex data.
+                LDA XAMH
+                SBC H
+BCS TONEXTITEM  ; Not less, so no more data to output.
+                INC XAML
+BNE MOD8CHK     ; Increment ‘examine index’.
+                INC XAMH
+MOD8CHK:        LDA XAML        ; Check low-order ‘examine index’ byte
+                AND #$07        ; For MOD 8=0
+BPL NXTPRNT     ; Always taken.
+PRBYTE:         PHA             ; Save A for LSD.
+                LSR
+                LSR
+                LSR             ; MSD to LSD position.
+                LSR
+JSR PRHEX       ; Output hex digit.
+                PLA             ; Restore A.
+PRHEX:          AND #$0F        ; Mask LSD for hex print.
+                ORA #&#39;0&#39; + $80  ; Add &#34;0&#34;.
+                CMP #$BA        ; Digit?
+                BCC ECHO        ; Yes, output it.
+                ADC #$06        ; Add offset for letter.
+ECHO:
+                ; BIT DSP         ; bit (B7) cleared yet?
+                ; BMI ECHO        ; No, wait for display.
+                ; STA DSP         ; Output character. Sets DA.
+                pha
+                and #$7F
+                jsr krn\_chrout
+                pla
+                RTS             ; Return.
+</code></pre><p>Second important change. We got rid of the Apple I specific routine to output characters and use the chrout-routine of the SteckOS-kernel. But in order not to output garbage, we need to unset bit 7. Since all comparisons afterwards still rely on bit 7 being set, we save the A register to the stack and restore it afterwards. A faster way would be to just set bit 7 again by doing a ORA #$80 before the RTS, but what the heck.</p><pre tabindex=0><code>; BRK             ; unused
+; BRK             ; unused
+</code></pre><p>We don&rsquo;t need those.</p><pre tabindex=0><code>; Interrupt Vectors
+; .WORD $0F00     ; NMI
+; .WORD RESET     ; RESET
+; .WORD $0000 ; BRK/IRQ
+</code></pre><p>We don&rsquo;t need those either since we are not using wozmon as system software. Interrupt handling is still done by the SteckOS kernel.</p><p> </p><p><img src=images/wozmon.jpg alt=wozmon> Tada!</p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button previous"><a href=https://beta.steckschwein.de/post/save-the-date-vcfb-13-10-14-10/><span class=button__icon>←</span>
+<span class=button__text>Save the date: VCFb - 13.10.-14.10.</span></a></span>
+<span class="button next"><a href=https://beta.steckschwein.de/post/vcfe-diesmal-ohne-steckschwein/><span class=button__text>VCFe diesmal ohne Steckschwein</span>
+<span class=button__icon>→</span></a></span></div></div></div></div><footer class=footer><div class=footer__inner><div class=copyright><span>© 2022 Powered by <a href=http://gohugo.io>Hugo</a></span>
+<span>:: Theme made by <a href=https://twitter.com/panr>panr</a></span></div></div></footer><script src=https://beta.steckschwein.de/assets/main.js></script>
+<script src=https://beta.steckschwein.de/assets/prism.js></script></div></body></html>
