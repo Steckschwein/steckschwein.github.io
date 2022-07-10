@@ -27,6 +27,11 @@ paginate = 5
 
     [languages.en.menu]
       [[languages.en.menu.main]]
+        identifier = "home"
+        name = "Home"
+        url = "/"
+        weight = 1
+      [[languages.en.menu.main]]
         identifier = "hardware"
         name = "Hardware"
         url = "/hardware/"
