@@ -1,4 +1,4 @@
-baseurl = "https://beta.steckschwein.de/"
+baseurl = "https://www.steckschwein.de/"
 languageCode = "en-us"
 theme = "terminal"
 paginate = 5
