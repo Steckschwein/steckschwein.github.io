@@ -1,0 +1,7 @@
+:root {
+    --accent: rgb(96,221,108);
+}
+
+.post-meta{
+    color:rgba(96,221,108,.7);
+}
