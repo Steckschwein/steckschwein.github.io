@@ -1,6 +1,6 @@
 baseurl = "https://www.steckschwein.de/"
 languageCode = "en-us"
-theme = "terminal"
+theme = ["terminal", "ssw"]
 paginate = 5
 #sectionPagesMenu = "main"
 
@@ -10,6 +10,10 @@ paginate = 5
   showMenuItems = 5
   fullWidthTheme = false
   centerTheme = true
+  showLastUpdated = true
+  # favicon = "s"
+  twitter.site="@steckschwein"
+  twitter.creator=""
 
 [languages]
   [languages.en]
@@ -27,8 +31,8 @@ paginate = 5
 
     [languages.en.menu]
       [[languages.en.menu.main]]
-        identifier = "home"
-        name = "Home"
+        identifier = "blog"
+        name = "Blog"
         url = "/"
         weight = 1
       [[languages.en.menu.main]]
