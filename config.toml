@@ -1,6 +1,6 @@
 baseurl = "https://www.steckschwein.de/"
 languageCode = "en-us"
-theme = ["terminal", "ssw"]
+theme = ["terminal"]
 paginate = 5
 #sectionPagesMenu = "main"
 
