@@ -10,7 +10,7 @@ All software (steckOS, BIOS, libraries, tools, games, stuff): [https://bitbucket
 
 Hardware (Schematics, PCB Layouts): [https://bitbucket.org/steckschwein/steckschwein-hardware](https://bitbucket.org/steckschwein/steckschwein-hardware)
 
-Steckschwein Emulator: [https://github.com/twoinke/steckschwein-emulator](https://github.com/twoinke/steckschwein-emulator)
+Steckschwein Emulator: [https://github.com/Steckschwein/steckschwein-emulator](https://github.com/Steckschwein/steckschwein-emulator)
 
 ## Tools
 
