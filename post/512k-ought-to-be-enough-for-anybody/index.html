@@ -54,7 +54,7 @@ Bootloader switches slot 2 to bank 3 (or whatever bank the OS shall be in)
 Bootloader writes steckOS to slot 2 ($8000)
 Bootloader switches slot 3 to bank 3
 Bootloader jumps to steckOS init
-</code></pre><p>This memory banking scheme is rather simple, but provides a lot of flexibility in order to use more than 64k of memory. Also, all kinds of memory (ROM, RAM) are being treated the same way, so it’s much more cleaner than the ROMOFF approach. Being able to remap the area containing the zero page and stack will also help implementing some sort of task switching or even multitasking.
+</code></pre><p>This memory banking scheme is rather simple, but provides a lot of flexibility in order to use more than 64k of memory. Also, all kinds of memory (ROM, RAM) are being treated the same way, so it’s much cleaner than the ROMOFF approach. Being able to remap the area containing the zero page and stack will also help implementing some sort of task switching or even multitasking.
 On the downside, it’s flexible but pretty dumb as the software has to keep track of what has been put in which bank.
 We a really eager to explore this idea, so the VHDL code for the XC9572 CPLD has been written, the board has been designed and waiting to be delivered.</p></div></div><div class=pagination><div class=pagination__title><span class=pagination__title-h>Read other posts</span><hr></div><div class=pagination__buttons><span class="button previous"><a href=https://www.steckschwein.de/post/its-a-long-way-to-the-memory-top/><span class=button__icon>←</span>
 <span class=button__text>It's a Long Way to the Memory Top</span></a></span>
