@@ -86,6 +86,6 @@ We do not need the ROMOFF mechanism anymore, so the loading of steckOS will foll
     Bootloader switches slot 3 to bank 3
     Bootloader jumps to steckOS init
 
-This memory banking scheme is rather simple, but provides a lot of flexibility in order to use more than 64k of memory. Also, all kinds of memory (ROM, RAM) are being treated the same way, so it’s much more cleaner than the ROMOFF approach. Being able to remap the area containing the zero page and stack will also help implementing some sort of task switching or even multitasking.
+This memory banking scheme is rather simple, but provides a lot of flexibility in order to use more than 64k of memory. Also, all kinds of memory (ROM, RAM) are being treated the same way, so it’s much cleaner than the ROMOFF approach. Being able to remap the area containing the zero page and stack will also help implementing some sort of task switching or even multitasking.
 On the downside, it’s flexible but pretty dumb as the software has to keep track of what has been put in which bank.
 We a really eager to explore this idea, so the VHDL code for the XC9572 CPLD has been written, the board has been designed and waiting to be delivered.
