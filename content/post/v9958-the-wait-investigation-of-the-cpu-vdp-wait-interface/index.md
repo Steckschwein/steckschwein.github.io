@@ -35,39 +35,43 @@ With this in mind, we can optimize our library a little bit by using different "
 
 We enhance our vdp.inc and built two macros which provide the different delay we need.
 
-.macro vdp\_wait\_s
-  jsr vdp\_nopslide\_2m ; 2m for 2µs wait
+```
+.macro vdp_wait_s
+  jsr vdp_nopslide_2m ; 2m for 2µs wait
 ...
 
-.macro vdp\_wait\_l
-  jsr vdp\_nopslide\_8m ; 8m for 8µs wait
+.macro vdp_wait_l
+  jsr vdp_nopslide_8m ; 8m for 8µs wait
 ...
+```
 
 steckSchwein is running at 8Mhz, so we also defined some equations and used ca65 macros to build our nop slides.
 
-.define CLOCK\_SPEED\_MHZ 8
+```
+.define CLOCK_SPEED_MHZ 8
 
 ; long delay with 6µ+2µs (below)
-MAX\_NOPS\_8M = (6 \* 1000 / (1000 / CLOCK\_SPEED\_MHZ)) / 2 
+MAX_NOPS_8M = (6 * 1000 / (1000 / CLOCK_SPEED_MHZ)) / 2 
 ; 8Mhz, 125ns per cycle, wait 6µs = 6000ns 
 ; = 6000ns / 125ns = 48cl / 2 => 24 NOP 
 
 ; short delay with 2µs wait
-MAX\_NOPS\_2M = (2 \* 1000 / (1000 / CLOCK\_SPEED\_MHZ) -12) / 2 
-; -12 => jsr/rts = 2 \* 6cl = 12cl must be subtract
+MAX_NOPS_2M = (2 * 1000 / (1000 / CLOCK_SPEED_MHZ) -12) / 2 
+; -12 => jsr/rts = 2 * 6cl = 12cl must be subtract
 
-.macro m\_vdp\_nopslide
-vdp\_nopslide\_8m:
+.macro m_vdp_nopslide
+vdp_nopslide_8m:
    ; long delay with 6+2 2µs wait
-   .repeat MAX\_NOPS\_8M
+   .repeat MAX_NOPS_8M
       nop
    .endrepeat
-vdp\_nopslide\_2m:	
-   .repeat MAX\_NOPS\_2M
+vdp_nopslide_2m:	
+   .repeat MAX_NOPS_2M
       nop
    .endrepeat
    rts
 .endmacro
+```
 
 Another interesting thing would be, "how does the /WAIT" behave in this situation? the assumption here is, that the /WAIT will behave in the way as specified. so /WAIT will be go low at least after 130ns from CSW. so to handover the /RDY handling to the vdp via the /WAIT pin, we have to apply only 1 wait state from our WS-Gen. after one wait state, we can release the /RDY low from our WS so that the vdp /WAIT can drive /RDY as needed.
 
@@ -75,15 +79,19 @@ Back home, Thomas did the test and changed the waitstate generator firmware for 
 
 The equation was
 
+```
 W2 = ROM \* UART \* SND \* /VDP 
 W1 = W2 
      + /ROM \* UART \* VDP
+```
 
 and was changed to
 
+```
 W2 = /SND
 W1 = W2
      + /ROM 			; /ROM wait state if ROM is cs
      + /VDP			; /VDP wait state if VDP is cs
+```
 
 So finally, we only need one wait state from the waitstate generator to access the VDP. If the VDP requires more time - surely - during a video memory access it will drive /WAIT to low as long as needed. So after the explcit 1WS from our wait state generator we now hand over the /RDY control to the VDP. How our /RDY and /WAIT really work together is subject to one of our next sessions where we're going to measure the things with a logic analyzer and oscilloscope. Nevertheless, it works in this way and it works exaclty as specified within the datasheet.
