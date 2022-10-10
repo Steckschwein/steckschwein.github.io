@@ -45,22 +45,22 @@ as described in the datasheet (V9958-Technical-manual_v1.0.pdf) of the V9958 the
 &lt;/ol>
 &lt;p>With this in mind, we can optimize our library a little bit by using different &amp;ldquo;nop slides&amp;rdquo; for address setup and vram writes.&lt;/p>
 &lt;p>We enhance our vdp.inc and built two macros which provide the different delay we need.&lt;/p>
-&lt;p>.macro vdp_wait_s
+&lt;pre tabindex="0">&lt;code>.macro vdp_wait_s
 jsr vdp_nopslide_2m ; 2m for 2µs wait
-&amp;hellip;&lt;/p>
-&lt;p>.macro vdp_wait_l
+...
+.macro vdp_wait_l
 jsr vdp_nopslide_8m ; 8m for 8µs wait
-&amp;hellip;&lt;/p>
-&lt;p>steckSchwein is running at 8Mhz, so we also defined some equations and used ca65 macros to build our nop slides.&lt;/p>
-&lt;p>.define CLOCK_SPEED_MHZ 8&lt;/p>
-&lt;p>; long delay with 6µ+2µs (below)
+...
+&lt;/code>&lt;/pre>&lt;p>steckSchwein is running at 8Mhz, so we also defined some equations and used ca65 macros to build our nop slides.&lt;/p>
+&lt;pre tabindex="0">&lt;code>.define CLOCK_SPEED_MHZ 8
+; long delay with 6µ+2µs (below)
 MAX_NOPS_8M = (6 * 1000 / (1000 / CLOCK_SPEED_MHZ)) / 2
 ; 8Mhz, 125ns per cycle, wait 6µs = 6000ns
-; = 6000ns / 125ns = 48cl / 2 =&amp;gt; 24 NOP&lt;/p>
-&lt;p>; short delay with 2µs wait
+; = 6000ns / 125ns = 48cl / 2 =&amp;gt; 24 NOP
+; short delay with 2µs wait
 MAX_NOPS_2M = (2 * 1000 / (1000 / CLOCK_SPEED_MHZ) -12) / 2
-; -12 =&amp;gt; jsr/rts = 2 * 6cl = 12cl must be subtract&lt;/p>
-&lt;p>.macro m_vdp_nopslide
+; -12 =&amp;gt; jsr/rts = 2 * 6cl = 12cl must be subtract
+.macro m_vdp_nopslide
 vdp_nopslide_8m:
 ; long delay with 6+2 2µs wait
 .repeat MAX_NOPS_8M
@@ -71,19 +71,19 @@ vdp_nopslide_2m:
 nop
 .endrepeat
 rts
-.endmacro&lt;/p>
-&lt;p>Another interesting thing would be, &amp;ldquo;how does the /WAIT&amp;rdquo; behave in this situation? the assumption here is, that the /WAIT will behave in the way as specified. so /WAIT will be go low at least after 130ns from CSW. so to handover the /RDY handling to the vdp via the /WAIT pin, we have to apply only 1 wait state from our WS-Gen. after one wait state, we can release the /RDY low from our WS so that the vdp /WAIT can drive /RDY as needed.&lt;/p>
+.endmacro
+&lt;/code>&lt;/pre>&lt;p>Another interesting thing would be, &amp;ldquo;how does the /WAIT&amp;rdquo; behave in this situation? the assumption here is, that the /WAIT will behave in the way as specified. so /WAIT will be go low at least after 130ns from CSW. so to handover the /RDY handling to the vdp via the /WAIT pin, we have to apply only 1 wait state from our WS-Gen. after one wait state, we can release the /RDY low from our WS so that the vdp /WAIT can drive /RDY as needed.&lt;/p>
 &lt;p>Back home, Thomas did the test and changed the waitstate generator firmware for the GAL16V8.&lt;/p>
 &lt;p>The equation was&lt;/p>
-&lt;p>W2 = ROM * UART * SND * /VDP
+&lt;pre tabindex="0">&lt;code>W2 = ROM \* UART \* SND \* /VDP
 W1 = W2
-+ /ROM * UART * VDP&lt;/p>
-&lt;p>and was changed to&lt;/p>
-&lt;p>W2 = /SND
++ /ROM \* UART \* VDP
+&lt;/code>&lt;/pre>&lt;p>and was changed to&lt;/p>
+&lt;pre tabindex="0">&lt;code>W2 = /SND
 W1 = W2
 + /ROM ; /ROM wait state if ROM is cs
-+ /VDP ; /VDP wait state if VDP is cs&lt;/p>
-&lt;p>So finally, we only need one wait state from the waitstate generator to access the VDP. If the VDP requires more time - surely - during a video memory access it will drive /WAIT to low as long as needed. So after the explcit 1WS from our wait state generator we now hand over the /RDY control to the VDP. How our /RDY and /WAIT really work together is subject to one of our next sessions where we&amp;rsquo;re going to measure the things with a logic analyzer and oscilloscope. Nevertheless, it works in this way and it works exaclty as specified within the datasheet.&lt;/p></content></item><item><title>VCFB 2018 It was great...</title><link>https://www.steckschwein.de/post/vcfb-2018-its-great/</link><pubDate>Sat, 13 Oct 2018 00:00:00 +0000</pubDate><guid>https://www.steckschwein.de/post/vcfb-2018-its-great/</guid><description>VCF 2018 in Berlin was great! We&amp;rsquo;ve met interesting people there. Got a handshake with Scot W. Stevenson who for(th)ced us to use his TaliForth2 ;)
++ /VDP ; /VDP wait state if VDP is cs
+&lt;/code>&lt;/pre>&lt;p>So finally, we only need one wait state from the waitstate generator to access the VDP. If the VDP requires more time - surely - during a video memory access it will drive /WAIT to low as long as needed. So after the explcit 1WS from our wait state generator we now hand over the /RDY control to the VDP. How our /RDY and /WAIT really work together is subject to one of our next sessions where we&amp;rsquo;re going to measure the things with a logic analyzer and oscilloscope. Nevertheless, it works in this way and it works exaclty as specified within the datasheet.&lt;/p></content></item><item><title>VCFB 2018 It was great...</title><link>https://www.steckschwein.de/post/vcfb-2018-its-great/</link><pubDate>Sat, 13 Oct 2018 00:00:00 +0000</pubDate><guid>https://www.steckschwein.de/post/vcfb-2018-its-great/</guid><description>VCF 2018 in Berlin was great! We&amp;rsquo;ve met interesting people there. Got a handshake with Scot W. Stevenson who for(th)ced us to use his TaliForth2 ;)
 Later on Saturday Daniel Illgen - maintainer of the Adlib Tracker II for Linux - had decided to honor us with his OPL2 knowledge while on the way out. He advised us to keep the OPL2 sound chip on the Steckschwein, because the OPL2 chip is still not outbid.</description><content>&lt;p>VCF 2018 in Berlin was great! We&amp;rsquo;ve met interesting people there. Got a handshake with Scot W. Stevenson who for(th)ced us to use his &lt;a href="https://github.com/scotws/TaliForth2">TaliForth2&lt;/a> ;)&lt;/p>
 &lt;p>Later on Saturday &lt;a href="http://www.adlibtracker.net/downloads.php">Daniel Illgen&lt;/a> - maintainer of the Adlib Tracker II for Linux - had decided to honor us with his OPL2 knowledge while on the way out. He advised us to keep the OPL2 sound chip on the Steckschwein, because the OPL2 chip is still not outbid. We hat doubts at first, but then we could listen to OPL2 with so called &amp;ldquo;software low frequency oscillation&amp;rdquo; (soft lfo) and the drums and bass sounds great!&lt;/p>
 &lt;p>Beside the VCF there where talks about demos and the history of the demoscene then and now. There where two interesting and awesome talks given by &amp;ldquo;&lt;a href="http://svolli.de/">SvOlli&lt;/a>&amp;rdquo; about the demoscene and demo coding on the Atari VCS (Stella).&lt;/p>
