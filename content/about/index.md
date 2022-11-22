@@ -4,10 +4,10 @@ menu:
   main:
     weight: 10
 ---
+The Steckschwein is a homebrew 8bit computer based on the 65c02 CPU.
 
-These are times where one just gets bombed with gigahertz, gigabytes. The Steckschwein is an 8bit computer that wants to show how much know how is already to be found in a rather simple computer.
-
-Our mission is to create a computer that might have existed during the heyday of 8bit home computers. Only with more modern interfaces to the outside world, since nobody wants to fiddle with floppy disks anymore.
+Our initial mission used to be to create a computer that might have existed during the heyday of 8bit home computers. Only with more modern interfaces to the outside world, like SPI for SD card storage instead of floppy disks.
+Now, having achieved that already quite some time ago, we now try to push the limits of what is possible.
 
 The name "Steckschwein" originates to the very early stages of our project, where everything was prototyped on breadboards (german: "Steckbrett"), and we all know that those things can be real pigs.
 
