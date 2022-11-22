@@ -4,7 +4,7 @@ date: 2022-10-26
 
 ---
 
-This one really is a tough one to debug. We suspected the VHDL code for the CPLD as the main error source, as VHDL is not our strongest suit. In fact, the decoder/banking logic is the first thing we ever really did in VHDL (apart from a few simple decoder equations the first days we were playing with GALs).
+This one really is a tough one to debug. At first, we suspected the VHDL code for the CPLD as the main error source, as VHDL is not our strongest suit. In fact, the decoder/banking logic is the first thing we ever really did in VHDL (apart from a few simple decoder equations the first days we were playing with GALs).
 
 As it turned out, the VHDL was not the main problem. It sure was quite buggy and the RDY-generator had problems, but overall it was not too far off.
 Marko even managed to run a memory check over the entire 512k RAM, proving that even the banking logic works. Furthermore, he was able to clock the new board at 16MHz, which is another breakthrough, as a bonus.
