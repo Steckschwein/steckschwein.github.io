@@ -2,7 +2,7 @@
 title: "Hardware"
 ---
 
-It it's current incarnation, the Steckschwein consists of 4 main units:
+It it's current incarnation, the Steckschwein consists of 3 main units:
 
 1. [CPU/Memory](/cpuramdecoder/)
 2. [IO (VIA 65c22), now also including UART](/via-65c22-as-spi-master/)
