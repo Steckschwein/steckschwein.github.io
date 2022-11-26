@@ -13,7 +13,7 @@ The CPU boards carries the main CPU 65c02, 64k RAM organized in two 32k * 8 SRAM
 
 ## Address decoding
 
-The adress decoder logic is the glue that holds everything together as it takes care of mapping all components into their respective areas within the 65c02's address space by decoding the upper 12bit of the adress bus. The decoding logic itself is accommodated in a GAL22V10
+The address decoder logic is the glue that holds everything together. It takes care of mapping all components into their respective areas within the 65c02's address space by decoding the upper 12bit of the adress bus. The decoding logic itself is accommodated in a GAL22V10.
 
 ```
 GAL22V10
@@ -46,7 +46,7 @@ GND | 12           13 | A4
 
 ```
 
-This way, we can assign memory areas as small as 16 byte, which comes in handy for IO devices. Additionally, the r/W pin and a custom pin "ROMOFF" are being decoded to provide some runtime controll over the memory mapping. Write accesses to the ROM-area $E000-$FFFF will always go to the unterlying RAM. Is ROMOFF high, the ROM will be banked out, and the underlying RAM will be readable. ROMOFF is connected to bit 0 of the "Memory Mapping Control Latch", so writing a 1 into $0230 will bank out the ROM, writing a 0 will bank it back in.
+This way, we can assign memory areas as small as 16 byte, which comes in handy for IO devices. Additionally, the r/W pin and a custom pin "ROMOFF" are being decoded to provide some runtime controll over the memory mapping. Write accesses to the ROM-area $E000-$FFFF will always go to the underlying RAM. Is ROMOFF high, the ROM will be banked out, and the underlying RAM will be readable. ROMOFF is connected to bit 0 of the "Memory Mapping Control Latch", so writing a 1 into $0230 will bank out the ROM, writing a 0 will bank it back in.
 
 The memory mapping looks like this:
 
@@ -55,15 +55,14 @@ The memory mapping looks like this:
 | $0000-$00ff | Zeropage |  |
 | $0100-$01ff | Stack |  |
 | $0200-$02ff | IO-Area |  |
-| $0300-$7fff | RAM |  |
-| $8000-$dfff | RAM |  |
+| $0300-$dfff | RAM |  |
 | $e000-$ffff | ROM/RAM |  |
 
 The 28C256 EEPROM is 32k * 8, and we only bank in 8k. To make the whole EEPROM accessible, A13 and A14 of the EEPROM are connected to bits 1 and 2 of the latch. This way, the 32k ROM is divided into 4 banks of 8k each, which are selectable during runtime.
 
 ## Waitstate generation
 
-The Steckschwein runs at 8MHz, and probably more in the future, as the WDC 65c02 is actually rated for 14MHz. Not all components are capable of that bus speed though, so we need to take care about them. The 65c02 has us covered by providing a pin called "RDY", which can be used to stop and freeze the CPU at whatever it is doing right now. While accessing slower devices such as the video chip, sound chip and ROM, the Steckschwein halts the CPU for 1 cycle, giving those devices the time they need.
+The Steckschwein is clocked at at 8MHz, and probably more in the future, as the WDC 65c02 is actually rated for 14MHz. Not all components are capable of that bus speed though, so we need to take care about them. The 65c02 has us covered by providing a pin called "RDY", which can be used to stop and freeze the CPU at whatever it is doing right now. While accessing slower devices such as the video chip, sound chip and ROM, the Steckschwein halts the CPU for 1 cycle, giving those devices the time they need.
 
 ![printed board with parts description](images/steckschwein_hw.png) printed board with parts description
 
