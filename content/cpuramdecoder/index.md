@@ -3,7 +3,7 @@ title: "CPU-Board"
 date: "2015-09-15"
 ---
 
-The CPU boards carries the main CPU 65c02, 64k RAM organized in two 32k * 8 SRAM chips (62256). We decided to use SRAM just because it's much simpler to use than DRAM as we do not need a DRAM conroller. Also, small SRAM chips are also pretty easy to come by and also rather cheap. The ROM is a 28c256 EEPROM, which is banked in at $e000 in 8k steps. Also, clock generation and reset circuit also reside on the CPU board. The latter one could of course be much simpler since a simple RC circuit would have sufficed. But we decided to replicate the NE555 based reset circuit used by commodore in the PET series as a little hommage.
+The CPU boards carries the main CPU 65c02, 64k RAM organized in two 32k * 8 SRAM chips (62256). We decided to use SRAM just because it's much simpler to use than DRAM as we do not need a DRAM conroller. Also, small SRAM chips are cheap and easy to obtain. The ROM is a 28c256 EEPROM, which is banked in at $e000 in 8k steps. Clock generation and reset circuit reside on the CPU board, too. We decided to replicate the NE555 based reset circuit used by commodore in the PET series as a little hommage.
 
 ![CPU Memory Board](images/cpu_mem_rdy.png) CPU/memory board
 
