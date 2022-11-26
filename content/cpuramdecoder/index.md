@@ -50,13 +50,13 @@ This way, we can assign memory areas as small as 16 byte, which comes in handy f
 
 The memory mapping looks like this:
 
-|  | Description |  |
-| --- | --- | --- |
-| $0000-$00ff | Zeropage |  |
-| $0100-$01ff | Stack |  |
-| $0200-$02ff | IO-Area |  |
-| $0300-$dfff | RAM |  |
-| $e000-$ffff | ROM/RAM |  |
+| Address | Description |  
+| --- | --- | 
+| $0000-$00ff | Zeropage | 
+| $0100-$01ff | Stack |
+| $0200-$02ff | IO-Area | 
+| $0300-$dfff | RAM |
+| $e000-$ffff | ROM/RAM |
 
 The 28C256 EEPROM is 32k * 8, and we only bank in 8k. To make the whole EEPROM accessible, A13 and A14 of the EEPROM are connected to bits 1 and 2 of the latch. This way, the 32k ROM is divided into 4 banks of 8k each, which are selectable during runtime.
 
