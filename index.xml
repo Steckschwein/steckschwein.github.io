@@ -1100,7 +1100,7 @@ Steckschwein-Seitig haben wir die Tastaturabfrage immer im Blank-Interrupt des V
 &lt;p>&lt;img src="images/decoder.png" alt="address decoder"> address decoder and /RDY generator&lt;/p>
 &lt;p> &lt;/p>
 &lt;h2 id="address-decoding">Address decoding&lt;/h2>
-&lt;p>The adress decoder logic is the glue that holds everything together as it takes care of mapping all components into their respective areas within the 65c02&amp;rsquo;s address space by decoding the upper 12bit of the adress bus. The decoding logic itself is accommodated in a GAL22V10&lt;/p>
+&lt;p>The address decoder logic is the glue that holds everything together. It takes care of mapping all components into their respective areas within the 65c02&amp;rsquo;s address space by decoding the upper 12bit of the adress bus. The decoding logic itself is accommodated in a GAL22V10.&lt;/p>
 &lt;pre tabindex="0">&lt;code>GAL22V10
 -------\___/-------
 A15 | 1 24 | VCC
@@ -1127,52 +1127,41 @@ A5 | 11 14 | RW
 | |
 GND | 12 13 | A4
 -------------------
-&lt;/code>&lt;/pre>&lt;p>This way, we can assign memory areas as small as 16 byte, which comes in handy for IO devices. Additionally, the r/W pin and a custom pin &amp;ldquo;ROMOFF&amp;rdquo; are being decoded to provide some runtime controll over the memory mapping. Write accesses to the ROM-area $E000-$FFFF will always go to the unterlying RAM. Is ROMOFF high, the ROM will be banked out, and the underlying RAM will be readable. ROMOFF is connected to bit 0 of the &amp;ldquo;Memory Mapping Control Latch&amp;rdquo;, so writing a 1 into $0230 will bank out the ROM, writing a 0 will bank it back in.&lt;/p>
+&lt;/code>&lt;/pre>&lt;p>This way, we can assign memory areas as small as 16 byte, which comes in handy for IO devices. Additionally, the r/W pin and a custom pin &amp;ldquo;ROMOFF&amp;rdquo; are being decoded to provide some runtime controll over the memory mapping. Write accesses to the ROM-area $E000-$FFFF will always go to the underlying RAM. Is ROMOFF high, the ROM will be banked out, and the underlying RAM will be readable. ROMOFF is connected to bit 0 of the &amp;ldquo;Memory Mapping Control Latch&amp;rdquo;, so writing a 1 into $0230 will bank out the ROM, writing a 0 will bank it back in.&lt;/p>
 &lt;p>The memory mapping looks like this:&lt;/p>
 &lt;table>
 &lt;thead>
 &lt;tr>
-&lt;th>&lt;/th>
+&lt;th>Address&lt;/th>
 &lt;th>Description&lt;/th>
-&lt;th>&lt;/th>
 &lt;/tr>
 &lt;/thead>
 &lt;tbody>
 &lt;tr>
 &lt;td>$0000-$00ff&lt;/td>
 &lt;td>Zeropage&lt;/td>
-&lt;td>&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>$0100-$01ff&lt;/td>
 &lt;td>Stack&lt;/td>
-&lt;td>&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>$0200-$02ff&lt;/td>
 &lt;td>IO-Area&lt;/td>
-&lt;td>&lt;/td>
 &lt;/tr>
 &lt;tr>
-&lt;td>$0300-$7fff&lt;/td>
+&lt;td>$0300-$dfff&lt;/td>
 &lt;td>RAM&lt;/td>
-&lt;td>&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>$8000-$dfff&lt;/td>
-&lt;td>RAM&lt;/td>
-&lt;td>&lt;/td>
 &lt;/tr>
 &lt;tr>
 &lt;td>$e000-$ffff&lt;/td>
 &lt;td>ROM/RAM&lt;/td>
-&lt;td>&lt;/td>
 &lt;/tr>
 &lt;/tbody>
 &lt;/table>
 &lt;p>The 28C256 EEPROM is 32k * 8, and we only bank in 8k. To make the whole EEPROM accessible, A13 and A14 of the EEPROM are connected to bits 1 and 2 of the latch. This way, the 32k ROM is divided into 4 banks of 8k each, which are selectable during runtime.&lt;/p>
 &lt;h2 id="waitstate-generation">Waitstate generation&lt;/h2>
-&lt;p>The Steckschwein runs at 8MHz, and probably more in the future, as the WDC 65c02 is actually rated for 14MHz. Not all components are capable of that bus speed though, so we need to take care about them. The 65c02 has us covered by providing a pin called &amp;ldquo;RDY&amp;rdquo;, which can be used to stop and freeze the CPU at whatever it is doing right now. While accessing slower devices such as the video chip, sound chip and ROM, the Steckschwein halts the CPU for 1 cycle, giving those devices the time they need.&lt;/p>
+&lt;p>The Steckschwein is clocked at at 8MHz, and probably more in the future, as the WDC 65c02 is actually rated for 14MHz. Not all components are capable of that bus speed though, so we need to take care about them. The 65c02 has us covered by providing a pin called &amp;ldquo;RDY&amp;rdquo;, which can be used to stop and freeze the CPU at whatever it is doing right now. While accessing slower devices such as the video chip, sound chip and ROM, the Steckschwein halts the CPU for 1 cycle, giving those devices the time they need.&lt;/p>
 &lt;p>&lt;img src="images/steckschwein_hw.png" alt="printed board with parts description"> printed board with parts description&lt;/p>
 &lt;p>&lt;a href="https://www.steckschwein.de/steckschwein.pdf">PDF&lt;/a>&lt;/p></content></item><item><title>Ein Spiel entsteht...</title><link>https://www.steckschwein.de/post/ein-spiel-entsteht/</link><pubDate>Fri, 11 Sep 2015 00:00:00 +0000</pubDate><guid>https://www.steckschwein.de/post/ein-spiel-entsteht/</guid><description>Im Chrome Browser gibt es einen netten Zeitvertreib in Form des Games &amp;ldquo;Dinosaur&amp;rdquo;. Das Spiel wird immer dann eingeblendet, wenn keine Internet-Verbindung verfügbar ist. Das Spiel ist sehr einfach aufgebaut, kann aber leicht süchtig machen und ist ein netter Zeitvertreib bis die Verbindung wieder verfügbar ist. Genau diese Einfachheit der Grafik und des Gameplays brachte mich auf die Idee das Spiel für das Steckschwein umzusetzen. Wie ich dabei vorgegangen bin, möchte ich Euch hier schildern.</description><content>&lt;p>Im Chrome Browser gibt es einen netten Zeitvertreib in Form des Games &amp;ldquo;Dinosaur&amp;rdquo;. Das Spiel wird immer dann eingeblendet, wenn keine Internet-Verbindung verfügbar ist. Das Spiel ist sehr einfach aufgebaut, kann aber leicht süchtig machen und ist ein netter Zeitvertreib bis die Verbindung wieder verfügbar ist. Genau diese Einfachheit der Grafik und des Gameplays brachte mich auf die Idee das Spiel für das Steckschwein umzusetzen. Wie ich dabei vorgegangen bin, möchte ich Euch hier schildern.&lt;/p>
 &lt;p> 
