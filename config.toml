@@ -4,19 +4,22 @@ theme = ["Mainroad"]
 paginate = 5
 #sectionPagesMenu = "main"
 
-[params]
-  contentTypeName = "post"
-  themeColor = "green"
-  showMenuItems = 5
-  fullWidthTheme = false
-  centerTheme = true
-  showLastUpdated = true
-  # favicon = "s"
-  twitter.site="@steckschwein"
-  twitter.creator=""
 
 [Params.style.vars]
   highlightColor = "rgb(96,221,108)"
+
+[Params.sidebar]
+  home = "left"
+  widgets = ["search", "recent",  "taglist", "social"]
+
+[Params.widgets.social]
+  # Enable parts of social widget
+  twitter = "Steckschwein"
+  bitbucket = "steckschwein"
+
+[[Params.widgets.social.custom]]
+  title = "YouTube"
+  url = "https://www.youtube.com/channel/UCzNO0qQr8fjNhkGxzIM_2vw"
 
 [languages]
   [languages.en]
