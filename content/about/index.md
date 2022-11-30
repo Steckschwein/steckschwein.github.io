@@ -1,8 +1,5 @@
 ---
 title: "About"
-menu:
-  main:
-    weight: 10
 ---
 The Steckschwein is a homebrew 8bit computer based on the 65c02 CPU.
 
