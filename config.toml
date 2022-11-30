@@ -15,6 +15,9 @@ paginate = 5
   twitter.site="@steckschwein"
   twitter.creator=""
 
+[Params.style.vars]
+  highlightColor = "rgb(96,221,108)"
+
 [languages]
   [languages.en]
     title = "Steckschwein"
