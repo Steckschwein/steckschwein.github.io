@@ -16,6 +16,7 @@ paginate = 5
   # Enable parts of social widget
   twitter = "Steckschwein"
   bitbucket = "steckschwein"
+  github = "Steckschwein"
 
 [[Params.widgets.social.custom]]
   title = "YouTube"
