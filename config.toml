@@ -18,10 +18,6 @@ paginate = 5
   bitbucket = "steckschwein"
   github = "Steckschwein"
 
-[[Params.widgets.social.custom]]
-  title = "YouTube"
-  url = "https://www.youtube.com/channel/UCzNO0qQr8fjNhkGxzIM_2vw"
-
 [languages]
   [languages.en]
     title = "Steckschwein"
