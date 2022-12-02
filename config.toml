@@ -18,6 +18,12 @@ paginate = 5
   bitbucket = "steckschwein"
   github = "Steckschwein"
 
+[Params.widgets.search]
+  url = "/search/"
+  [Params.widgets.search.input]
+    name = false
+    pre = ""
+
 [languages]
   [languages.en]
     title = "Steckschwein"
