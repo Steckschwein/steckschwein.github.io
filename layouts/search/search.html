@@ -1,0 +1,12 @@
+{{ define "main" }}
+<main class="main list" role="main">
+	{{- with .Content }}
+	<div class="content main__content clearfix">
+    {{ . }}
+	</div>
+	{{- end }}
+  <div class="gcse-searchresults-only"></div>
+  <script async src="https://cse.google.com/cse.js?cx=27b966947af2b4b7f"></script>
+</main>
+{{ partial "pagination.html" . }}
+{{ end }}

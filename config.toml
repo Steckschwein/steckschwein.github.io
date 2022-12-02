@@ -1,19 +1,28 @@
 baseurl = "https://www.steckschwein.de/"
 languageCode = "en-us"
-theme = ["terminal"]
+theme = ["Mainroad"]
 paginate = 5
 #sectionPagesMenu = "main"
 
-[params]
-  contentTypeName = "post"
-  themeColor = "green"
-  showMenuItems = 5
-  fullWidthTheme = false
-  centerTheme = true
-  showLastUpdated = true
-  # favicon = "s"
-  twitter.site="@steckschwein"
-  twitter.creator=""
+
+[Params.style.vars]
+  highlightColor = "rgb(96,221,108)"
+
+[Params.sidebar]
+  home = "left"
+  widgets = ["recent", "search", "taglist", "social"]
+
+[Params.widgets.social]
+  # Enable parts of social widget
+  twitter = "Steckschwein"
+  bitbucket = "steckschwein"
+  github = "Steckschwein"
+
+[Params.widgets.search]
+  url = "/search/"
+  [Params.widgets.search.input]
+    name = false
+    pre = ""
 
 [languages]
   [languages.en]
@@ -24,10 +33,6 @@ paginate = 5
     menuMore = "Show more"
     readMore = "Read more"
     readOtherPosts = "Read other posts"
-
-    [languages.en.params.logo]
-      logoText = "Steckschwein"
-      logoHomeLink = "/"
 
     [languages.en.menu]
       [[languages.en.menu.main]]
@@ -45,6 +50,11 @@ paginate = 5
         name = "Software"
         url = "/software/"
         weight = 400
+      [[languages.en.menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "/about/"
+        weight = 450
       [[languages.en.menu.main]]
         identifier = "impressum"
         name = "Impressum"
