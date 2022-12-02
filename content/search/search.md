@@ -1,6 +1,6 @@
 ---
-title: Search
+title: "Search"
 authorbox: false
-sidebar: false
+sidebar: true
 pager: false
 ---
