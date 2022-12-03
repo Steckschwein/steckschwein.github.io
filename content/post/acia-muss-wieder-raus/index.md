@@ -1,11 +1,8 @@
 ---
-draft: false
-
 title: "ACIA muss wieder raus"
 date: "2014-03-28"
-categories: 
+tags: 
   - "acia"
-  - "allgemein"
   - "rs232"
   - "uart"
 ---

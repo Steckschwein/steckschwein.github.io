@@ -3,8 +3,10 @@ draft: false
 
 title: "Markos Pacman Talk at VCFb"
 date: "2019-10-23"
-categories: 
-  - "allgemein"
+tags: 
+  - "pacman"
+  - "talk"
+  - "vcfb"
 ---
 
 Marko talked about his Pacman port to the Steckschwein at VCFb. Basically it's the same talk he did at VCFe in April, but this time, there's a video. Enjoy!

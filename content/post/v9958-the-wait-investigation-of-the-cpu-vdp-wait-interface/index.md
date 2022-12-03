@@ -3,23 +3,12 @@ draft: false
 
 title: "V9958 - \"The WAIT\" - investigation of the CPU/VDP /WAIT interface"
 date: "2018-10-22"
-categories: 
-  - "64k"
-  - "6502"
-  - "65c02"
-  - "9918"
+tags: 
   - "allgemein"
-  - "assembly"
   - "cpu"
-  - "experiment"
-  - "nop"
-  - "steckschwein"
   - "timing"
-  - "tms9929"
   - "v9958"
   - "vdp"
-  - "video"
-  - "video-chip"
   - "waitstate"
 ---
 

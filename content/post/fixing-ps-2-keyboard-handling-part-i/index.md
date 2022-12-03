@@ -3,8 +3,11 @@ draft: false
 
 title: "Fixing PS/2 Keyboard handling (Part I)"
 date: "2020-11-14"
-categories: 
-  - "allgemein"
+tags: 
+  - "ps2"
+  - "keyboard"
+  - "spi"
+  - "avr"
 ---
 
 The way the PS/2 keyboard is handled has always been something we were never quite happy with. The key points being:

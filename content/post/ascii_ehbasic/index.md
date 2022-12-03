@@ -2,6 +2,9 @@
 title: "Loading ASCII sources in EhBasic"
 date: 2021-09-23T15:00:00+00:00
 draft: false
+tags:
+  - fat
+  - basic
 ---
 
 Since our implementation of FAT32 now supports reading a file byte for byte, a little rework of the file handling in our version of EhBasic is in order.

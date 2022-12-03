@@ -3,10 +3,9 @@ draft: false
 
 title: "Connecting SNES Controller to the Steckschwein"
 date: "2020-01-15"
-categories: 
-  - "allgemein"
-  - "experiment"
+tags: 
   - "joystick"
+  - "snes"
 ---
 
 Recently, Michael Steil published a [blog post about connecting NES and SNES Controller to a 6502-based system](https://www.pagetable.com/?p=1365) showing how to use NES and SNES controllers on a C64 without the need for any special hardware, by just connecting them to the C64's user port.
