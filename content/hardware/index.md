@@ -1,5 +1,7 @@
 ---
 title: "Hardware"
+categories:
+  - hardware
 ---
 
 In it's current incarnation, the Steckschwein consists of 3 main units:

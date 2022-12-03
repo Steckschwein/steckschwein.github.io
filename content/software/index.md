@@ -1,5 +1,7 @@
 ---
 title: "Software"
+categories:
+  - software
 ---
 
 ## Repositories

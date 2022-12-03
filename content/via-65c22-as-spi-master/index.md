@@ -1,5 +1,7 @@
 ---
 title: "IO: VIA 65c22 as SPI-Master"
+categories:
+  - hardware
 ---
 
 One of the fundamental design decisions when creating the Steckschwein was to use SPI as the main peripheral bus. This way, various different devices can be utilized using a single interface protocol. The main killer feature for using SPI was to be able to use an SD card as mass storage. This gives us mass storage with almost no extra hardware effort, only level conversion is needed between the system (5V) and the card (3.3V).

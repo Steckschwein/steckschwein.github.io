@@ -3,8 +3,7 @@ draft: false
 
 title: "Dekoder, die Dritte"
 date: "2014-10-23"
-categories: 
-  - "adressdekoder"
+tags: 
   - "gal"
   - "ram"
   - "rom"

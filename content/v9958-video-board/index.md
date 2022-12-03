@@ -1,5 +1,7 @@
 ---
 title: "Yamaha V9958/YM3812 Video/Audio Board"
+categories:
+  - hardware
 ---
 
 Our current audio/video board is based on the Yamaha V9958. The V9958 is the successor of the V9938, which in turn is the successor to our TMS9929/9918, which has served our project for quite some time. But it is hard to ignore what the V9958 has to offer (80 column text mode to begin with), so we decided to use it as the first major upgrade to the Steckschwein Hardware specs in a couple of years.

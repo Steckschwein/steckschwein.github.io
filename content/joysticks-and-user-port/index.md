@@ -1,5 +1,7 @@
 ---
 title: "Joysticks and user port"
+categories:
+  - hardware
 ---
 
 Since after using all of VIA Port B for SPI, all we have left is Port A to hook up anything else. One of our design goals is to be able to hook up two Atari/Commodore style joysticks. With only one 8bit IO port left, this is a bit tricky. Our first approach was to wire up the joysticks in a matrix like arrangement, but this suffered from the infamous [matrix ghosting problem](https://www.dribin.org/dave/keyboard/one_html/). Also, port A was completely blocked and could not be used for anything else that way.
