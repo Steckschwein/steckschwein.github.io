@@ -3,8 +3,10 @@ draft: false
 
 title: "LOAD / SAVE in EhBasic"
 date: "2017-02-28"
-categories: 
-  - "allgemein"
+tags: 
+  - "basic"
+  - "load"
+  - "save"
 ---
 
 Nachdem EhBasic brauchbar auf unserem SteckOS-Kernel läuft, fehlen noch 2 Kleinigkeiten für das vollkommene Glück. Denn noch lassen sich die geschriebenen BASIC-Kunstwerke nicht speichern. Dies stellt uns gleich vor 2 Herausforderungen:
