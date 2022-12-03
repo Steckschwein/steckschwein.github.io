@@ -3,7 +3,13 @@ languageCode = "en-us"
 theme = ["Mainroad"]
 paginate = 5
 #sectionPagesMenu = "main"
+opengraph = true
+schema = true
+twitter_cards = true
 
+[Params]
+  opengraph = true
+  schema = true
 
 [Params.style.vars]
   highlightColor = "rgb(96,221,108)"
@@ -17,6 +23,12 @@ paginate = 5
   twitter = "Steckschwein"
   bitbucket = "steckschwein"
   github = "Steckschwein"
+
+[[Params.widgets.social.custom]]
+  title = "Youtube"
+  url = "https://www.youtube.com/@Programmiernutte"
+  icon = "03b2ceb73723f8b53cd533e4fba898ee.svg" # Optional. Path relative to "layouts/partials"
+  rel = "noopener noreferrer" # Set to false to remove the rel attribute
 
 [Params.widgets.search]
   url = "/search/"
