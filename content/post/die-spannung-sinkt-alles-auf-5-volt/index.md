@@ -3,13 +3,6 @@ draft: false
 
 title: "Die Spannung sinkt... alles auf 5 Volt"
 date: "2016-05-11"
-categories: 
-  - "fbas"
-  - "spannung"
-  - "steckschwein"
-  - "video"
-  - "video-chip"
-  - "video-signal"
 ---
 
 ### Endlich,

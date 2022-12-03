@@ -3,11 +3,6 @@ draft: false
 
 title: "Exkurs: Wie kommt Code aufs Steckschwein?"
 date: "2014-04-03"
-categories: 
-  - "acia"
-  - "acme"
-  - "rs232"
-  - "uart"
 ---
 
 Die Programmierung eines Computers, der nur aus einer gesteckten Schaltung besteht und weder Tastatur noch Speichermöglichkeit hat, ist eine mühsame Angelegenheit. Die allerersten Experimente bekamen ihr Futter auf einem 27128-EPROM serviert. Bekanntlich wollen diese vor dem Beschreiben mit neuem Code mit UV-Licht gelöscht werden. Also wurde für jedes Update ein EPROM mit neuem Code gebrannt, um die EPROMS anschließend in 10er-Packen ins Löschgerät zu schieben. 15 Minuten Kaffeepause.

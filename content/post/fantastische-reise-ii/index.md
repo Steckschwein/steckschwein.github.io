@@ -3,16 +3,9 @@ draft: false
 
 title: "FanTASTische Reise II"
 date: "2015-09-22"
-categories: 
-  - "avr"
-  - "debugging"
-  - "ps-2"
-  - "spi"
-  - "tastatur"
-  - "uart"
 ---
 
-Vor einer Weile haben wir im Beitrag [/index.php/2014/12/15/eine-fantastische-reise/](/index.php/2014/12/15/eine-fantastische-reise/) den Weg zu unserem aktuellen Tastaturcontroller beschrieben.
+Vor einer Weile haben wir im Beitrag [eine-fantastische-reise](/post/eine-fantastische-reise/) den Weg zu unserem aktuellen Tastaturcontroller beschrieben.
 
 Wer nicht nochmal nachlesen möchte: Ein ATmega8 dient als SPI Slave als Interface zwischen PS/2-Protokoll, Tastaturmapping und Puffer. Als Basis dient eine angepasste Version des Codes aus AVR Application Note 313, die als Ausgabeschnittstelle den USART des ATmega8 vorsieht. Dies haben wir durch das SPI-Interface des AVR ersetzt.
 

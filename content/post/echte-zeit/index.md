@@ -3,9 +3,6 @@ draft: false
 
 title: "Echte Zeit"
 date: "2014-12-15"
-categories: 
-  - "rtc"
-  - "spi"
 ---
 
 Eine batteriegepufferte Echtzeituhr gehört ja heutzutage schon zur Serienausstattung, auch bei Retro-Rechnern. Das Steckschwein soll also auch eine bekommen. [Chris Ward's Design](http://www.chrisward.org.uk/6502/schematics/ds1687.gif), welches uns zu Anfang als Grundlage gedient hat (mittlerweile ist davon nicht mehr viel übrig geblieben) verwendet eine DS1687, deren Intel-mäßiges Businterface über ein wenig Glue-Logik direkt an den Datenbus des 6502 angelegt ist und damit auch Platz im IO-Bereich benötigt.

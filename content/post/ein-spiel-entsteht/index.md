@@ -3,13 +3,6 @@ draft: false
 author: "Marko"
 title: "Ein Spiel entsteht..."
 date: "2015-09-11"
-categories: 
-  - "dinosaur"
-  - "joystick"
-  - "scrolling"
-  - "soft-scrolling"
-  - "sprites"
-  - "tms9929"
 ---
 
 Im Chrome Browser gibt es einen netten Zeitvertreib in Form des Games "Dinosaur". Das Spiel wird immer dann eingeblendet, wenn keine Internet-Verbindung verfügbar ist. Das Spiel ist sehr einfach aufgebaut, kann aber leicht süchtig machen und ist ein netter Zeitvertreib bis die Verbindung wieder verfügbar ist. Genau diese Einfachheit der Grafik und des Gameplays brachte mich auf die Idee das Spiel für das Steckschwein umzusetzen. Wie ich dabei vorgegangen bin, möchte ich Euch hier schildern.

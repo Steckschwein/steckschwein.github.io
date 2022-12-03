@@ -3,16 +3,9 @@ draft: false
 
 title: "Filesystem und Shell"
 date: "2015-05-20"
-categories: 
-  - "fat"
-  - "fat32"
-  - "massenspeicher"
-  - "shell"
-  - "tms9929"
-  - "vdp"
 ---
 
-[Vor kurzem](http://wordpress.steckschwein.de/wordpress/index.php/2015/01/05/bootschwein/) haben wir ja schon von ersten Gehversuchen einer FAT32-Implementation berichtet, mit der wir in der Lage waren, beim Systemstart eine Datei von SD-Karte zu laden.
+[Vor kurzem](/post//bootschwein/) haben wir ja schon von ersten Gehversuchen einer FAT32-Implementation berichtet, mit der wir in der Lage waren, beim Systemstart eine Datei von SD-Karte zu laden.
 
 Was fehlt, ist eine Möglichkeit, innerhalb eines Filesystems einer SD-Karte zu navigieren, Programme zu laden oder Dateien anzuzeigen. Um diese Lücke zu füllen, ist die SteckShell entstanden. In der aktuellen Version 0.6 unterstützt die Shell folgende Funktionen:
 

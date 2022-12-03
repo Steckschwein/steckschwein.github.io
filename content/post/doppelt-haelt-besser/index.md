@@ -3,12 +3,6 @@ draft: false
 
 title: "Doppelt hält besser"
 date: "2014-02-22"
-categories: 
-  - "adressdekoder"
-  - "gal"
-  - "galasm"
-  - "steckschwein"
-  - "vhdl"
 ---
 
 Damit sich ein "Steckschwein" nicht so einsam fühlt, haben wir das ganze nochmal geklont. Jetzt hat jeder sein eigenes Steckschwein und kann daran rumschrauben oder besser gesagt rumstecken.

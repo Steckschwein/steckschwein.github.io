@@ -3,12 +3,6 @@ draft: false
 
 title: "Ein richtiger Computer soll es sein"
 date: "2014-03-15"
-categories: 
-  - "adressdekoder"
-  - "lcd"
-  - "ram"
-  - "rom"
-  - "via"
 ---
 
 Nachdem die vorangegangenen Spielereien sehr ermutigend verliefen, war der nächste Schritt klar. Wenn wir so weit kommen, kommen wir auch noch weiter. Das Ziel ist jetzt definitiv ein funktionierender 8bit-Rechner mit 64k RAM.
