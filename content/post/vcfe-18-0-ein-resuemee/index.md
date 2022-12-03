@@ -3,8 +3,7 @@ draft: false
 
 title: "VCFe 18.0 - ein Resümee"
 date: "2017-05-02"
-categories: 
-  - "allgemein"
+tags: 
   - "forth"
   - "vcfe"
 ---
