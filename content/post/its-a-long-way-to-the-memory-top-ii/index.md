@@ -1,6 +1,7 @@
 ---
 title: "It's a Long Way to the Memory Top, Part II"
 date: 2022-10-26
+author: Thomas
 tags:
   - mmu
   - ram
