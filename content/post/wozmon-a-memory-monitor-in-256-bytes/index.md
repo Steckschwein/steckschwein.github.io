@@ -3,12 +3,9 @@ draft: false
 
 title: "WOZMON - a memory monitor in 256 bytes"
 date: "2018-07-22"
-categories: 
-  - "debugging"
-  - "experiment"
-  - "hexdump"
-  - "software"
-coverImage: "wozmon.jpg"
+tags: 
+  - "debug"
+  - "wozmon"
 ---
 
 The [woz monitor, also known as WOZMON](https://www.sbprojects.net/projects/apple1/wozmon.php), is a pretty simple memory monitor and was the system software located in the 256 byte PROM on the Apple I. Wozmon is used to inspect and modify memory contents or to execute programs already located in memory. Steve Wozniak managed to squeeze all that functionality into 256 bytes. That's right, bytes. Not megabytes, not kilobytes. Bytes.
