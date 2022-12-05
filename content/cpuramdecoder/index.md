@@ -4,7 +4,8 @@ categories:
   - hardware
 ---
 
-The CPU boards carries the main CPU 65c02, 64k RAM organized in two 32k * 8 SRAM chips (62256). We decided to use SRAM just because it's much simpler to use than DRAM as we do not need a DRAM conroller. Also, small SRAM chips are cheap and easy to obtain. The ROM is a 28c256 EEPROM, which is banked in at $e000 in 8k steps. Clock generation and reset circuit reside on the CPU board, too. We decided to replicate the NE555 based reset circuit used by commodore in the PET series as a little hommage.
+The CPU boards carries the main CPU 65c02, 64k RAM organized in two 32k * 8 SRAM chips (62256). We decided to use SRAM just because it's much simpler to use than DRAM as we do not need a DRAM conroller. Also, small SRAM chips are cheap and easy to obtain. The ROM is a 28c256 EEPROM, which is banked in at $e000 in 8k steps. \
+Clock generation and reset circuit reside on the CPU board, too. We decided to replicate the NE555 based reset circuit used by commodore in the PET series as a little hommage. Clock is generated using a 16MHz can oscillator and a 74HCT393 4bit counter to divide the 16 MHz into 4 jumper-selectable clocks: 8 MHz, 4 MHz, 2 Mhz and 1 MHz
 
 ![CPU Memory Board](images/cpu_mem_rdy.png) CPU/memory board
 
@@ -63,7 +64,7 @@ The 28C256 EEPROM is 32k * 8, and we only bank in 8k. To make the whole EEPROM a
 
 ## Waitstate generation
 
-The Steckschwein is clocked at at 8MHz, and probably more in the future, as the WDC 65c02 is actually rated for 14MHz. Not all components are capable of that bus speed though, so we need to take care about them. The 65c02 has us covered by providing a pin called "RDY", which can be used to stop and freeze the CPU at whatever it is doing right now. While accessing slower devices such as the video chip, sound chip and ROM, the Steckschwein halts the CPU for 1 cycle, giving those devices the time they need.
+The Steckschwein is clocked at at 8MHz, and probably more in the future. The WDC 65c02 is actually rated for 14MHz, and is known to be overclock-friendly. Not all components are capable of that bus speed though, so we need to take care about them. The 65c02 has us covered by providing a pin called "RDY", which can be used to stop and freeze the CPU at whatever it is doing right now. While accessing slower devices such as the video chip, sound chip and ROM, the Steckschwein halts the CPU for 1 cycle, giving those devices the time they need.
 
 ![printed board with parts description](images/steckschwein_hw.png) printed board with parts description
 
