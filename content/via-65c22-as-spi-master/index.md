@@ -8,6 +8,8 @@ One of the fundamental design decisions when creating the Steckschwein was to us
 
 The most common io device for the 6502 processor is the 6522 VIA (Versatile Interface Adapter). In our case, we are using it among a few other things as as the SPI master. VIA port B is solely dedicated to be used with SPI devices. The direction MISO (Master In, Slave Out) is covered by the internal shift register of the VIA. The VIA pins are used as follows:
 
+|VIA pin |SPI / SD card pin|
+|---|---|
 |PB0|SPICLK|
 |PB1|SS1 SD-card|
 |PB2|SS2 PS/2 keyboard controller (ATmega8)|
