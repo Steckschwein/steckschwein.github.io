@@ -3,7 +3,7 @@ draft: false
 
 title: "Das Schwein kann singen..."
 date: "2015-01-04"
-categories: 
+tags: 
   - "opl2"
   - "sound"
   - "ym3812"

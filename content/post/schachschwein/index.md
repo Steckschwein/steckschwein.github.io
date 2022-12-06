@@ -3,11 +3,6 @@ draft: false
 
 title: "Schachschwein"
 date: "2015-03-21"
-categories: 
-  - "portierung"
-  - "schach"
-  - "software"
-  - "spiel"
 ---
 
 Nachdem das Grundsystem nun in Form von Platinen vorliegt und Marko dabei ist, das Videoboard zu layouten, ist die Gelegenheit günstig, schon einmal ein wenig vorhandene Software auf das Steckschwein zu portieren. Den Anfang macht [MicroChess](http://benlo.com/microchess/index.html), 1976 von Peter Jennings für den MOS KIM-1 entwickelt und von [Daryl Rictor modifiziert](http://www.6502.org/source/games/uchess/uchess.htm), um über ein serielles Terminal als Ein- /Ausgabestation spielbar zu sein, inklusive der coolen ASCII-Art-Darstellung des Schachbretts.

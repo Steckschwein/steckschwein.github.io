@@ -3,14 +3,6 @@ draft: false
 
 title: "Chiptuning"
 date: "2016-01-30"
-categories: 
-  - "adressdekoder"
-  - "cpu"
-  - "gal"
-  - "galasm"
-  - "ram"
-  - "rom"
-  - "waitstate"
 ---
 
 An den Heimcomputern von "damals" gemessen ist das Steckschwein mit 4 MHz durchaus einer der schnelleren 6502-Rechner. Damals waren zumeist Taktraten von 1 MHz üblich. Einige wenige hatten deutlich mehr, wie z.B. der Apple IIgs (65816) mit 2.8 MHz. Einen 4 MHz-65(C)02-Heimcomputer hat es damals nach unserem Informationsstand nicht gegeben.

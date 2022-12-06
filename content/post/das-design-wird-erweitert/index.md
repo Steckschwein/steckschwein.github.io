@@ -3,14 +3,14 @@ draft: false
 
 title: "Das Design wird erweitert"
 date: "2014-03-16"
-categories: 
-  - "64k"
-  - "acia"
-  - "adressdekoder"
-  - "allgemein"
-  - "gal"
-  - "ram"
-  - "vhdl"
+#categories: 
+  #- "64k"
+  #- "acia"
+  #- "adressdekoder"
+  #- "allgemein"
+  #- "gal"
+  #- "ram"
+  #- "vhdl"
 ---
 
 Sinn der Sache ist ja nicht, etwas 1:1 nachzubauen, sondern ein möglichst eigenes Design. Nachdem wir mit Chris' Design - bzw. dessen, was wir davon übernommen haben (Adressdekodierung, ACIA, VIA) - genug herumgespielt hatten, galt es, "unser" Ding draus zu machen. Der erste Schritt war ein Sprung ins kalte Wasser in die uns bislang noch unbekannte Welt der Programmierbaren Logik. Dazu haben wir zunächst die Adressdekodierung bestehend aus 74ls138/74ls154 sowie etwas glue Logic in VHDL implementiert und auf ein GAL22V10D gebrannt. Somit haben wir 3 TTL-ICs durch einen GAL ersetzt und wieder Platz auf dem Steckbrett geschaffen. Und das Beste: Änderungen an der Dekodierungslogik laufen ab sofort minimalinvasiv.

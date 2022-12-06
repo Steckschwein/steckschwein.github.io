@@ -3,15 +3,9 @@ draft: false
 
 title: "Eine fanTASTische Reise"
 date: "2014-12-15"
-categories: 
-  - "avr"
-  - "ps-2"
-  - "spi"
-  - "tastatur"
-  - "timing"
 ---
 
-Von unserem Plan, einen AVR-µC als PS/2-Tastaturcontroller als SPI-Slave einzusetzen, haben wir ja schon [in der Vergangenheit](http://wordpress.steckschwein.de/wordpress/index.php/2014/07/11/tore-zur-welt/)  berichtet. Damals hieß es: "Bequemerweise gibt es zahlreiche fertige Lösungen, die z.B. am anderen Ende rs232 sprechen. Wir wollen aber nur wegen einer Tastatur keinen zweiten UART verbauen. Fehlt also nur eine kleine Anpassung auf SPI."
+Von unserem Plan, einen AVR-µC als PS/2-Tastaturcontroller als SPI-Slave einzusetzen, haben wir ja schon [in der Vergangenheit](/post/tore-zur-welt/)  berichtet. Damals hieß es: "Bequemerweise gibt es zahlreiche fertige Lösungen, die z.B. am anderen Ende rs232 sprechen. Wir wollen aber nur wegen einer Tastatur keinen zweiten UART verbauen. Fehlt also nur eine kleine Anpassung auf SPI."
 
 Hiermit sollte das Schicksal seinen Lauf nehmen. Der kühne Griff in die Bastelkiste sollte einen ATtiny2313 zu Tage fördern, welcher der zugedachten Aufgabe durchaus gewachsen zu sein schien.
 

@@ -3,8 +3,6 @@ draft: false
 
 title: "Fixing the white screen problem on a Tekway DST1062B oscilloscope"
 date: "2019-02-17"
-categories: 
-  - "allgemein"
 ---
 
 The Tekway DST 1062B (also known unter the Hantek or Voltcraft brand) is an inexpensive 60MHz digital storage oscilloscope, which is very much hackable and has proven to be worth its weight in gold pressed latinum.

@@ -3,10 +3,6 @@ draft: false
 
 title: "Am Anfang war das NOP"
 date: "2014-02-12"
-categories: 
-  - "experiment"
-  - "nop"
-  - "urschleim"
 ---
 
 Wenn man 20 Jahre lang den Jugendtraum mit sich rumträgt, einen 8bit-Rechner selber zu bauen, dann hat man 20 Jahre Zeit, einzurosten. Langsames Rantasten an das große Ziel ist angesagt.

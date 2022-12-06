@@ -1,5 +1,7 @@
 ---
 title: "SPI-Devices"
+categories:
+  - hardware
 ---
 
 ### SD-Card as really cheap and lazy mass storage

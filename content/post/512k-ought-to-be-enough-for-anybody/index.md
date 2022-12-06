@@ -3,6 +3,11 @@ title: "512k Ought to Be Enough for Anybody"
 date: 2022-05-27
 draft: false
 author: "Thomas"
+tags:
+  - ram
+  - cpld
+  - mmu
+
 ---
 
 

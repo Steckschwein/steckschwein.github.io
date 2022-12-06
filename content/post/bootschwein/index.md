@@ -3,12 +3,6 @@ draft: false
 
 title: "Bootschwein"
 date: "2015-01-05"
-categories: 
-  - "bios"
-  - "bootloader"
-  - "fat"
-  - "fat32"
-  - "sd-karte"
 ---
 
 Die Aufgabe, die wir dem (Steck)BIOS zugedacht haben, beschränkt sich darauf, die vorhandene Hardware zu initialisieren, auf eine eingelegte SD-Karte zu prüfen, und dann von dort das eigentliche "Betriebssystem" zu laden. Fast ein bisschen PC-like.

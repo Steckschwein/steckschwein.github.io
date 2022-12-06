@@ -3,12 +3,12 @@ draft: false
 
 title: "Weird bug in SD card code"
 date: "2019-10-16"
-categories: 
+tags: 
   - "assembly"
   - "code"
   - "debugging"
   - "murphy"
-  - "sd-karte"
+  - "sd-card"
   - "spi"
 ---
 

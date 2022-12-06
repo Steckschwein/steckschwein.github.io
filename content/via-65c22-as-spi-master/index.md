@@ -1,11 +1,15 @@
 ---
 title: "IO: VIA 65c22 as SPI-Master"
+categories:
+  - hardware
 ---
 
 One of the fundamental design decisions when creating the Steckschwein was to use SPI as the main peripheral bus. This way, various different devices can be utilized using a single interface protocol. The main killer feature for using SPI was to be able to use an SD card as mass storage. This gives us mass storage with almost no extra hardware effort, only level conversion is needed between the system (5V) and the card (3.3V).
 
 The most common io device for the 6502 processor is the 6522 VIA (Versatile Interface Adapter). In our case, we are using it among a few other things as as the SPI master. VIA port B is solely dedicated to be used with SPI devices. The direction MISO (Master In, Slave Out) is covered by the internal shift register of the VIA. The VIA pins are used as follows:
 
+|VIA pin |SPI / SD card pin|
+|---|---|
 |PB0|SPICLK|
 |PB1|SS1 SD-card|
 |PB2|SS2 PS/2 keyboard controller (ATmega8)|

@@ -3,8 +3,9 @@ draft: false
 
 title: "Forth Benchmarks"
 date: "2019-07-02"
-categories: 
-  - "allgemein"
+tags: 
+  - "forth"
+  - "benchmark"
 ---
 
 The main motivation to get Forth up and running on the Steckschwein was to participate at [The Ultimate Benchmark](https://theultimatebenchmark.org/), in order to crush all 8bit competition to dust.

@@ -3,8 +3,6 @@ draft: false
 
 title: "Es wird geschraubt"
 date: "2016-07-25"
-categories: 
-  - "allgemein"
 ---
 
 Es ist mal wieder recht still ums Schwein. Und mal wieder ist das kein Indiz dafür, dass nicht gewerkelt wird. In den letzten Wochen wurden BIOS und der SteckOS-Kernel auf Basis des Assemblers ca65 neu gebaut. Dessen nachgelagerter Linker erlaubt eine übersichtlichere Strukturierung der Codebasis.

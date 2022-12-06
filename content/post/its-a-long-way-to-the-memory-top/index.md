@@ -2,6 +2,11 @@
 title: "It's a Long Way to the Memory Top"
 date: 2022-06-28
 draft: false
+tags:
+  - mmu
+  - ram
+  - cpld
+  - plcc
 ---
 
 In preparation for the build of our new CPU-Board, we purchased two WDC 65c02 in PLCC44 package from some eBay vendor.

@@ -3,19 +3,6 @@ draft: false
 
 title: "Es wird wieder gesteckt"
 date: "2017-12-09"
-categories: 
-  - "9918"
-  - "allgemein"
-  - "dram"
-  - "pal"
-  - "rgb"
-  - "scart"
-  - "tms9929"
-  - "v9958"
-  - "vdp"
-  - "video"
-  - "video-chip"
-  - "video-signal"
 ---
 
 Wir haben uns schon länger ein Upgrade des Videochips des Steckschweins vorgenommen. Der TMS9929 ist ein netter Chip, aber an einem 8MHz-65c02, der dazu noch so coole Hardware-Features hat, fühlt er sich ein bisschen wie die Achillesferse an.

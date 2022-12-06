@@ -3,10 +3,6 @@ draft: false
 
 title: "Euphorie: Jetzt auch RAM!"
 date: "2014-02-12"
-categories: 
-  - "code"
-  - "ram"
-  - "urschleim"
 ---
 
 Die Euphorie ob des Ausgangs des letzten Versuchs nutzend wird jetzt weitergebaut. Immerhin sind wir so nah an einem richtigen Computer. Was fehlt, ist RAM. Leider nichts im Haus.
