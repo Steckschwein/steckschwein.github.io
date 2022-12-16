@@ -3,8 +3,13 @@ languageCode = "en-us"
 theme = ["Mainroad"]
 paginate = 5
 #sectionPagesMenu = "main"
+opengraph = true
+schema = true
+twitter_cards = true
 
 [Params]
+  opengraph = true
+  schema = true
   twitter_cards = true # Enable Twitter Cards if true
   readmore = false # Show "Read more" button in list if true
   post_meta = ["author", "date", "categories", "translations"] # Order of post meta information
@@ -21,6 +26,12 @@ paginate = 5
   twitter = "Steckschwein"
   bitbucket = "steckschwein"
   github = "Steckschwein"
+
+[[Params.widgets.social.custom]]
+  title = "Youtube"
+  url = "https://www.youtube.com/@Programmiernutte"
+  icon = "03b2ceb73723f8b53cd533e4fba898ee.svg" # Optional. Path relative to "layouts/partials"
+  rel = "noopener noreferrer" # Set to false to remove the rel attribute
 
 [Params.widgets.search]
   url = "/search/"
