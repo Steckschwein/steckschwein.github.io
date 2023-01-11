@@ -77,11 +77,12 @@ The above illustration shows how the Slot selection scheme works. It is also pos
 
 In order to be able to execute the RESET Vector the CPU requires ROM being present in Slot 3 at system start time. So the default bank assignment looks like this:
 
-Slot 0	Bank 0
-Slot 1	Bank 1
-Slot 2	Bank 2
-Slot 3	Bank 80
-Default bank assignment at boot
+| Slot | Bank |
+|:----:|:----:|
+|   0	 |   0  |
+|   1	 |   1  |
+|   2	 |   2  |
+|   3	 |  80  | 
 
 We do not need the ROMOFF mechanism anymore, so the loading of steckOS will follow a different procedure:
 
