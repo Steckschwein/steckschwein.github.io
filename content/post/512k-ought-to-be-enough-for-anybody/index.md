@@ -30,6 +30,7 @@ We might upgrade the 32k 28C256 EEPROM to a 512k Flash EEPROM in one of the next
 |1|$4000|$7fff|
 |2|$8000|$bfff|
 |3|$c000|$ffff|
+
 The 4 Slots within the 64k address space
 
 ```
