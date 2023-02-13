@@ -1,6 +1,7 @@
 ---
 title: "Get the CPLD Board to run"
 date: "2023-02-11"
+draft: true
 tags:
   - "65c02"
   - "cpu"
@@ -8,6 +9,7 @@ tags:
 ---
 
 #### Status
+table gives a brief overview what we have achieved with the new CPLD board attached to the steckschwein peripherie boards (i/o, video/opl).
 | Date | CPU Clock (MHz) | Status | issues/finings |
 |:--:|-:|:-:|:-|
 | 2023/02/10 | 2 | OK | n.a.|
