@@ -7,6 +7,9 @@ opengraph = true
 schema = true
 twitter_cards = true
 
+[markup]
+  goldmark.renderer.unsafe=true
+
 [Params]
   opengraph = true
   schema = true
