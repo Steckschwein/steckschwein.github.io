@@ -16,7 +16,7 @@ While routing, I was briefly wondering why U29's bypass capacitor was at the opp
 ![Schematic showing GND at the top and VCC at the bottom](images/vcc_gnd_mixup_fixed.png "r/W missing") \
 VCC/GND mixup fixed
 
-The next error was not that easy to spot. After we could not get anything running on the SBC, and we got it only to talk to us over serial after some trickery with the /OE line, I sat down and compared the schematics and the UCF definitions. That one hit hard.. I forgot to connect the CPU's r/w line to the CPLD. When I build the schematics, I went over the CPLD pinout in the UCF file and the schematics several times, and still managed to miss r/W. 
+The next error was not that easy to spot. After we could not get anything running on the SBC, and we got it only to talk to us over serial after some trickery with the /OE line, I sat down and compared the schematics and the UCF definitions. That one hit hard.. I forgot to connect the CPU's r/w line to the CPLD. When I build the schematics, I went over the CPLD pinout in the UCF file and the schematics several times, and still managed to miss r/W.  Bodge-wire time!
 
 ![Pin 44 of the CPLD unconnected](images/cpu_rw_missing.png "r/W missing") \
 Pin 44 (CPU_r/W) unconnected
