@@ -1,6 +1,6 @@
 ---
 title: "SBC - Revision 0.6"
-date: 2023-05-15
+date: 2023-08-11
 draft: false
 author: "Thomas"
 tags:
