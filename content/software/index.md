@@ -12,7 +12,7 @@ All sources for steckOS, BIOS, firmware, decoder and also schematics and layouts
 All software (steckOS, BIOS, libraries, tools, games, stuff): 
 [https://github.com/Steckschwein/code](https://github.com/Steckschwein/code)
 
-Hardware (Schematics, PCB Layouts): 
+Hardware (Schematics, PCB Layouts, Firmware): 
 [https://github.com/Steckschwein/hardware](https://github.com/Steckschwein/hardware)
 
 Steckschwein Emulator: 
