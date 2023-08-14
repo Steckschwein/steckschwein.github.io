@@ -15,7 +15,7 @@ In it's current incarnation, the Steckschwein consists of 3 main units:
 
 The 62c22 VIA is mainly utilized as SPI master to implement SPI as the main peripheral bus, connecting SD-card, RTC and the ATmega8 (used as PS/2 controller) to the system. The block diagram shows how things are working together.
 
-**Schematics and pcb layouts** can be found at our [scm repository on bitbucket.org](https://bitbucket.org/steckschwein/steckschwein-hardware).
+**Schematics, pcb layouts and firmware** can be found at our [Github repository](https://github.com/Steckschwein/hardware).
 
 ![blockschaltbild](images/blockschaltbild.png)
 
