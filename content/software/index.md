@@ -10,10 +10,10 @@ All sources for steckOS, BIOS, firmware, decoder and also schematics and layouts
 
 
 All software (steckOS, BIOS, libraries, tools, games, stuff): 
-[https://bitbucket.org/steckschwein/steckschwein-code](https://bitbucket.org/steckschwein/steckschwein-code)
+[https://github.com/Steckschwein/code](https://github.com/Steckschwein/code)
 
 Hardware (Schematics, PCB Layouts): 
-[https://bitbucket.org/steckschwein/steckschwein-hardware](https://bitbucket.org/steckschwein/steckschwein-hardware)
+[https://github.com/Steckschwein/hardware](https://github.com/Steckschwein/hardware)
 
 Steckschwein Emulator: 
 [https://github.com/Steckschwein/steckschwein-emulator](https://github.com/Steckschwein/steckschwein-emulator)
