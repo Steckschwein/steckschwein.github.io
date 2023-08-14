@@ -3,10 +3,9 @@ draft: false
 
 title: "Musik"
 date: "2017-07-13"
-categories: 
-  - "allgemein"
+tags: 
   - "opl2"
-  - "sound"
+  - "audio"
   - "ym3812"
 ---
 
@@ -55,12 +54,13 @@ Der Plan ist folgender: Das IMF-File wird komplett in den Speicher geladen. Dann
 
 In der Zeropage benutzen wir 2 Bytes als unseren Delay-Zähler. Diesen setzen wir inital auf 0. In der Interrupt-Routine prüfen wir als erstes, ob der Delay-Zähler 0 ist. Wenn nicht, dekrementieren wir ihn und verlassen die Routine wieder. Ist der Zähler 0, setzen wir das Datenbyte aus unseren IMF-Daten in das vorgesehene Register. Dann rücken wir den Datenzeiger um 4 Bytes weiter, setzen den Delay-Zähler neu, und verlassen den Interrupt.
 
-player\_isr:
+```
+player_isr:
  pha
  phy
 
 bit via1ifr ; Interrupt from VIA?
- bpl @isr\_end
+ bpl @isr_end
 
 bit via1t1cl ; Acknowledge timer interrupt by reading channel low
 
@@ -73,53 +73,55 @@ bit via1t1cl ; Acknowledge timer interrupt by reading channel low
 ; if no, 16bit decrement and exit routine
  dec16 delayh
 
-bra @isr\_end
+bra @isr_end
 @l1:
 
 ldy #$00
- lda (imf\_ptr),y
- sta opl\_stat
+ lda (imf_ptr),y
+ sta opl_stat
 
 iny
- lda (imf\_ptr),y
+ lda (imf_ptr),y
 
-jsr opl2\_delay\_register
+jsr opl2_delay_register
 
-sta opl\_data
+sta opl_data
 
 iny
- lda (imf\_ptr),y
+ lda (imf_ptr),y
  sta delayh
 
 iny
- lda (imf\_ptr),y
+ lda (imf_ptr),y
  sta delayl
 
 ; song data end reached? then set state to 80 so loop will terminate
- lda imf\_ptr\_h
- cmp imf\_end+1
+ lda imf_ptr_h
+ cmp imf_end+1
  bne @l3
- lda imf\_ptr
- cmp imf\_end+0
+ lda imf_ptr
+ cmp imf_end+0
  bne @l3
 
 lda #$80
  sta state
 
-bra @isr\_end
+bra @isr_end
 @l3:
 
 ;advance pointer by 4 bytes
  clc
  lda #$04
- adc imf\_ptr
- sta imf\_ptr
- bcc @isr\_end
- inc imf\_ptr\_h
-@isr\_end:
+ adc imf_ptr
+ sta imf_ptr
+ bcc @isr_end
+ inc imf_ptr_h
+@isr_end:
  ; jump to kernel isr
  ply
  pla
- jmp (old\_isr)
+ jmp (old_isr)
+```
 
-[Der vollständige Player](https://bitbucket.org/steckschwein/steckschwein-code/src/074d9f378daeedeb45166a346cafd39907be22c9/imfplayer/?at=default) ist in unserem [Bitbucket-Repository](https://bitbucket.org/steckschwein/steckschwein-code) zu finden. Wir gehen jetzt den Wolfenstein 3D-Soundtrack hören.
+[Der vollständige Player](https://github.com/Steckschwein/code/tree/master/progs/imfplayer) ist in unserem [Github-Repository](https://github.com/Steckschwein/code) zu finden. Wir gehen jetzt den Wolfenstein 3D-Soundtrack hören.
+
