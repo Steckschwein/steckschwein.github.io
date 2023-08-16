@@ -45,7 +45,7 @@ twitter_cards = true
   [languages.en]
     title = "Steckschwein"
     subtitle = "An 8bit computer for the 21st century"
-    keywords = ""
+    keywords = "8bit,retro,homebrew"
     copyright = ""
     menuMore = "Show more"
     readMore = "Read more"
