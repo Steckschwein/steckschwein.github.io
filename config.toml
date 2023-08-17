@@ -11,10 +11,6 @@ twitter_cards = true
   goldmark.renderer.unsafe=true
 
 
-[Author] # Used in authorbox
-  name = "Steck Schwein"
-  bio = "Never trust a computer you did not build yourself"
-
 [Params]
   opengraph = true
   schema = true
