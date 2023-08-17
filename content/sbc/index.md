@@ -33,13 +33,12 @@ The 64k address space of the 65C02 is split into 4 areas sized 16k each. Let's c
 └──┴──┴──┴──┴──┴──┴──┴──┘
 {{< /goat >}}  
 
-{{< goat 75 >}}  
-┌─┬─┬─┬─┐
-│0│1│2│3│
-└─┴─┴─┴─┘
+ROM pages are numbered from 128 upwards
+{{< goat 20 >}}  
+┌───┬───┐
+│128│129│
+└───┴───┘
 {{< /goat >}}  
-
-
 
 
 |Slot|Start|End|
@@ -58,16 +57,22 @@ Slot 0 is special, since it also contains the zero page, the stack (as given by 
 | $0200-$02ff | IO-Area | 
 | $0300-$3fff | RAM |
 
-The IO-area consists of 16 byte areas 
+The IO-area consists of 16 byte areas for the peripheral devices to be mapped in and also 4 internal registers to control the memory mapping. 
 
 | Address | Device |
 | --- | --- |
 | $0200 | UART |
 | $0210 | VIA |
 | $0220 | VDP |
-| $0230 | 4 banking registers |
+| $0230 | banking register slot 0|
+| $0231 | banking register slot 1|
+| $0232 | banking register slot 2|
+| $0233 | banking register slot 3|
 | $0240 | OPL |
 | $0250 | Expansion Slot 0 |
 | $0260 | Expansion Slot 1 |
+| $0270 | reserved |
 
-The four "banking registers" are used to select 
+The four "banking registers" are used to select the memory page to be mapped into which slot.
+
+
