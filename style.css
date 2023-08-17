@@ -5,3 +5,25 @@
 .post-meta{
     color:rgba(96,221,108,.7);
 }
+
+.goat {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.goat-scale {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.goat > svg {
+  font-family: monospace;
+  font-size: medium;
+}
+
+@media only screen and (max-width: 650px) {
+  .goat-scale {
+    width: 100% !important;
+  }
+}
