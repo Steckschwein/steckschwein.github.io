@@ -20,7 +20,8 @@ The single board Steckschwein marks several major milestones in the development 
 The 64k address space of the 65C02 is split into 4 areas sized 16k each. Let's call these areas "slots". The 512k RAM and 32k ROM are also split into 16k blocks. Let's call those "pages".
 
 512k RAM organized in pages 16k each
-```goat
+
+{{< goat 75 >}}  
 ┌──┬──┬──┬──┬──┬──┬──┬──┐
 │0 │1 │2 │3 │4 │5 │6 │7 │
 ├──┼──┼──┼──┼──┼──┼──┼──┤
@@ -30,13 +31,13 @@ The 64k address space of the 65C02 is split into 4 areas sized 16k each. Let's c
 ├──┼──┼──┼──┼──┼──┼──┼──┤
 │24│25│26│27│28│29│30│31│
 └──┴──┴──┴──┴──┴──┴──┴──┘
-```
+{{< /goat >}}  
 
-```goat
+{{< goat 75 >}}  
 ┌─┬─┬─┬─┐
 │0│1│2│3│
 └─┴─┴─┴─┘
-```
+{{< /goat >}}  
 
 
 
