@@ -3,43 +3,40 @@ title: "Single Board Steckschwein"
 categories:
   - sbc
 ---
-The single board Steckschwein marks several major milestones in the development of our favourite homebrew computer.
+The single board Steckschwein marks several major milestones in the development of our favourite homebrew computer. The goal has alwas been to integrate the various boards onto one single PCB.
 
- - The first obvious milestone is of course having everything on one single circuit board. This is the thing we have been working towards since day one, and we are very happy and very proud of where we are now.
+## Specifications
+- [65c02-CPU](https://en.wikipedia.org/wiki/MOS_Technology_6502) @ 10MHz
+- 512k RAM
+- 32k ROM
+- Video chip [V9958](https://en.wikipedia.org/wiki/Yamaha_V9958)
+  - Video RAM: 128 KB + 64 KB of expanded VRAM (optional)
+  - Text modes:
+    - 80 x 24 
+    - 32 x 24
+  - Graphics Resolutions: 
+    - 512 x 212 (4 or 16 colors out of 512) 
+    - 256 x 212 (16, 256, 12499 or 19268 colors)
+  - Sprites: 32 (max 8 per horizontal line)
+  - Scroll registers
 
-- All glue logic has been integrated into one single CPLD Xilinx XC9572, nicknamed "Chuck" 
+- Sound chip [YM3812](https://en.wikipedia.org/wiki/Yamaha_YM3812) (OPL2)
+  - 9 voices
+  - 2 oscillators (operators) per voice
+  - 4 waveforms (sine, half-sine, absolute sine, pseudo-sawtooth) per operator
 
-  This includes clock- and wait state generation, chip select generation and memory banking logic. Also some additional "virtual" address lines (up to A18) have been added, extending addressable memory to 512k. From an architectural point of view, this the most important point, as we can now change the banking scheme, memory map, clock generation, etc. on the fly.
+- rs232 via [UART 16550](https://en.wikipedia.org/wiki/16550_UART)
+- SPI used as main peripheral bus for:
+    - sd-card based mass storage
+    - PS/2-peripheral controller (keyboard, mouse) (ATmega8)
+    - RTC ([Maxim DS1306](http://www.maximintegrated.com/en/products/digital/real-time-clocks/DS1306.html))
 
-  As a side effect, the system clock speed has been raised to 10 MHz
-
-- The "computer core" has been separated from the peripheral section using buffers.
 
 ## Memory Map
 
-The 64k address space of the 65C02 is split into 4 areas sized 16k each. Let's call these areas "slots". The 512k RAM and 32k ROM are also split into 16k blocks. Let's call those "pages".
+For a detailed description on how our banking scheme works, see [this post](/post/512k-ought-to-be-enough-for-anybody/) and also the [slides from our talk at CVFe 22.0](/pdf/vcfe22.pdf).
 
 512k RAM organized in pages 16k each
-
-{{< goat 75 >}}  
-┌──┬──┬──┬──┬──┬──┬──┬──┐
-│0 │1 │2 │3 │4 │5 │6 │7 │
-├──┼──┼──┼──┼──┼──┼──┼──┤
-│8 │9 │10│11│12│13│14│15│
-├──┼──┼──┼──┼──┼──┼──┼──┤
-│16│17│18│19│20│21│22│23│
-├──┼──┼──┼──┼──┼──┼──┼──┤
-│24│25│26│27│28│29│30│31│
-└──┴──┴──┴──┴──┴──┴──┴──┘
-{{< /goat >}}  
-
-ROM pages are numbered from 128 upwards
-{{< goat 20 >}}  
-┌───┬───┐
-│128│129│
-└───┴───┘
-{{< /goat >}}  
-
 
 |Slot|Start|End|
 |:---|:---|:---|
@@ -73,6 +70,6 @@ The IO-area consists of 16 byte areas for the peripheral devices to be mapped in
 | $0260 | Expansion Slot 1 |
 | $0270 | reserved |
 
-The four "banking registers" are used to select the memory page to be mapped into which slot.
+The four "banking registers" are used to select the memory page to be mapped into which slot. Writing 0 into the banking register for slot 0 ($0230) will map the first 16k of the 512k into slot 0.
 
 
