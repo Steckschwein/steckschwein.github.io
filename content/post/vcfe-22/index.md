@@ -17,3 +17,6 @@ Hermann-Weinhauser-Straße 7 \
 81673 München 
 
 Check it out: https://vcfe.org/
+
+
+UPDATE: Our talk (in german) about our approach to address 512k is available [here](/pdf/vcfe22.0.pdf)
