@@ -151,3 +151,17 @@ User Port and the espansion slots have custom pinouts, of course.
 |14|IRQ|
 |15|VIA CA2|
 |16|VIA CA1|
+
+
+### JTAG
+This connector is used to program the CPLD
+
+|Pin|Description|
+|---|-----------|
+|1|TMS|
+|2|TDI|
+|3|TDO|
+|4|TCK|
+|5|GND|
+|6|5V|
+
