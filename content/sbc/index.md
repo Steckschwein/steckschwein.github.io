@@ -73,3 +73,81 @@ The IO-area consists of 16 byte areas for the peripheral devices to be mapped in
 The four "banking registers" are used to select the memory page to be mapped into which slot. Writing 0 into the banking register for slot 0 ($0230) will map the first 16k of the 512k into slot 0.
 
 
+## Pinouts
+Connectors on the Steckschwein are more or less standard like PS/2, RS232, s-video. RGB is "inspired" by the NeoGeo Console, who used a standard 8pin DIN-Type connector for RGB, Composite Video and Audio. \
+User Port and the espansion slots have custom pinouts, of course.
+
+### S-Video
+
+![S-Video jack](images/s-video.png)
+
+|Pin|Description|
+|---|-----------|
+|1  |Luminance GND|
+|2  |Chrominance GND|
+|3  |Luminance|
+|4  |Chrominance|
+ 
+### RGB
+![RGB jack](images/rgb.png)
+
+|Pin|Description|
+|---|-----------|
+|1  |Audio|
+|2  |GND|
+|3  |Composite / Sync|
+|4  |5V|
+|5  |Green|
+|6  |Red|
+|7  |Composite / Sync|
+|8  |Blue|
+### Expansion Slots
+
+
+|Pin|Description|
+|---|-----------|
+|1|D0|
+|2|A9|
+|3|D1|
+|4|A1|
+|5|D2|
+|6|A2|
+|7|D3|
+|8|A3|
+|9|D4|
+|10|RW|
+|11|D5|
+|12|WE|
+|13|D6|
+|14|OE|
+|15|D7|
+|16|CS|
+|17|IRQ|
+|18|NMI|
+|19|RDY|
+|20|PHI2|
+|21|RESET|
+|22|RESET_TRIG|
+|23|5V|
+|24|GND|
+
+### User Port
+
+|Pin|Description|
+|---|-----------|
+|1|VIA PA0|
+|2|VIA PA1|
+|3|VIA PA2|
+|4|VIA PA3|
+|5|VIA PA4|
+|6|VIA PA5|
+|7|VIA PA6|
+|8|VIA PA7|
+|9|GND|
+|10|5V|
+|11|N.C. (key)|
+|12|N.C. (key)|
+|13|RESET|
+|14|IRQ|
+|15|VIA CA2|
+|16|VIA CA1|
