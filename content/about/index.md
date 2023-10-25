@@ -12,12 +12,14 @@ The name "Steckschwein" originates to the very early stages of our project, wher
 
 ![schweinebande](images/schweinebande.jpg) First PCB based prototypes
 
+![single board steckschwein](images/sbc_0.6_land.png) Single Board Steckschwein
+
 We started off with a very small test circuit, having the 65c02 execute only NOPs, by hard wiring the data lines to $EA. Then,  we started to add new components step by step, such as ROM, RAM, IO interface (65c22 VIA), serial interface (UART 16550), until we arrived at the current specifications:
 
-- [65c02-CPU](https://de.wikipedia.org/wiki/MOS_Technology_6502) @ [8MHz](/post/chiptuning/)
-- 64k RAM
+- [65c02-CPU](https://de.wikipedia.org/wiki/MOS_Technology_6502) @ [10MHz](/post/chiptuning/)
+- 512k RAM
 - 32k bankable ROM
-- Video chip [TMS9929](https://en.wikipedia.org/wiki/Texas_Instruments_TMS9918), now upgraded to [V9958](https://en.wikipedia.org/wiki/Yamaha_V9958)
+- Video chip [V9958](https://en.wikipedia.org/wiki/Yamaha_V9958)
 - Sound chip [YM3812](https://de.wikipedia.org/wiki/Yamaha_YM3812) (OPL2)
 - rs232 via [UART 16550](https://en.wikipedia.org/wiki/16550_UART)
 - SPI used as main peripheral bus for:
