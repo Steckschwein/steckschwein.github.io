@@ -1,6 +1,6 @@
 ---
-title: "VCFb 2023 - "
-date: 2023-10-14
+title: "VCFb 2023"
+date: 2023-10-25
 draft: false
 author: "Thomas"
 tags:
