@@ -1,7 +1,7 @@
 ---
 title: "VCFb 2023 - "
 date: 2023-10-14
-draft: true
+draft: false
 author: "Thomas"
 tags:
   - vcfb
