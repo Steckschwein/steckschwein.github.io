@@ -14,21 +14,69 @@ categories:
 # CPU/Memory
 
 The actual computer core is composed of the actual CPU, a 512k x 8 SRAM, a 32k EEPROM and a Xilinx XC9572 CPLD. The CPLD now provides all glue logic, such as address decoding, memory mapping, wait state and clock generation. In previous revisions, this part was made up of GALs and a couple of TTL ICs.
-In order to address 512k, the CPLD provides additional address lines. The banking scheme to address all memory is based on dividing the 64k address space of the 65c02 CPU into 4 "slots" sized 16k each:
+In order to address 512k, the CPLD provides additional address lines. 
+
+![schematic of cpu / memory/ glue logic part](images/cpu_mem_cpld.png)
+
+## What is the CPLDs job?
+
+### Address decoding
+
+The CPLD decodes the address bus and decides if ROM or RAM is enabled at that address, or, if the address lies within the IO area, if the VIA, the UART, the VDP or the OPL2 chip is being talked to by the CPU.
+
+The IO area is a group of memory locations located at $0200 to $027f that is divided into 8 sections sized 16 bytes each, which is enough to accommodate all memory locations of all of the chips we use.
+
+|Location|Device|
+|:---|:----|
+|$0200|UART|
+|$0210|VIA|
+|$0220|VDP|
+|$0230|Internal memory mapping registers|
+|$0240|OPL2|
+|$0250|Expansion slot 0|
+|$0260|Expansion slot 1|
+|$0270|reserved for future use|
+
+### Memory paging
+
+In order to make 512k adressable by the 65c02's 16bit address bus, some extra logic is required.
+We divide the 64k address space of the 65c02 CPU into 4 "slots" sized 16k each:
 
 |Slot|Start|End|
-|:--:|:---:|:-:|
+|:---|:----|:--|
 |0|$0000|$3fff|
 |1|$4000|$7fff|
 |2|$8000|$bfff|
 |3|$c000|$ffff|
 
-Four registers within the CPLD (one register per slot) are used to assign one of 32 RAM pages (512k / 16k) or one of 2 ROM pages (32k / 16k) to each slot. For a detailed description of the banking scheme, see [here](/post/512k-ought-to-be-enough-for-anybody/).
-
-![schematic of cpu / memory/ glue logic part](images/cpu_mem_cpld.png)
+The "internal memory mapping registers" mentioned above  are used to assign one of 32 RAM pages (512k / 16k) or one of 2 ROM pages (32k / 16k) to each slot. 
 
 
-## Waitstate generation
+```
+R0: 00000000
+R1: 00000001
+R2: 00000100
+R3: 10000000
+    |  |   | 
+    |  + Bits 0-4: Page Number (0-31 for RAM, 0-1 for ROM)
+    |
+    +--- Bit 7: 0 if RAM, 1 if ROM
+
+```
+
+Each register has bits 0-4 to contain the page number (actual 16k block within the 512k memory space), and bit 7 to select ROM or RAM. Bits 5 and 6 are reserved for future use.
+Example: 
+A register value of $81 (10000001) in register 3 will cause ROM bank 1 to be visible in Slot 3 ($c000-$ffff).
+
+The IO-area ($0200-$02f) will always be present at this location, no matter the value of register 0.
+
+For a more detailed description of the banking scheme, see [here](/post/512k-ought-to-be-enough-for-anybody/).
+
+### Clock generation
+
+The master clock is also routed through the CPLD in order to be able to get some flexibility to shape the clock signal. At the moment, the master oscillator's clock is just divided by two. 
+
+### Waitstate generation
 
 The Steckschwein is clocked at at 10MHz, and probably more in the future. The WDC 65c02 is actually rated for 14MHz, and is known to be "overclock-friendly". Not all components are capable of that bus speed though, so we need to take care about them. The 65c02 has us covered by providing a pin called “RDY”, which can be used to stop and freeze the CPU at whatever it is doing right now. While accessing slower devices such as the video chip, sound chip and ROM, the Steckschwein halts the CPU for a given number of cycles, giving those devices the time they need.
 
