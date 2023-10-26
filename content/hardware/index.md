@@ -32,6 +32,7 @@ Four registers within the CPLD (one register per slot) are used to assign one of
 
 The Steckschwein is clocked at at 10MHz, and probably more in the future. The WDC 65c02 is actually rated for 14MHz, and is known to be "overclock-friendly". Not all components are capable of that bus speed though, so we need to take care about them. The 65c02 has us covered by providing a pin called “RDY”, which can be used to stop and freeze the CPU at whatever it is doing right now. While accessing slower devices such as the video chip, sound chip and ROM, the Steckschwein halts the CPU for a given number of cycles, giving those devices the time they need.
 
+## Reset
 
 The reset circuit is based on an NE555 and is the same as in the Commodore PET and VC20. 
 
