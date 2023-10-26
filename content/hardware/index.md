@@ -116,6 +116,8 @@ The VIA pins are used as follows:
 |CB1|SPICLK (connected to PB0)|
 |CB2|MISO|
 
+D1 only needs to be populated when using a VIA variant with a totem pole IRQ pin instead of open drain, such as the W65c22S. If an NMOS compatible variant is used, a wire has to be popupated for D1.
+
 ![schematic of via](images/via.png)
 
 
@@ -139,6 +141,7 @@ This gives us access to gigabytes of mass storage with minimal effort. No need t
 #### PS/2 keyboard controller
 
 An ATmega8 is used as PS/2 keyboard and maybe (later) mouse controller. The code running on the ATmega is based on [AVR Application Note 313](http://www.atmel.com/Images/doc1235.pdf), We added code to act as an SPI slave and implemented german keyboard layout and support for a few modifier keys that was missing in the original code. Also, special keys or key combinations like SysRq and the three-finger-salute are being handled directly by the keyboard controller to pull the respective signals like NMI or trigger a hardware reset.
+The pin header P2 can be used to access the rx and tx pin of the ATmega8's UART to be able to get some debug output. P3 is a standard ISP connector used to reflash the ATmega8's firmware.
 
 ![schematic of ps controller](images/ps2.png)
 
@@ -179,7 +182,7 @@ The core of the Steckschwein video section is the [Yamaha V9958](https://www.msx
 
 #### Digital Section
 
-The V9958 supports up to 192k of video RAM - 128k in two banks, plus additional 64k "extended" RAM.  The video chip having his own RAM also means, that every access to the video RAM has to happen through the means of the V9958. There is now way for the CPU to access the video RAM directly.
+The V9958 supports up to 192k of video RAM - 128k in two banks, plus additional 64k "extended" RAM.  The video chip having his own RAM also means that every access to the video RAM has to happen through the means of the V9958. There is no way for the CPU to access the video RAM directly.
 The VDP has it's own /WAIT line, which it can use to signal that it is still busy doing VRAM access. This line can be connected to the 65c02's RDY line to halt the CPU until the VDP is ready again.
 
 ![v9958 digital section](images/video_digital.png)
