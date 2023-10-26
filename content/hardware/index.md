@@ -25,16 +25,26 @@ In order to address 512k, the CPLD provides additional address lines. The bankin
 
 Four registers within the CPLD (one register per slot) are used to assign one of 32 RAM pages (512k / 16k) or one of 2 ROM pages (32k / 16k) to each slot. For a detailed description of the banking scheme, see [here](/post/512k-ought-to-be-enough-for-anybody/).
 
+![schematic of cpu / memory/ glue logic part](images/cpu_mem_cpld.png)
+
+
 ## Waitstate generation
 
 The Steckschwein is clocked at at 10MHz, and probably more in the future. The WDC 65c02 is actually rated for 14MHz, and is known to be "overclock-friendly". Not all components are capable of that bus speed though, so we need to take care about them. The 65c02 has us covered by providing a pin called “RDY”, which can be used to stop and freeze the CPU at whatever it is doing right now. While accessing slower devices such as the video chip, sound chip and ROM, the Steckschwein halts the CPU for a given number of cycles, giving those devices the time they need.
-
-![schematic of cpu / memory/ glue logic part](images/cpu_mem_cpld.png)
 
 
 The reset circuit is based on an NE555 and is the same as in the Commodore PET and VC20. 
 
 ![schematic of reset part](images/reset.png)
+
+
+## Buffers
+
+The "computer core", CPU, ROM, RAM and CPLD plus the VIA 65c22 and the "non-65xx-bus" native rest of the system, such as the UART 16550, V9958 and OPL2 are separated through two 74HCT245 buffers, to keep the bus lines as short as possible.
+
+![buffers](images/buffers.png)
+
+
 
 # I/O 
 
@@ -101,23 +111,73 @@ The 16550 provides a full featured serial interfaces and a FIFO. Also, it provid
 ![uart](images/uart.png)
 
 
-### Joysticks and User Port
+### Joysticks
 
 Since after using all of VIA Port B for SPI, all we have left is Port A to hook up anything else. One of our design goals is to be able to hook up two Atari/Commodore style joysticks. With only one 8bit IO port left, this is a bit tricky. 
 Our next approach included tri state drivers behind every joystick port. That way, in order to read the state of a particular joystick, the respective driver has to be enabled first. It is also possible to disable the drivers altogether, freeing port A up completely, which made it possible to add a freely programmable user port.
 
 ![io_joyports](images/joystick.png)
 
+### User Port
+By using the UART IO lines, the Joysticks can be completely disconnected from the VIA, freeing up it's entire port A for the user port and any custom extension one might want to connect there. IRQ and NMI lines are also accessible from the user port. An example for an user port extension could be an [adapter for SNES controllers](/post/connecting-snes-controller-to-the-steckschwein/).
 
-1. [CPU/Memory](/cpuramdecoder/)
-2. [IO (VIA 65c22), now also including UART](/via-65c22-as-spi-master/)
-    1. [SPI-Devices](/spi-devices/)
-    2. [UART 16550](/uart-16550/)
-    3. [Joysticks and user port](/joysticks-and-user-port/)
-3. [Video / audio board with V9958 VDP and YM3812 (OPL2) sound chip](/v9958-video-board/)
-
-The 62c22 VIA is mainly utilized as SPI master to implement SPI as the main peripheral bus, connecting SD-card, RTC and the ATmega8 (used as PS/2 controller) to the system. The block diagram shows how things are working together.
+![io_joyports](images/userport.png)
 
 
-[Download full schematics](/pdf/sbc_schematic_0.6.pdf)
-[Github repository](https://github.com/Steckschwein/hardware).
+### Video
+
+The core of the Steckschwein video section is the [Yamaha V9958](https://www.msx.org/wiki/Yamaha_V9958). The V9958 is the successor of the V9938, which in turn is the successor to our TMS9929/9918, which has served our project for quite some time. But it is hard to ignore what the V9958 has to offer (80 column text mode to begin with), so we decided to use it as the first major upgrade to the Steckschwein Hardware specs in a couple of years.
+
+#### Digital Section
+
+The V9958 supports up to 192k of video RAM - 128k in two banks, plus additional 64k "extended" RAM.  The video chip having his own RAM also means, that every access to the video RAM has to happen through the means of the V9958. There is now way for the CPU to access the video RAM directly.
+The VDP has it's own /WAIT line, which it can use to signal that it is still busy doing VRAM access. This line can be connected to the 65c02's RDY line to halt the CPU until the VDP is ready again.
+
+![v9958 digital section](images/video_digital.png)
+
+#### Analog Section
+
+A Sony CXA2075 is used as the video signal output stage and to additionally generate s-video and composite video from the VDPs RGB signal.
+The shown configuration is for generating PAL video. For NTSC, has to be changed from 2.61k/1% Ohms to 3.32k/1%, and the oscillator X2 needs to be 3.28 MHz instead of 4.43MHz. Also, the VDP needs to be initialized accordingly.
+The 8pin DIN jack for the RGB signal and the pinout is the same the NeoGeo console uses. We wanted an RGB jack that is not D-SUB23 or SCART, and we did not want to come up with out own. The NeoGeo pinout is exactly what we need, and there are also ready made cables available to buy. S-Video just uses the standard miniDIN connector.
+
+![v9958 digital section](images/video_analog.png)
+
+
+### Sound
+
+A real 8bit computer also needs a real soundchip, not some D/A converter that plays samples, but a real synthesizer on a chip, just like in the old days.
+
+And by thinking sound chip and 8bit, the first thing comes to mind is of course the MOS 6581 SID chip, prominently used in the C64 and hands down the best sound chip from the 8bit era. But the SID has a few drawbacks that would make it difficult to use for the Steckschwein:
+
+1. It’s maximum clock rating is 2MHz. We’re already running at 8MHz, so that’s going to be a problem.
+2. While not hard to come by, SID chips aren’t cheap. Prices of about 40 Euros or more per unit are common. And those chips are not NOS, they are most likely pulled from a C64. We do not want to build the Steckschwein out of scavenged parts.
+
+The other optimal choice would probably have been the Ensonic DOC5503 Chip, as used in the Apple IIgs, and also in the early Ensoniq Synthesizers as the ESQ-1 and the SQ-80, but these are hard to come by and documentation is scarce.
+
+So we decided to use the Yamaha [YM3812](https://en.wikipedia.org/wiki/Yamaha_YM3812) chip, which might be better known as OPL2. That’s right, the very chip that was used on early PC sound cards such as AdLib or the first Sound Blaster cards. OPL2 chips are easy to come by, and they are rather cheap.
+
+#### Digital Section
+
+The YM3812 is attached to the CPU data bus, CS and RD/WR signals are generated by the glue logic in the CPLD. The YM3812 does not output an analog audio signal directly, but a digital stream of encoded floating point numbers. To convert this into analog audio, it's companion chip, the Y3014B is used.
+
+![OPL2 digital section](images/audio_digital.png)
+
+#### Analog Section
+
+As mentioned above, the actial analog audio signal is generated by the Y3014B 16bit DAC. All thats needed to get an line level audio signal is an amplification stage using the very common operational amplifier LM324. Actually, the whole analog section is the same as the one in the [Commodore Sound Expander](https://www.c64-wiki.com/wiki/Commodore_Sound_Expander#Technical_Details) cartridge.
+
+![OPL2 analog section](images/audio_analog.png)
+
+### Expansion Slots
+
+The Steckschwein SBC has two expansion slots featuring the most relevant signals to build extension modules and/or prototype new hardware features.
+
+![expansion slots](images/slots.png)
+
+
+### Schematics and Repository.
+
+The full schematics are available as PDF [here](/pdf/sbc_schematic_0.6.pdf).
+
+Our [Github hardware repository](https://github.com/Steckschwein/hardware) does not only contain all KiCad files including schematics and pcb layouts, but also the firmware for the CPLD and the PS/2 controller.
