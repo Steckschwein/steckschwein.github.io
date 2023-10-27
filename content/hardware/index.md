@@ -13,12 +13,19 @@ categories:
 
 # CPU/Memory
 
-The actual computer core is composed of the actual CPU, a 512k x 8 SRAM, a 32k EEPROM and a Xilinx XC9572 CPLD. The CPLD now provides all glue logic, such as address decoding, memory mapping, wait state and clock generation. In previous revisions, this part was made up of GALs and a couple of TTL ICs.
-In order to address 512k, the CPLD provides additional address lines. 
+The actual computer core is composed of the actual 65c02 CPU, an Alliance Memory AS6C4008 512k x 8 SRAM, a 32k EEPROM Atmel 28c256 and a Xilinx XC9572 CPLD. 
 
 ![schematic of cpu / memory/ glue logic part](images/cpu_mem_cpld.png)
 
+## Buffers
+
+The "computer core", CPU, ROM, RAM and CPLD plus the VIA 65c22 and the "non-65xx-bus" native rest of the system, such as the UART 16550, V9958 and OPL2 are separated through two 74HCT245 buffers, to keep the bus lines as short as possible.
+
+![buffers](images/buffers.png)
+
 ## What is the CPLDs job?
+The CPLD now provides all glue logic, such as address decoding, memory mapping, wait state and clock generation. In previous revisions, this part was made up of GALs and a couple of TTL ICs.
+In order to address 512k, the CPLD provides additional address lines. 
 
 ### Address decoding
 
@@ -64,7 +71,9 @@ R3: 10000000
 
 ```
 
-Each register has bits 0-4 to contain the page number (actual 16k block within the 512k memory space), and bit 7 to select ROM or RAM. Bits 5 and 6 are reserved for future use.
+Each register has 8 bits. Bits 0-4 hold the page number (actual 16k block within the 512k memory space), and bit 7 is used to select ROM or RAM. Bits 5 and 6 are reserved for future use.
+So in theory, Page numbers below 128 refer to RAM, and page numbers above 128 refer to ROM. Practically, the maximum register number is 31 for each RAM or ROM, provided a 512k EEPROM is used. For now, it is 32k.
+
 Example: 
 A register value of $81 (10000001) in register 3 will cause ROM bank 1 to be visible in Slot 3 ($c000-$ffff).
 
@@ -74,11 +83,11 @@ For a more detailed description of the banking scheme, see [here](/post/512k-oug
 
 ### Clock generation
 
-The master clock is also routed through the CPLD in order to be able to get some flexibility to shape the clock signal. At the moment, the master oscillator's clock is just divided by two. 
+The master clock is also routed through the CPLD in order to be able to get some control over the shape of the system clock signal. At the moment, the master oscillator's clock is just divided by two. 
 
 ### Waitstate generation
 
-The Steckschwein is clocked at at 10MHz, and probably more in the future. The WDC 65c02 is actually rated for 14MHz, and is known to be "overclock-friendly". Not all components are capable of that bus speed though, so we need to take care about them. The 65c02 has us covered by providing a pin called “RDY”, which can be used to stop and freeze the CPU at whatever it is doing right now. While accessing slower devices such as the video chip, sound chip and ROM, the Steckschwein halts the CPU for a given number of cycles, giving those devices the time they need.
+The Steckschwein is running at 10MHz, and probably more in the future. The WDC 65c02 is actually rated for 14MHz, and is known to be "overclock-friendly". Not all components are capable of that bus speed though, so we need to take care about them. The 65c02 has us covered by providing a pin called “RDY”, which can be used to stop and freeze the CPU at whatever it is doing right now. While accessing slower devices such as the video chip, sound chip and ROM, the Steckschwein halts the CPU for a given number of cycles, giving those devices the time they need.
 
 ## Reset
 
@@ -87,11 +96,6 @@ The reset circuit is based on an NE555 and is the same as in the Commodore PET a
 ![schematic of reset part](images/reset.png)
 
 
-## Buffers
-
-The "computer core", CPU, ROM, RAM and CPLD plus the VIA 65c22 and the "non-65xx-bus" native rest of the system, such as the UART 16550, V9958 and OPL2 are separated through two 74HCT245 buffers, to keep the bus lines as short as possible.
-
-![buffers](images/buffers.png)
 
 
 
@@ -116,10 +120,10 @@ The VIA pins are used as follows:
 |CB1|SPICLK (connected to PB0)|
 |CB2|MISO|
 
-D1 only needs to be populated when using a VIA variant with a totem pole IRQ pin instead of open drain, such as the W65c22S. If an NMOS compatible variant is used, a wire has to be popupated for D1.
 
 ![schematic of via](images/via.png)
 
+The Dideo D1 only needs to be populated when using a VIA variant with a totem pole IRQ pin instead of open drain, such as the W65c22S. If an NMOS compatible variant is used, a wire has to be populated instead a diode.
 
 Basically, the process of reading data via SPI only consists of setting the appropriate slave select pin to low and then "wiggling" the PB0 pin as fast as possible, which is determined by how fast the CPU is able to write to the port. This also means that the shift register is used in "Shift In - External CB1 Clock Control (011)"-mode, which is the very mode affected by the infamous [VIA-Bug](http://forum.6502.org/viewtopic.php?t=342#p2310). We did not do anything circuit wise to implement a workaround. We rather rely on the fact, that we create the SPI clock using the processor and hereby have the SPI clock locked to the system clock, so the signal slopes have a fixed delay. This should take care of the bug not to occur. Hopefully.
 
