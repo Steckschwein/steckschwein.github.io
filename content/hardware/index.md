@@ -77,7 +77,7 @@ So in theory, Page numbers below 128 refer to RAM, and page numbers above 128 re
 Example: 
 A register value of $81 (10000001) in register 3 will cause ROM bank 1 to be visible in Slot 3 ($c000-$ffff).
 
-The IO-area ($0200-$02f) will always be present at this location, no matter the value of register 0.
+The IO-area ($0200-$02f0) will always be present at this location, no matter the value of register 0.
 
 For a more detailed description of the banking scheme, see [here](/post/512k-ought-to-be-enough-for-anybody/).
 
@@ -123,7 +123,7 @@ The VIA pins are used as follows:
 
 ![schematic of via](images/via.png)
 
-The Dideo D1 only needs to be populated when using a VIA variant with a totem pole IRQ pin instead of open drain, such as the W65c22S. If an NMOS compatible variant is used, a wire has to be populated instead a diode.
+The Dideo D1 only needs to be populated when using a VIA variant with a totem pole IRQ pin instead of open drain, such as the W65c22S. If the NMOS compatible variant W65c22N is used, a wire has to be populated instead a diode.
 
 Basically, the process of reading data via SPI only consists of setting the appropriate slave select pin to low and then "wiggling" the PB0 pin as fast as possible, which is determined by how fast the CPU is able to write to the port. This also means that the shift register is used in "Shift In - External CB1 Clock Control (011)"-mode, which is the very mode affected by the infamous [VIA-Bug](http://forum.6502.org/viewtopic.php?t=342#p2310). We did not do anything circuit wise to implement a workaround. We rather rely on the fact, that we create the SPI clock using the processor and hereby have the SPI clock locked to the system clock, so the signal slopes have a fixed delay. This should take care of the bug not to occur. Hopefully.
 
@@ -144,7 +144,7 @@ This gives us access to gigabytes of mass storage with minimal effort. No need t
 
 #### PS/2 keyboard controller
 
-An ATmega8 is used as PS/2 keyboard and maybe (later) mouse controller. The code running on the ATmega is based on [AVR Application Note 313](http://www.atmel.com/Images/doc1235.pdf), We added code to act as an SPI slave and implemented german keyboard layout and support for a few modifier keys that was missing in the original code. Also, special keys or key combinations like SysRq and the three-finger-salute are being handled directly by the keyboard controller to pull the respective signals like NMI or trigger a hardware reset.
+An ATmega8 is used as PS/2 keyboard and maybe (later) mouse controller. The code running on the ATmega is based on [AVR Application Note 313](http://www.atmel.com/Images/doc1235.pdf) and takes care of the PS/2 protocol handling and mapping keycodes to ASCII characters. We added code to act as an SPI slave and implemented german keyboard layout and support for a few modifier keys that was missing in the original code. Also, special keys or key combinations like SysRq and the three-finger-salute are being handled directly by the keyboard controller to pull the respective signals like NMI or trigger a hardware reset.
 The pin header P2 can be used to access the rx and tx pin of the ATmega8's UART to be able to get some debug output. P3 is a standard ISP connector used to reflash the ATmega8's firmware.
 
 ![schematic of ps controller](images/ps2.png)
