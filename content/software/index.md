@@ -31,6 +31,10 @@ The steckShell and commands is modeled after Unix/DOS. The shell only has one bu
 
 ### commands and tools
 
+So what can you do with steckOS? The short answer is - not much. steckOS's primary goal was to be able to navigate the file system and start programs.
+To be able to do this, we had to write (or port) a couple of commands and a few tools, a few of which we want to introduce:
+
+#### help
 ![steckOS right after boot](images/help.png)
 
 The "help"-command lists the most important commands.
@@ -38,7 +42,7 @@ The "help"-command lists the most important commands.
 #### ll
 ![steckOS ll command output](images/ll.png)
 
-Like it's Unix/Linux counterpart, ll shows the content of the current directory or the directory specified as command line argument.
+Like it's Unix/Linux counterpart, ll shows the content of the current directory or the directory specified as command line argument. The output resembles that of DOS's dir command.
 
 #### stat
 ![steckOS stat command output](images/stat.png)
@@ -49,13 +53,33 @@ Much like the Unix/Linux stat command, stat shows meta information about a file 
 
 ![steckOS nvram command output](images/nvram.png)
 
-nvram shows and/or modifies the contents of the RTCs NVRAM. The NVRAM is used to store the OS loader filename, UART settings like baud rate and line parameters, and the keyboard delay and repeat rate.
+nvram shows and/or modifies the contents of the RTCs NVRAM. The NVRAM is used to store the OS loader filename, UART settings like baud rate and line parameters, and the keyboard delay and repeat rate. nvram is written in C.
+
+#### date and setdate
+
+![steckOS nvram command output](images/date_setdate.png)
+
+date and setdate are used to display or set the RTC time. date and setdate are written in C.
 
 #### fsinfo
 
 ![steckOS fsinfo command output](images/fsinfo.png)
 
 fsinfo lists some information about the currently mounted FAT32 file system.
+
+#### banner
+
+![steckOS banner command output](images/banner.png)
+
+
+A version of the Unix SYS V banner command taken from [here](https://github.com/uffejakobsen/sysvbanner/blob/master/banner.c). One of the few tools written in C. The source compiled with cc65 without modifications. We changed some int variables to unisigned char anyway to fit our 8bit CPU.
+
+#### wozmon
+
+
+![steckOS wozmon showing the memory mapping registers](images/wozmon.png)
+
+Steve Wozniak's legendary memory monitor fitting in one page (256 bytes). The effort of adapting it to steckOS is documented in [this blog post](/post/wozmon-a-memory-monitor-in-256-bytes/)
 
 # TaliForth2
 
@@ -84,9 +108,9 @@ An endless runner, just like the one built-in into the Chrome browser.
 
 ![pong](images/pong.png)
 
-Our pong clone uses the TMS9918's multicolor mode with 64x24 pixels. Yes, those squares are single pixels.
+Our pong clone uses the TMS9918's multicolor mode with 64x48 pixels. Yes, those squares are single pixels.
 
 ## MicroChess
 ![microchess](images/microchess.png)
 
-MicroChess is a chess game, written initially for the MOS/Commodore KIM-1 by Peter Jennings, making the KIM-1 the first affordable chess computer. Our version is based on the [serial line version by Daryl Rictor](http://6502.org/source/games/uchess/uchess.htm) which includes display of a chess board.
+MicroChess is a chess game, written in 1976 for the MOS/Commodore KIM-1 by Peter Jennings, making the KIM-1 the first affordable chess computer. Our version is based on the [serial line version by Daryl Rictor](http://6502.org/source/games/uchess/uchess.htm) which includes display of a chess board.
