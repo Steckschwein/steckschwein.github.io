@@ -27,7 +27,7 @@ twitter_cards = true
 
 [Params.widgets.social]
   # Enable parts of social widget
-  twitter = "Steckschwein"
+  #twitter = "Steckschwein"
   github = "Steckschwein"
 
 [[Params.widgets.social.custom]]
