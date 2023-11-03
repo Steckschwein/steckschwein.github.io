@@ -54,10 +54,16 @@ twitter_cards = true
 
     [languages.en.menu]
       [[languages.en.menu.main]]
+        identifier = "about"
+        name = "About"
+        url = "/about/"
+        weight = 50
+
+      [[languages.en.menu.main]]
         identifier = "blog"
         name = "Blog"
         url = "/"
-        weight = 1
+        weight = 100
       [[languages.en.menu.main]]
         identifier = "hardware"
         name = "Hardware"
@@ -69,12 +75,15 @@ twitter_cards = true
         url = "/software/"
         weight = 400
       [[languages.en.menu.main]]
-        identifier = "about"
-        name = "About"
-        url = "/about/"
-        weight = 450
+        identifier = "resources"
+        name = "Resources"
+        url = "/resources/"
+        weight = 500
+
+
+
       [[languages.en.menu.main]]
         identifier = "impressum"
         name = "Impressum"
         url = "/impressum/"
-        weight = 500
+        weight = 600
