@@ -14,20 +14,22 @@ On failure, the BIOS expects a binary uploaded via XMODEM.
 
 # steckOS
 
-The operating system loader (LOADER.PRG) contains the actual steckOS kernel, and the startup code that loads the OS and starts up the kernel.
-
-## boot
 ![steckOS right after boot](images/steckOS.png)
 
+The operating system loader (LOADER.PRG) contains the actual steckOS kernel, and the startup code that loads the OS and starts up the kernel. The OS loader as well as any executable in steckOS are in PRG format with the load address in the first two bytes as known from Commodore computers.
 
 ## kernel
 
-The steckOS kernel provides interrupt handlers, test display routines for the VDP and a jumptable with kernel calls. 
+After having been loaded by the OS loader, the kernel initializes the hardware (again), mounts the SD card and tries to find the shell executable, which it then executes.
+The steckOS kernel provides basic interrupt handling, text display routines for the VDP and a jumptable with kernel calls.
+
+## library
+
+Hardware interfacing code and utility routines both used by BIOS and steckOS are located in the library. Examples are utility routines to convert binary to ASCII decimal or hexadecimal, but also the SD card driver and FAT32 file system implementation.
 
 ## shell
 
-
-The steckShell and commands is modeled after Unix/DOS. The shell only has one builtin command, "cd". Every other command is searched for in the "PATH" and executed. steckOS uses PRG executables with the load address contained in the first two bytes.
+The steckShell is a simple REPL interface roughly modeled after the Unix sh shell. The shell only has one builtin command, "cd". Every other command is searched for in the "PATH" and executed. Commands and tools are mostly named after their Unix / DOS counterparts. 
 
 ### commands and tools
 
@@ -44,10 +46,28 @@ The "help"-command lists the most important commands.
 
 Like it's Unix/Linux counterpart, ll shows the content of the current directory or the directory specified as command line argument. The output resembles that of DOS's dir command.
 
+#### ls
+![steckOS ls command output](images/ls.png)
+
+Displays directory contents in short form, just like the ls command in Unix/Linux.
+
 #### stat
 ![steckOS stat command output](images/stat.png)
 
 Much like the Unix/Linux stat command, stat shows meta information about a file or directory, including file attributes. There is also an attrib command to set/unset attributes. 
+
+#### attrib
+
+![steckOS attrib command example](images/attrib.png)
+
+Much like it's DOS counterpart, attrib is used to set/unset certain FAT attributes such as the hidden bit.
+
+#### fsinfo
+
+![steckOS fsinfo command output](images/fsinfo.png)
+
+fsinfo lists some information about the currently mounted FAT32 file system.
+
 
 #### nvram
 
@@ -55,17 +75,13 @@ Much like the Unix/Linux stat command, stat shows meta information about a file 
 
 nvram shows and/or modifies the contents of the RTCs NVRAM. The NVRAM is used to store the OS loader filename, UART settings like baud rate and line parameters, and the keyboard delay and repeat rate. nvram is written in C.
 
+
 #### date and setdate
 
 ![steckOS nvram command output](images/date_setdate.png)
 
 date and setdate are used to display or set the RTC time. date and setdate are written in C.
 
-#### fsinfo
-
-![steckOS fsinfo command output](images/fsinfo.png)
-
-fsinfo lists some information about the currently mounted FAT32 file system.
 
 #### banner
 
@@ -74,43 +90,48 @@ fsinfo lists some information about the currently mounted FAT32 file system.
 
 A version of the Unix SYS V banner command taken from [here](https://github.com/uffejakobsen/sysvbanner/blob/master/banner.c). One of the few tools written in C. The source compiled with cc65 without modifications. We changed some int variables to unisigned char anyway to fit our 8bit CPU.
 
-#### wozmon
 
+#### wozmon
 
 ![steckOS wozmon showing the memory mapping registers](images/wozmon.png)
 
 Steve Wozniak's legendary memory monitor fitting in one page (256 bytes). The effort of adapting it to steckOS is documented in [this blog post](/post/wozmon-a-memory-monitor-in-256-bytes/)
 
-# TaliForth2
+## Programming languages
+
+An 8bit computer is nothing without period correct interpreter languages like BASIC and Forth.
+
+### EhBasic
+
+![ehbasic](images/ehbasic.png)
+
+EhBasic is a quite common BASIC interpreter among homebrew enthusiasts because of it's easy portability. Our version is based on the [65c02 version by forum.6502.org user floobydust](http://forum.6502.org/viewtopic.php?f=5&t=5760). We extended it with a few graphics commands that interface with the V9958's command engine and implemented a LOAD routine that accepts ASCII source files.
+
+
+### TaliForth2
 
 ![tali forth](images/taliforth.png)
 
 [TaliForth 2](https://github.com/scotws/TaliForth2) is a subroutine threaded code (STC) implementation of an ANS-based Forth for the 65c02 written by Scot W. Stevenson. 
 
 
-# EhBasic
-
-![ehbasic](images/ehbasic.png)
-
-EhBasic is a quite common BASIC interpreter among homebrew enthusiasts because of it's easy portability. Our version is based on the [65c02 version by forum.6502.org user floobydust](http://forum.6502.org/viewtopic.php?f=5&t=5760). We extended it with a few graphics commands that interface with the V9958's command engine.
-
-# Games
+## Games
 
 A computer is nothing without games, so we had to write/port a few.
 
-## dinosaur
+### dinosaur
 
 ![dinosaur](images/dinosaur.png)
 
 An endless runner, just like the one built-in into the Chrome browser.
 
-## pong
+### pong
 
 ![pong](images/pong.png)
 
 Our pong clone uses the TMS9918's multicolor mode with 64x48 pixels. Yes, those squares are single pixels.
 
-## MicroChess
+### MicroChess
 ![microchess](images/microchess.png)
 
 MicroChess is a chess game, written in 1976 for the MOS/Commodore KIM-1 by Peter Jennings, making the KIM-1 the first affordable chess computer. Our version is based on the [serial line version by Daryl Rictor](http://6502.org/source/games/uchess/uchess.htm) which includes display of a chess board.
