@@ -105,7 +105,7 @@ An 8bit computer is nothing without period correct interpreter languages like BA
 
 ![ehbasic](images/ehbasic.png)
 
-EhBasic is a quite common BASIC interpreter among homebrew enthusiasts because of it's easy portability. Our version is based on the [65c02 version by forum.6502.org user floobydust](http://forum.6502.org/viewtopic.php?f=5&t=5760). We extended it with a few graphics commands that interface with the V9958's command engine and implemented a LOAD routine that accepts ASCII source files.
+EhBasic is a quite common BASIC interpreter among homebrew enthusiasts because of it's easy portability. Our version is based on the [65c02 version by forum.6502.org user floobydust](http://forum.6502.org/viewtopic.php?f=5&t=5760). We extended it with a few graphics commands that interface with the V9958's command engine and implemented a [LOAD routine that accepts ASCII source files](/post/ascii_ehbasic/).
 
 
 ### TaliForth2
