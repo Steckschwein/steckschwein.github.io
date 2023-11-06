@@ -135,3 +135,11 @@ Our pong clone uses the TMS9918's multicolor mode with 64x48 pixels. Yes, those 
 ![microchess](images/microchess.png)
 
 MicroChess is a chess game, written in 1976 for the MOS/Commodore KIM-1 by Peter Jennings, making the KIM-1 the first affordable chess computer. Our version is based on the [serial line version by Daryl Rictor](http://6502.org/source/games/uchess/uchess.htm) which includes display of a chess board.
+
+## Other neat stuff
+
+### unrclock
+
+![unrclock](images/unrclock.png)
+
+An unary clock, nice to look at, useful as screen saver, and like pong another showcase for the 64x48 pixel multicolor mode.
