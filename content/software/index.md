@@ -23,6 +23,73 @@ The operating system loader (LOADER.PRG) contains the actual steckOS kernel, and
 After having been loaded by the OS loader, the kernel initializes the hardware (again), mounts the SD card and tries to find the shell executable, which it then executes.
 The steckOS kernel provides basic interrupt handling, text display routines for the VDP and a jumptable with kernel calls.
 
+### Jumptable
+
+#### basic kernel stuff
+
+|Label       |Purpose                              |
+|:-----------|:------------------------------------|
+|krn_getkey  |fetch character from keyboard buffer |
+|krn_chrout  |output character to screen           |
+|krn_upload  |jump to xmodem upload routine        |
+|krn_execv   |load PRG file and execute            |
+
+
+#### filesystem stuff
+
+|Label             |Purpose                              |
+|:-----------------|:------------------------------------|
+|krn_mount         |mount FAT32 filesystem               |
+|krn_open          |open file                            |
+|krn_chdir         |change into directory                |
+|krn_unlink        |delete file                          |
+|krn_rmdir         |delete directory                     |
+|krn_mkdir         |create directory                     |
+|krn_close         |close file                           |
+|krn_close_all     |close all open files                 |
+|krn_fread:        |read entire file                     | 
+|krn_fread_byte    |read byte from file                  |
+|krn_write         |write file                           |
+|krn_find_first    |find first dir entry for pattern     |
+|krn_find_next     |find next dir entry for pattern      |
+|krn_getcwd:       |get current directory                |
+
+#### display stuff
+
+|Label             |Purpose                              |
+|:-----------------|:------------------------------------|
+|krn_textui_init   |                                     |
+|krn_textui_enable ||
+|krn_textui_disable|| 
+|krn_display_off   ||
+|krn_textui_crsxy  |set cursor to position x/y           |
+|krn_textui_update_crs_ptr| |
+|krn_textui_clrscr_ptr|blank screen |
+|krn_textui_setmode|set display mode |
+|krn_textui_crs_onoff|cursor on/off|
+
+#### sd card stuff
+
+|Label             |Purpose                              |
+|:-----------------|:------------------------------------|
+|krn_init_sdcard   |initialize SD card in SPI mode|
+|krn_sd_write_block|write block to SD card|
+|krn_sd_read_block |read block from SD card|
+
+#### spi stuff
+|Label                 |Purpose                              |
+|:---------------------|:------------------------------------|
+|krn_spi_select_device |select SPI device|
+|krn_spi_deselect      |deselect all SPI devices|
+|krn_spi_rw_byte       |read/write byte|
+|krn_spi_r_byte        |read byte|
+
+#### serial stuff
+|Label                 |Purpose                              |
+|:---------------------|:------------------------------------|
+|krn_uart_tx           |write byte over serial|
+|krn_uart_rx           |read byte over serial|
+
 ## library
 
 Hardware interfacing code and utility routines both used by BIOS and steckOS are located in the library. Examples are utility routines to convert binary to ASCII decimal or hexadecimal, but also the SD card driver and FAT32 file system implementation.
