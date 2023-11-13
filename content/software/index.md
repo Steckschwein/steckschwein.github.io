@@ -61,7 +61,6 @@ The steckOS kernel provides basic interrupt handling, text display routines for 
 |krn_textui_init   |                                     |
 |krn_textui_enable ||
 |krn_textui_disable|| 
-|krn_display_off   ||
 |krn_textui_crsxy  |set cursor to position x/y           |
 |krn_textui_update_crs_ptr| |
 |krn_textui_clrscr_ptr|blank screen |
@@ -72,7 +71,6 @@ The steckOS kernel provides basic interrupt handling, text display routines for 
 
 |Label             |Purpose                              |
 |:-----------------|:------------------------------------|
-|krn_init_sdcard   |initialize SD card in SPI mode|
 |krn_sd_write_block|write block to SD card|
 |krn_sd_read_block |read block from SD card|
 
