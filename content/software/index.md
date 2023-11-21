@@ -61,6 +61,7 @@ The steckOS kernel provides basic interrupt handling, text display routines for 
 |krn_textui_init   |                                     |
 |krn_textui_enable ||
 |krn_textui_disable|| 
+|krn_textui_crsxy  |set cursor to position x/y           |
 |krn_textui_update_crs_ptr| |
 |krn_textui_setmode|set display mode |
 |krn_textui_crs_onoff|cursor on/off|
