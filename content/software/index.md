@@ -47,12 +47,12 @@ The steckOS kernel provides basic interrupt handling, text display routines for 
 |krn_mkdir         |create directory                     |
 |krn_close         |close file                           |
 |krn_close_all     |close all open files                 |
-|krn_fread:        |read entire file                     | 
+|krn_fread         |read entire file                     | 
 |krn_fread_byte    |read byte from file                  |
 |krn_write         |write file                           |
 |krn_find_first    |find first dir entry for pattern     |
 |krn_find_next     |find next dir entry for pattern      |
-|krn_getcwd:       |get current directory                |
+|krn_getcwd        |get current directory                |
 
 #### display stuff
 
@@ -61,9 +61,7 @@ The steckOS kernel provides basic interrupt handling, text display routines for 
 |krn_textui_init   |                                     |
 |krn_textui_enable ||
 |krn_textui_disable|| 
-|krn_textui_crsxy  |set cursor to position x/y           |
 |krn_textui_update_crs_ptr| |
-|krn_textui_clrscr_ptr|blank screen |
 |krn_textui_setmode|set display mode |
 |krn_textui_crs_onoff|cursor on/off|
 
