@@ -1,6 +1,7 @@
 ---
 title: "Loading ASCII sources in EhBasic"
-date: 2021-09-23T15:00:00+00:00
+date: 2021-09-23T15:00:00+00
+author: Thomas
 draft: false
 tags:
   - fat
