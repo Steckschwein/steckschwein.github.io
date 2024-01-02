@@ -23,6 +23,8 @@ We have to thank [Andre Fachat's Pages on 6502.org](http://www.6502.org/users/an
 
 The [VCFe (Vintage Computer Festival Europe)](http://vcfe.org), organised by Hans, has become some sort of "home-base" for us. So we have to include everyone we met there.
 
+[Michael Steil] (https://www.pagetable.com) is to thank for convincing us about the necessity of an emulator, and providing us with a skeleton of his Commander X16 emulator. This would form the basis to build our own Steckschwein-emulator, which has become a crucial component in Steckschwein software development.
+
 All the people we had conversations with along the way that had some kind of impression on us and the Steckschwein are just too many to list, so we won't even try, out of fear that we might leave someone out.
 
 After all, there obviously is a very active home brew computing community out there, and we are happy to be part of it. 
