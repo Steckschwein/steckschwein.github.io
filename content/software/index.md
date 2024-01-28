@@ -93,13 +93,69 @@ The steckOS kernel provides basic interrupt handling, text display routines for 
 Hardware interfacing code and utility routines both used by BIOS and steckOS are located in the library. Examples are utility routines to convert binary to ASCII decimal or hexadecimal, but also the SD card driver and FAT32 file system implementation.
 
 ## shell
-
-The steckShell is a simple REPL interface roughly modeled after the Unix sh shell. The shell only has one builtin command, "cd". Every other command is searched for in the "PATH" and executed. Commands and tools are mostly named after their Unix / DOS counterparts. 
-
-### commands and tools
-
 So what can you do with steckOS? The short answer is - not much. steckOS's primary goal was to be able to navigate the file system and start programs.
-To be able to do this, we had to write (or port) a couple of commands and a few tools, a few of which we want to introduce:
+
+To be able to do this, the first thing needed was a command line interface. The steckShell is a simple REPL interface roughly modeled after the Unix sh shell. The shell also provides commands to inspect and modify memory contents.
+
+### internal commands
+
+The following commands are internally build into the shell executable.
+
+#### pwd, mkdir, rmdir, rm, cls
+
+![steckOS pwd, mkdir, rmdir, rm command output](images/pwd_mkdir_rmdir_rm.png)
+
+These commands do what their Unix/Linux/DOS counterparts do.
+
+#### up
+
+![steckOS up command output](images/up.png)
+
+up jumps to the kernel xmodem upload routine and expects an executable in PRG format to be sent via xmodem.
+
+#### pd
+
+![steckOS pd command output](images/pd.png)
+
+pd (page dump) shows a memory page (256 bytes) or a range of memory pages in hexdump format.
+
+#### ms
+
+![steckOS ms command output](images/ms.png)
+
+ms (memory set) sets the content of a memory address plus the following bytes
+
+#### go
+
+![steckOS go command output](images/go.png)
+
+
+go starts executing code at the given memory location
+
+#### load
+
+![steckOS load command output](images/load.png)
+
+
+load is used to load the contents of a file to a give memory location
+
+#### save
+
+![steckOS save command output](images/save.png)
+
+save is used to save a memory area (from address, to address) to a file
+
+#### bd
+
+![steckOS bd command output](images/bd.png)
+
+bd (block dump) loads a block (512 bytes) from SD card and displays it's contents like pd
+
+
+### external commands and tools
+
+Every other command is searched for in a hard coded "PATH" and executed. Commands and tools are mostly named after their Unix / DOS counterparts. 
+
 
 #### help
 ![steckOS right after boot](images/help.png)
@@ -107,14 +163,16 @@ To be able to do this, we had to write (or port) a couple of commands and a few 
 The "help"-command lists the most important commands.
 
 #### ll
+
 ![steckOS ll command output](images/ll.png)
 
 Like it's Unix/Linux counterpart, ll shows the content of the current directory or the directory specified as command line argument. The output resembles that of DOS's dir command.
 
 #### ls
+
 ![steckOS ls command output](images/ls.png)
 
-Displays directory contents in short form, just like the ls command in Unix/Linux.
+Displays directory contents, like a mix of the DOS "dir" command and the "ls" command in Unix/Linux.
 
 #### stat
 ![steckOS stat command output](images/stat.png)
