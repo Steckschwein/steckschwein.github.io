@@ -1,7 +1,6 @@
 # Modules
 
 [fat32](#fat32) | [joystick](#joystick) | [keyboard](#keyboard) | [sdcard](#sdcard) | [spi](#spi) | [uart](#uart) | [util](#util) | [vdp](#vdp) | 
-
 ***
 
 
@@ -26,6 +25,7 @@ Out
 : C, C=0 on success (A=0), C=1 and A=<error code> otherwise<br />X, index into fd_area of the opened directory (which is FD_INDEX_CURRENT_DIR)
 
 
+***
 
 ### fat_close
 
@@ -42,6 +42,7 @@ Out
 : C, 0 on success, 1 on error<br />A, error code
 
 
+***
 
 ### fat_find_first
 
@@ -58,6 +59,7 @@ Out
 : Z, 1 on success, 0 on error<br />A, error code<br />C, 0 if found and dirptr is set to the dir entry found (requires Z=1), else 1
 
 
+***
 
 ### fat_find_next
 
@@ -74,6 +76,7 @@ Out
 : A, error code<br />C, 0 on success (A=0), C=1 and A=<error code>, else 1
 
 
+***
 
 ### fat_fopen
 
@@ -90,6 +93,7 @@ Out
 : C, 0 on success, 1 on error<br />A, error code<br />X, index into fd_area of the opened file
 
 
+***
 
 ### fat_fread_byte
 
@@ -106,6 +110,7 @@ Out
 : C, 0 on success, 1 on error<br />A, received byte
 
 
+***
 
 ### fat_get_root_and_pwd
 
@@ -122,6 +127,7 @@ Out
 : C, 0 on success, 1 on error<br />A, error code
 
 
+***
 
 ### fat_mkdir
 
@@ -138,6 +144,7 @@ Out
 : C, 0 on success, 1 on error<br />A, error code
 
 
+***
 
 ### fat_mount
 
@@ -151,6 +158,7 @@ Out
 : C, 0 on success, 1 on error<br />A, error code
 
 
+***
 
 ### fat_opendir
 
@@ -167,6 +175,7 @@ Out
 : C, C=0 on success (A=0), C=1 and A=<error code> otherwise<br />X, index into fd_area of the opened directory
 
 
+***
 
 ### fat_readdir
 
@@ -183,6 +192,7 @@ Out
 : C - C = 0 on success (A=0), C = 1 and A = <error code> otherwise
 
 
+***
 
 ### fat_rmdir
 
@@ -199,6 +209,7 @@ Out
 : C, 0 on success, 1 on error<br />A, error code
 
 
+***
 
 ### fat_unlink
 
@@ -215,6 +226,7 @@ Out
 : C, C=0 on success (A=0), C=1 and A=<error code> otherwise
 
 
+***
 
 ### fat_write_byte
 
@@ -231,8 +243,8 @@ Out
 : C, 0 on success, 1 on error
 
 
-
 ***
+
 
 ## joystick
 [joystick_detect](#joystick_detect) | [joystick_read](#joystick_read) | 
@@ -252,6 +264,7 @@ Out
 : Z, Z=1 no joystick detected, Z=0 joystick detected, port in A<br />A, detected joystick port, JOY_PORT1 or JOY_PORT2
 
 
+***
 
 ### joystick_read
 
@@ -265,8 +278,8 @@ Out
 : A, joystick button state - bit 0-4
 
 
-
 ***
+
 
 ## keyboard
 [fetchkey](#fetchkey) | [getkey](#getkey) | 
@@ -286,6 +299,7 @@ Out
 : A, fetched key / error code<br />C, 1 - key was fetched, 0 - nothing fetched
 
 
+***
 
 ### getkey
 
@@ -299,8 +313,8 @@ Out
 : A, fetched key<br />C, 1 - key was fetched, 0 - nothing fetched
 
 
-
 ***
+
 
 ## sdcard
 [sd_busy_wait](#sd_busy_wait) | [sd_cmd](#sd_cmd) | [sd_deselect_card](#sd_deselect_card) | [sd_read_block](#sd_read_block) | [sd_select_card](#sd_select_card) | [sdcard_init](#sdcard_init) | 
@@ -323,6 +337,7 @@ Out
 Clobbers
 : A,X,Y 
 
+***
 
 ### sd_cmd
 
@@ -342,6 +357,7 @@ Out
 Clobbers
 : A,X,Y 
 
+***
 
 ### sd_deselect_card
 
@@ -358,6 +374,7 @@ Out
 Clobbers
 : X 
 
+***
 
 ### sd_read_block
 
@@ -377,6 +394,7 @@ Out
 Clobbers
 : A,X,Y 
 
+***
 
 ### sd_select_card
 
@@ -393,6 +411,7 @@ Out
 Clobbers
 : A,X,Y 
 
+***
 
 ### sdcard_init
 
@@ -409,8 +428,8 @@ Out
 Clobbers
 : A,X,Y 
 
-
 ***
+
 
 ## spi
 [spi_r_byte](#spi_r_byte) | [spi_rw_byte](#spi_rw_byte) | 
@@ -433,6 +452,7 @@ Out
 Clobbers
 : A,X 
 
+***
 
 ### spi_rw_byte
 
@@ -452,8 +472,8 @@ Out
 Clobbers
 : A,X,Y 
 
-
 ***
+
 
 ## uart
 [uart_init](#uart_init) | [uart_rx](#uart_rx) | [uart_rx_nowait](#uart_rx_nowait) | [uart_tx](#uart_tx) | 
@@ -473,6 +493,7 @@ Clobbers
 Clobbers
 : A,X,Y 
 
+***
 
 ### uart_rx
 
@@ -486,6 +507,7 @@ Out
 : A, received byte
 
 
+***
 
 ### uart_rx_nowait
 
@@ -499,6 +521,7 @@ Out
 : A, received byte<br />C, 0 - no byte received, 1 - received byte
 
 
+***
 
 ### uart_tx
 
@@ -512,8 +535,8 @@ In
 
 
 
-
 ***
+
 
 ## util
 [atoi](#atoi) | [b2ad](#b2ad) | [b2ad2](#b2ad2) | [bin2dual](#bin2dual) | [hexout](#hexout) | [hextodec](#hextodec) | [strout](#strout) | 
@@ -536,6 +559,7 @@ Out
 : A, binary number
 
 
+***
 
 ### b2ad
 
@@ -549,6 +573,7 @@ In
 
 
 
+***
 
 ### b2ad2
 
@@ -562,6 +587,7 @@ In
 
 
 
+***
 
 ### bin2dual
 
@@ -575,6 +601,7 @@ In
 
 
 
+***
 
 ### hexout
 
@@ -588,6 +615,7 @@ In
 
 
 
+***
 
 ### hextodec
 
@@ -604,6 +632,7 @@ Out
 : A, ones<br />X, tens<br />Y, hundreds
 
 
+***
 
 ### strout
 
@@ -617,8 +646,8 @@ In
 
 
 
-
 ***
+
 
 ## vdp
 [vdp_wait_cmd](#vdp_wait_cmd) | 
@@ -641,5 +670,5 @@ Out
 : -
 
 
-
 ***
+
