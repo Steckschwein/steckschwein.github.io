@@ -105,7 +105,7 @@ The following commands are internally build into the shell executable.
 
 ![steckOS pwd, mkdir, rmdir, rm command output](images/pwd_mkdir_rmdir_rm.png)
 
-These commands do what their Unix/Linux/DOS counterparts do.
+These commands do pretty much what you think they do.
 
 #### up
 
@@ -129,7 +129,6 @@ ms (memory set) sets the content of a memory address plus the following bytes
 
 ![steckOS go command output](images/go.png)
 
-
 go starts executing code at the given memory location
 
 #### load
@@ -137,13 +136,13 @@ go starts executing code at the given memory location
 ![steckOS load command output](images/load.png)
 
 
-load is used to load the contents of a file to a give memory location
+load the contents of a file to a given memory location
 
 #### save
 
 ![steckOS save command output](images/save.png)
 
-save is used to save a memory area (from address, to address) to a file
+save a memory area (from address, to address) to a file
 
 #### bd
 
@@ -161,12 +160,6 @@ Every other command is searched for in a hard coded "PATH" and executed. Command
 ![steckOS right after boot](images/help.png)
 
 The "help"-command lists the most important commands.
-
-#### ll
-
-![steckOS ll command output](images/ll.png)
-
-Like it's Unix/Linux counterpart, ll shows the content of the current directory or the directory specified as command line argument. The output resembles that of DOS's dir command.
 
 #### ls
 
