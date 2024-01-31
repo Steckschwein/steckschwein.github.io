@@ -10,8 +10,7 @@
 ***
 
 
-### fat_chdir
-
+### <a name="fat_chdir" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/fat32/fat32_dir.s#L83">fat_chdir</a>
 
 > change current directoryreaddir expects a pointer in A/Y to store the next F32DirEntry structure representing the next FAT32 directory entry in the directory stream pointed of directory X.
 
@@ -27,8 +26,7 @@ Out
 
 ***
 
-### fat_close
-
+### <a name="fat_close" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/fat32/fat32.s#L290">fat_close</a>
 
 > close file, update dir entry and free file descriptor quietly
 
@@ -44,8 +42,7 @@ Out
 
 ***
 
-### fat_find_first
-
+### <a name="fat_find_first" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/fat32/fat32.s#L309">fat_find_first</a>
 
 > find first dir entry
 
@@ -61,8 +58,7 @@ Out
 
 ***
 
-### fat_find_next
-
+### <a name="fat_find_next" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/fat32/fat32.s#L323">fat_find_next</a>
 
 > find next dir entry
 
@@ -78,8 +74,7 @@ Out
 
 ***
 
-### fat_fopen
-
+### <a name="fat_fopen" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/fat32/fat32.s#L243">fat_fopen</a>
 
 > open file
 
@@ -95,8 +90,7 @@ Out
 
 ***
 
-### fat_fread_byte
-
+### <a name="fat_fread_byte" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/fat32/fat32.s#L168">fat_fread_byte</a>
 
 > read byte from file
 
@@ -112,8 +106,7 @@ Out
 
 ***
 
-### fat_get_root_and_pwd
-
+### <a name="fat_get_root_and_pwd" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/fat32/fat32_cwd.s#L47">fat_get_root_and_pwd</a>
 
 > get current directory
 
@@ -129,8 +122,7 @@ Out
 
 ***
 
-### fat_mkdir
-
+### <a name="fat_mkdir" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/fat32/fat32_write_dir.s#L74">fat_mkdir</a>
 
 > create directory denoted by given path in A/X
 
@@ -146,8 +138,7 @@ Out
 
 ***
 
-### fat_mount
-
+### <a name="fat_mount" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/fat32/fat32_mount.s#L47">fat_mount</a>
 
 > mount fat32 file system
 
@@ -160,8 +151,7 @@ Out
 
 ***
 
-### fat_opendir
-
+### <a name="fat_opendir" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/fat32/fat32_dir.s#L60">fat_opendir</a>
 
 > open directory by given path starting from directory given as file descriptor
 
@@ -177,8 +167,7 @@ Out
 
 ***
 
-### fat_readdir
-
+### <a name="fat_readdir" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/fat32/fat32_dir.s#L102">fat_readdir</a>
 
 > 
 
@@ -194,8 +183,7 @@ Out
 
 ***
 
-### fat_rmdir
-
+### <a name="fat_rmdir" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/fat32/fat32_write_dir.s#L48">fat_rmdir</a>
 
 > delete a directory entry denoted by given path in A/X
 
@@ -211,8 +199,7 @@ Out
 
 ***
 
-### fat_unlink
-
+### <a name="fat_unlink" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/fat32/fat32_write.s#L559">fat_unlink</a>
 
 > unlink (delete) a file denoted by given path in A/X
 
@@ -228,8 +215,7 @@ Out
 
 ***
 
-### fat_write_byte
-
+### <a name="fat_write_byte" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/fat32/fat32_write.s#L56">fat_write_byte</a>
 
 > write byte to file
 
@@ -252,8 +238,7 @@ Out
 ***
 
 
-### joystick_detect
-
+### <a name="joystick_detect" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/joystick/joystick.s#L45">joystick_detect</a>
 
 > detect joystick
 
@@ -266,8 +251,7 @@ Out
 
 ***
 
-### joystick_read
-
+### <a name="joystick_read" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/joystick/joystick.s#L17">joystick_read</a>
 
 > read state of specified joystick
 
@@ -287,8 +271,7 @@ Out
 ***
 
 
-### fetchkey
-
+### <a name="fetchkey" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/keyboard/keyboard.s#L40">fetchkey</a>
 
 > fetch byte from keyboard controller
 
@@ -301,8 +284,7 @@ Out
 
 ***
 
-### getkey
-
+### <a name="getkey" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/keyboard/keyboard.s#L66">getkey</a>
 
 > get byte from keyboard buffer
 
@@ -322,8 +304,7 @@ Out
 ***
 
 
-### sd_busy_wait
-
+### <a name="sd_busy_wait" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/sdcard/sdcard.s#L423">sd_busy_wait</a>
 
 > wait while sd card is busy
 
@@ -335,12 +316,11 @@ Out
 
 
 Clobbers
-: A,X,Y 
+: A,X,Y
 
 ***
 
-### sd_cmd
-
+### <a name="sd_cmd" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/sdcard/sdcard.s#L235">sd_cmd</a>
 
 > send command to sd card
 
@@ -355,12 +335,11 @@ Out
 
 
 Clobbers
-: A,X,Y 
+: A,X,Y
 
 ***
 
-### sd_deselect_card
-
+### <a name="sd_deselect_card" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/sdcard/sdcard.s#L324">sd_deselect_card</a>
 
 > Read block from SD Card
 
@@ -372,12 +351,11 @@ Out
 
 
 Clobbers
-: X 
+: X
 
 ***
 
-### sd_read_block
-
+### <a name="sd_read_block" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/sdcard/sdcard.s#L295">sd_read_block</a>
 
 > Read block from SD Card
 
@@ -392,12 +370,11 @@ Out
 
 
 Clobbers
-: A,X,Y 
+: A,X,Y
 
 ***
 
-### sd_select_card
-
+### <a name="sd_select_card" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/sdcard/sdcard.s#L409">sd_select_card</a>
 
 > select sd card, pull CS line to low with busy wait
 
@@ -409,12 +386,11 @@ Out
 
 
 Clobbers
-: A,X,Y 
+: A,X,Y
 
 ***
 
-### sdcard_init
-
+### <a name="sdcard_init" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/sdcard/sdcard.s#L65">sdcard_init</a>
 
 > initialize sd card in SPI mode
 
@@ -426,7 +402,7 @@ Out
 
 
 Clobbers
-: A,X,Y 
+: A,X,Y
 
 ***
 
@@ -437,8 +413,7 @@ Clobbers
 ***
 
 
-### spi_r_byte
-
+### <a name="spi_r_byte" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/spi/spi_r_byte.s#L38">spi_r_byte</a>
 
 > read byte via SPI
 
@@ -450,12 +425,11 @@ Out
 
 
 Clobbers
-: A,X 
+: A,X
 
 ***
 
-### spi_rw_byte
-
+### <a name="spi_rw_byte" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/spi/spi_rw_byte.s#L40">spi_rw_byte</a>
 
 > transmit byte via SPI
 
@@ -470,7 +444,7 @@ Out
 
 
 Clobbers
-: A,X,Y 
+: A,X,Y
 
 ***
 
@@ -481,8 +455,7 @@ Clobbers
 ***
 
 
-### uart_init
-
+### <a name="uart_init" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/uart/16550/uart_init.s#L11">uart_init</a>
 
 > initialize UART with parameters from nvram
 
@@ -491,12 +464,11 @@ Clobbers
 
 
 Clobbers
-: A,X,Y 
+: A,X,Y
 
 ***
 
-### uart_rx
-
+### <a name="uart_rx" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/uart/16550/uart_rx.s#L9">uart_rx</a>
 
 > receive byte
 
@@ -509,8 +481,7 @@ Out
 
 ***
 
-### uart_rx_nowait
-
+### <a name="uart_rx_nowait" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/uart/16550/uart_rx_nowait.s#L7">uart_rx_nowait</a>
 
 > receive byte, no wait
 
@@ -523,8 +494,7 @@ Out
 
 ***
 
-### uart_tx
-
+### <a name="uart_tx" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/uart/16550/uart_tx.s#L10">uart_tx</a>
 
 > send byte
 
@@ -544,8 +514,7 @@ In
 ***
 
 
-### atoi
-
+### <a name="atoi" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/util/atoi.s#L31">atoi</a>
 
 > convert ascii digit to binary
 
@@ -561,8 +530,7 @@ Out
 
 ***
 
-### b2ad
-
+### <a name="b2ad" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/util/b2ad.s#L7">b2ad</a>
 
 > output 8bit value as 2 digit decimal
 
@@ -575,8 +543,7 @@ In
 
 ***
 
-### b2ad2
-
+### <a name="b2ad2" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/util/b2ad2.s#L8">b2ad2</a>
 
 > output 8bit value as 3 digit decimal
 
@@ -589,8 +556,7 @@ In
 
 ***
 
-### bin2dual
-
+### <a name="bin2dual" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/util/bin2dual.s#L6">bin2dual</a>
 
 > output 8bit value as binary string
 
@@ -603,8 +569,7 @@ In
 
 ***
 
-### hexout
-
+### <a name="hexout" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/util/hexout.s#L40">hexout</a>
 
 > output 8bit value as hex
 
@@ -617,8 +582,7 @@ In
 
 ***
 
-### hextodec
-
+### <a name="hextodec" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/util/hex2dec.s#L5">hextodec</a>
 
 > 8bit hex to decimal converter
 
@@ -634,8 +598,7 @@ Out
 
 ***
 
-### strout
-
+### <a name="strout" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/util/strout.s#L44">strout</a>
 
 > Output string on active output device
 
@@ -650,24 +613,406 @@ In
 
 
 ## vdp
-[vdp_wait_cmd](#vdp_wait_cmd) | 
+[gfx_circle](#gfx_circle) | [gfx_line](#gfx_line) | [gfx_plot](#gfx_plot) | [gfx_point](#gfx_point) | [vdp_bgcolor](#vdp_bgcolor) | [vdp_cmd_hmmv](#vdp_cmd_hmmv) | [vdp_fill](#vdp_fill) | [vdp_fills](#vdp_fills) | [vdp_gfx1_blank](#vdp_gfx1_blank) | [vdp_gfx1_on](#vdp_gfx1_on) | [vdp_gfx7_set_pixel_direct](#vdp_gfx7_set_pixel_direct) | [vdp_init_reg](#vdp_init_reg) | [vdp_mc_blank](#vdp_mc_blank) | [vdp_mc_init_screen](#vdp_mc_init_screen) | [vdp_mc_on](#vdp_mc_on) | [vdp_mc_set_pixel](#vdp_mc_set_pixel) | [vdp_memcpy](#vdp_memcpy) | [vdp_memcpys](#vdp_memcpys) | [vdp_mode2_blank](#vdp_mode2_blank) | [vdp_mode2_on](#vdp_mode2_on) | [vdp_mode2_set_pixel](#vdp_mode2_set_pixel) | [vdp_mode3_on](#vdp_mode3_on) | [vdp_mode6_blank](#vdp_mode6_blank) | [vdp_mode6_on](#vdp_mode6_on) | [vdp_mode6_set_pixel](#vdp_mode6_set_pixel) | [vdp_mode7_blank](#vdp_mode7_blank) | [vdp_mode7_on](#vdp_mode7_on) | [vdp_mode7_set_pixel](#vdp_mode7_set_pixel) | [vdp_mode_sprites_off](#vdp_mode_sprites_off) | [vdp_set_reg](#vdp_set_reg) | [vdp_text_blank](#vdp_text_blank) | [vdp_text_on](#vdp_text_on) | [vdp_wait_cmd](#vdp_wait_cmd) | 
 
 ***
 
 
-### vdp_wait_cmd
+### <a name="gfx_circle" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/gfx_circle.s#L36">gfx_circle</a>
 
+> draw circle
+
+
+
+In
+: A/Y - pointer to circle_t struct
+
+
+
+***
+
+### <a name="gfx_line" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/gfx_line.s#L37">gfx_line</a>
+
+> draw line according to data in given line struct
+
+
+
+In
+: A/Y ptr to line_t struct
+
+
+
+***
+
+### <a name="gfx_plot" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/gfx_plot.s#L66">gfx_plot</a>
+
+> plot pixel
+
+
+
+In
+: A/Y - pointer to plot_t struct
+
+
+
+***
+
+### <a name="gfx_point" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/gfx_point.s#L36">gfx_point</a>
+
+> read pixel value
+
+
+
+In
+: A/Y - pointer to plot_t struct
+
+
+Out
+: Y - color of pixel at given plot_t
+
+
+***
+
+### <a name="vdp_bgcolor" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/t99xx.s#L42">vdp_bgcolor</a>
+
+> 
+
+
+
+In
+: A - color
+
+
+
+***
+
+### <a name="vdp_cmd_hmmv" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/t99xx_cmd_hmmv.s#L35">vdp_cmd_hmmv</a>
+
+> execute highspeed memory move (vdp/vram) or fill
+
+
+
+In
+: A/X - ptr to rectangle coordinates (4 word with x1,y1, len x, len y)<br />Y - color to fill in (reg #44)
+
+
+
+***
+
+### <a name="vdp_fill" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/t99xx_fill.s#L31">vdp_fill</a>
+
+> fill vdp VRAM with given value page wise
+
+
+
+In
+: A - byte to fill<br />X - amount of 256byte blocks (page counter)
+
+
+
+***
+
+### <a name="vdp_fills" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/t99xx_fill.s#L45">vdp_fills</a>
+
+> fill vdp VRAM with given value
+
+
+
+In
+: A - value to write<br />X - amount of bytes
+
+
+
+***
+
+### <a name="vdp_gfx1_blank" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode1.s#L36">vdp_gfx1_blank</a>
+
+> 
+
+
+
+
+
+***
+
+### <a name="vdp_gfx1_on" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode1.s#L43">vdp_gfx1_on</a>
+
+> gfx mode 1 - 32x24 character mode, 16 colors with same color for 8 characters in a block
+
+
+
+
+
+***
+
+### <a name="vdp_gfx7_set_pixel_direct" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode7_setpixel.s#L67">vdp_gfx7_set_pixel_direct</a>
+
+> 
+
+
+
+In
+: X - x coordinate [0..ff]<br />Y - y coordinate [0..bf]<br />A - color GRB [0..ff] as 332
+
+
+
+***
+
+### <a name="vdp_init_reg" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/t99xx_init.s#L33">vdp_init_reg</a>
+
+> setup video registers upon given table starting from register #R.X down to #R0
+
+
+
+In
+: X - length of init table, corresponds to video register to start R#+X - e.g. X=10 start with R#10<br />A/Y - pointer to vdp init table
+
+
+
+***
+
+### <a name="vdp_mc_blank" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode_mc.s#L93">vdp_mc_blank</a>
+
+> blank multi color mode, set all pixel to black
+
+
+
+In
+: A - color to blank
+
+
+
+***
+
+### <a name="vdp_mc_init_screen" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode_mc.s#L60">vdp_mc_init_screen</a>
+
+> init mc screen
+
+
+
+
+
+***
+
+### <a name="vdp_mc_on" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode_mc.s#L38">vdp_mc_on</a>
+
+> gfx multi color mode - 4x4px blocks where each can have one of the 15 colors
+
+
+
+
+
+***
+
+### <a name="vdp_mc_set_pixel" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode_mc_setpixel.s#L33">vdp_mc_set_pixel</a>
+
+> set pixel to mc screen - VRAM ADDRESS = 8(INT(X DIV 2)) + 256(INT(Y DIV 8)) + (Y MOD 8)
+
+
+
+In
+: X - x coordinate [0..3f]<br />Y - y coordinate [0..2f]<br />A - color [0..f]
+
+
+
+***
+
+### <a name="vdp_memcpy" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/t99x_memcpy.s#L33">vdp_memcpy</a>
+
+> copy data from host memory denoted by pointer (A/Y) to vdp VRAM (page wise). the VRAM address must be setup beforehand e.g. with macro vdp_vram_w <address>
+
+
+
+In
+: X - amount of 256byte blocks (page counter)<br />A/Y - pointer to source data
+
+
+
+***
+
+### <a name="vdp_memcpys" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/t99x_memcpy.s#L58">vdp_memcpys</a>
+
+> copy memory to vdp VRAM page wise
+
+
+
+In
+: X - amount of bytes to copy<br />A/Y - pointer to data
+
+
+
+***
+
+### <a name="vdp_mode2_blank" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode2.s#L71">vdp_mode2_blank</a>
+
+> blank gfx mode 2 with
+
+
+
+In
+: A - color to fill [0..f]
+
+
+
+***
+
+### <a name="vdp_mode2_on" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode2.s#L37">vdp_mode2_on</a>
+
+> gfx 2 - each pixel can be addressed - e.g. for image
+
+
+
+
+
+***
+
+### <a name="vdp_mode2_set_pixel" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode2_setpixel.s#L33">vdp_mode2_set_pixel</a>
+
+> set pixel to gfx2 mode screen - VRAM ADDRESS = 8(INT(X DIV 8)) + 256(INT(Y DIV 8)) + (Y MOD 8)
+
+
+
+In
+: X - x coordinate [0..ff]<br />Y - y coordinate [0..bf]<br />A - color [0..f]
+
+
+
+***
+
+### <a name="vdp_mode3_on" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode3.s#L36">vdp_mode3_on</a>
+
+> mode 3 on
+
+
+
+
+
+***
+
+### <a name="vdp_mode6_blank" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode6.s#L64">vdp_mode6_blank</a>
+
+> blank gfx mode 6 with given color
+
+
+
+In
+: Y - color to fill 4|4 Bit
+
+
+
+***
+
+### <a name="vdp_mode6_on" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode6.s#L36">vdp_mode6_on</a>
+
+> gfx 6 - 512x192/212px, 16colors, sprite mode 2
+
+
+
+
+
+***
+
+### <a name="vdp_mode6_set_pixel" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode6_setpixel.s#L31">vdp_mode6_set_pixel</a>
+
+> set pixel to gfx6 mode screen - VRAM ADDRESS = 8(INT(X DIV 2)) + 256(INT(Y DIV 8)) + (Y MOD 8)
+
+
+
+In
+: X - x coordinate [0..ff]<br />Y - y coordinate [0..bf]<br />A - color [0..f] and bit 7 MSB x coordinate
+
+
+
+***
+
+### <a name="vdp_mode7_blank" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode7.s#L58">vdp_mode7_blank</a>
+
+> blank gfx mode 7 with
+
+
+
+In
+: Y - color to fill in GRB (3+3+2)
+
+
+
+***
+
+### <a name="vdp_mode7_on" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode7.s#L32">vdp_mode7_on</a>
+
+> gfx 7 - each pixel can be addressed - e.g. for image
+
+
+
+
+
+***
+
+### <a name="vdp_mode7_set_pixel" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode7_setpixel.s#L31">vdp_mode7_set_pixel</a>
+
+> VRAM ADDRESS = .X + 256*.Y
+
+
+
+In
+: X - x coordinate [0..ff]<br />Y - y coordinate [0..bf]<br />. A - color [0..ff] as GRB 332 (green bit 7-5, red bit 4-2, blue bit 1-0)
+
+
+
+***
+
+### <a name="vdp_mode_sprites_off" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/t99xx_sprites.s#L31">vdp_mode_sprites_off</a>
+
+> 
+
+
+
+
+
+***
+
+### <a name="vdp_set_reg" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/t99xx.s#L47">vdp_set_reg</a>
+
+> set value to vdp register
+
+
+
+In
+: A - value<br />Y - register
+
+
+
+***
+
+### <a name="vdp_text_blank" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode_text.s#L48">vdp_text_blank</a>
+
+> text mode blank screen and color vram
+
+
+
+
+
+***
+
+### <a name="vdp_text_on" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/mode_text.s#L63">vdp_text_on</a>
+
+> text mode - 40x24/80x24 character mode, 2 colors
+
+
+
+In
+: A - color settings (#R07)
+
+
+
+***
+
+### <a name="vdp_wait_cmd" target="_blank" href="https://github.com/Steckschwein/code/tree/master/steckos/libsrc/t99xx/t99xx_cmd.s#L31">vdp_wait_cmd</a>
 
 > wait until a pending command has been finished
 
 
 
-In
-: -
-
-
-Out
-: -
 
 
 ***
