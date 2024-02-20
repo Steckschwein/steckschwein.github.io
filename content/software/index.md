@@ -9,9 +9,8 @@ categories:
 
 ![bios startup message](images/bios.png)
 
-At initial boot time, the ROM bank containing the BIOS is banked in at top memory. The BIOS provides the RESET vector, and initializes the hardware, such as the UART and the video chip. 
-Then, it checks for an SD card, tries to mount it and open the OS loader executable (usually LOADER.PRG). If this is successful, the OS loader is executed and loads the actual operating system "steckOS".
-On failure, the BIOS expects a binary uploaded via XMODEM. 
+At initial boot time, the ROM bank containing the BIOS is banked in. The BIOS initializes the hardware, such as the UART and the video chip, and tries to load the steckOS loader executable (usually LOADER.PRG) from SD card and executes it. If that fails, the BIOS expects a PRG binary uploaded via XMODEM. 
+UART baud rate and the name of the steckOS loader executable can be configured and are stored in the RTC's NVRAM.
 
 # steckOS
 
@@ -24,6 +23,7 @@ The operating system loader (LOADER.PRG) contains the actual steckOS kernel, and
 After having been loaded by the OS loader, the kernel initializes the hardware (again), mounts the SD card and tries to find the shell executable, which it then executes.
 The steckOS kernel provides basic interrupt handling, text display routines for the VDP and a jumptable with kernel calls.
 
+<!--
 ### Jumptable
 
 #### basic kernel stuff
@@ -87,19 +87,26 @@ The steckOS kernel provides basic interrupt handling, text display routines for 
 |:---------------------|:------------------------------------|
 |krn_uart_tx           |write byte over serial|
 |krn_uart_rx           |read byte over serial|
+-->
 
-## library
-
-Hardware interfacing code and utility routines both used by BIOS and steckOS are located in the library. Examples are utility routines to convert binary to ASCII decimal or hexadecimal, but also the SD card driver and FAT32 file system implementation.
 
 ## shell
-So what can you do with steckOS? The short answer is - not much. steckOS's primary goal was to be able to navigate the file system and start programs.
 
-To be able to do this, the first thing needed was a command line interface. The steckShell is a simple REPL interface roughly modeled after the Unix sh shell. The shell also provides commands to inspect and modify memory contents.
+The steckShell is the user interface of steckOS, very much like COMMAND.COM on DOS or sh/bash on Linux. steckOS's  primary purpose is to be able to navigate the file system and start programs.
+For that, steckShell provides a couple of internal and external commands. External meanins that those are separate PRG files which are loaded from the file system and executed as any other program.
+
+For example, on typing "fsinfo" followed by enter the sheckShell will first search it's internal command table, will not find an entry "fsinfo" there and will then search a list of directories (the PATH) for an executable named FSINFO.PRG, and execute it if found.
+
 
 ### internal commands
 
-The following commands are internally build into the shell executable.
+The following commands are internally built into the shell executable.
+
+#### ls, dir
+
+![steckOS ls command output](images/ls.png)
+
+Displays directory contents, like a mix of the DOS "dir" command and the "ls" command in Unix/Linux. The "dir" command is an alias for "ls -l".
 
 #### pwd, mkdir, rmdir, rm, cls
 
@@ -111,7 +118,7 @@ These commands do pretty much what you think they do.
 
 ![steckOS up command output](images/up.png)
 
-up jumps to the kernel xmodem upload routine and expects an executable in PRG format to be sent via xmodem.
+up jumps to the kernel xmodem upload routine which expects an executable in PRG format to be sent via xmodem.
 
 #### pd
 
@@ -131,18 +138,20 @@ ms (memory set) sets the content of a memory address plus the following bytes
 
 go starts executing code at the given memory location
 
+
 #### load
 
 ![steckOS load command output](images/load.png)
 
-
 load the contents of a file to a given memory location
+
 
 #### save
 
 ![steckOS save command output](images/save.png)
 
 save a memory area (from address, to address) to a file
+
 
 #### bd
 
@@ -161,22 +170,18 @@ Every other command is searched for in a hard coded "PATH" and executed. Command
 
 The "help"-command lists the most important commands.
 
-#### ls
-
-![steckOS ls command output](images/ls.png)
-
-Displays directory contents, like a mix of the DOS "dir" command and the "ls" command in Unix/Linux.
 
 #### stat
 ![steckOS stat command output](images/stat.png)
 
-Much like the Unix/Linux stat command, stat shows meta information about a file or directory, including file attributes. There is also an attrib command to set/unset attributes. 
+Much like the Unix/Linux stat command, stat shows meta information about a file or directory, including file attributes. 
 
 #### attrib
 
 ![steckOS attrib command example](images/attrib.png)
 
 Much like it's DOS counterpart, attrib is used to set/unset certain FAT attributes such as the hidden bit.
+
 
 #### fsinfo
 
@@ -189,14 +194,14 @@ fsinfo lists some information about the currently mounted FAT32 file system.
 
 ![steckOS nvram command output](images/nvram.png)
 
-nvram shows and/or modifies the contents of the RTCs NVRAM. The NVRAM is used to store the OS loader filename, UART settings like baud rate and line parameters, and the keyboard delay and repeat rate. nvram is written in C.
+nvram shows and/or modifies the contents of the RTCs NVRAM. The NVRAM is used to store the OS loader filename, UART settings like baud rate and line parameters, and the keyboard delay and repeat rate. 
 
 
 #### date and setdate
 
 ![steckOS nvram command output](images/date_setdate.png)
 
-date and setdate are used to display or set the RTC time. date and setdate are written in C.
+date and setdate are used to display or set the RTC time. 
 
 
 #### banner
