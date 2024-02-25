@@ -12,26 +12,10 @@ categories:
 
 
 ## filesystem
-[fat_update_direntry](#fat_update_direntry) | [krn_chdir](#krn_chdir) | [krn_close](#krn_close) | [krn_fopen](#krn_fopen) | [krn_fread_byte](#krn_fread_byte) | [krn_fseek](#krn_fseek) | [krn_getcwd](#krn_getcwd) | [krn_mkdir](#krn_mkdir) | [krn_open](#krn_open) | [krn_opendir](#krn_opendir) | [krn_read_direntry](#krn_read_direntry) | [krn_readdir](#krn_readdir) | [krn_rmdir](#krn_rmdir) | [krn_unlink](#krn_unlink) | [krn_write_byte](#krn_write_byte) | 
+[krn_chdir](#krn_chdir) | [krn_close](#krn_close) | [krn_fopen](#krn_fopen) | [krn_fread_byte](#krn_fread_byte) | [krn_fseek](#krn_fseek) | [krn_getcwd](#krn_getcwd) | [krn_mkdir](#krn_mkdir) | [krn_open](#krn_open) | [krn_opendir](#krn_opendir) | [krn_read_direntry](#krn_read_direntry) | [krn_readdir](#krn_readdir) | [krn_rmdir](#krn_rmdir) | [krn_unlink](#krn_unlink) | [krn_update_direntry](#krn_update_direntry) | [krn_write_byte](#krn_write_byte) | 
 
 ***
 
-
-### <a name="fat_update_direntry" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/kernel//jumptable.asm#L161">fat_update_direntry</a>
-
-> update direntry given as pointer (A/Y) to FAT32 directory entry structure for file fd (X).
-
-
-
-In
-: X - file descriptor to fd_area of the file<br />A/Y - pointer to direntry buffer with updated direntry data of type F32DirEntry
-
-
-Out
-: C - C = 0 on success (A=0), C = 1 and A = <error code> otherwise. C=1/A=EOK if end of directory is reached
-
-
-***
 
 ### <a name="krn_chdir" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/kernel//jumptable.asm#L66">krn_chdir</a>
 
@@ -237,6 +221,22 @@ In
 
 Out
 : C, C=0 on success (A=0), C=1 and A=<error code> otherwise
+
+
+***
+
+### <a name="krn_update_direntry" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/kernel//jumptable.asm#L161">krn_update_direntry</a>
+
+> update direntry given as pointer (A/Y) to FAT32 directory entry structure for file fd (X).
+
+
+
+In
+: X - file descriptor to fd_area of the file<br />A/Y - pointer to direntry buffer with updated direntry data of type F32DirEntry
+
+
+Out
+: C - C = 0 on success (A=0), C = 1 and A = <error code> otherwise. C=1/A=EOK if end of directory is reached
 
 
 ***
