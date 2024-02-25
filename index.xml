@@ -104,7 +104,7 @@ Kontakt E-Mail: info (at) steckschwein.de
 Fax: +49 3212 115 8877
 Datenschutzerklärung (DSGVO) Auf dieser Webseite werden keine personenbezogenen Daten erhoben, gespeichert oder verarbeitet.
 Data Protection Policy (GDPR) This website does not collect, store or process Personally Identifiable Information (PII).
-Verweis auf Dritte Diese Website wird auf Github als Github Pages gehostet. Die Github Privacy Policy ist hier hinterlegt.</description></item><item><title>Jumptable</title><link>https://www.steckschwein.de/jumptable/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.steckschwein.de/jumptable/</guid><description>Modules filesystem | kernel | sdcard | spi | video |
+Verweis auf Dritte Diese Website wird auf Github als Github Pages gehostet. Die Github Privacy Policy ist hier hinterlegt.</description></item><item><title>jumptable</title><link>https://www.steckschwein.de/jumptable/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://www.steckschwein.de/jumptable/</guid><description>jumptable filesystem | kernel | sdcard | spi | video |
 filesystem fat_update_direntry | krn_chdir | krn_close | krn_fopen | krn_fread_byte | krn_fseek | krn_getcwd | krn_mkdir | krn_open | krn_opendir | krn_read_direntry | krn_readdir | krn_rmdir | krn_unlink | krn_write_byte |
 fat_update_direntry update direntry given as pointer (A/Y) to FAT32 directory entry structure for file fd (X).
 In X - file descriptor to fd_area of the file
