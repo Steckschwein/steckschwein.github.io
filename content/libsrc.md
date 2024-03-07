@@ -323,7 +323,7 @@ Out
 
 ***
 
-### <a name="getkey" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/libsrc/keyboard/keyboard.s#L66">getkey</a>
+### <a name="getkey" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/libsrc/keyboard/keyboard.s#L68">getkey</a>
 
 > get byte from keyboard buffer
 
@@ -697,7 +697,7 @@ In
 
 
 ## vdp
-[gfx_circle](#gfx_circle) | [gfx_line](#gfx_line) | [gfx_plot](#gfx_plot) | [gfx_point](#gfx_point) | [ppm_load_image](#ppm_load_image) | [vdp_bgcolor](#vdp_bgcolor) | [vdp_cmd_hmmv](#vdp_cmd_hmmv) | [vdp_fill](#vdp_fill) | [vdp_fills](#vdp_fills) | [vdp_gfx1_blank](#vdp_gfx1_blank) | [vdp_gfx1_on](#vdp_gfx1_on) | [vdp_gfx7_set_pixel_direct](#vdp_gfx7_set_pixel_direct) | [vdp_init_reg](#vdp_init_reg) | [vdp_mc_blank](#vdp_mc_blank) | [vdp_mc_init_screen](#vdp_mc_init_screen) | [vdp_mc_on](#vdp_mc_on) | [vdp_mc_set_pixel](#vdp_mc_set_pixel) | [vdp_memcpy](#vdp_memcpy) | [vdp_memcpys](#vdp_memcpys) | [vdp_mode2_blank](#vdp_mode2_blank) | [vdp_mode2_on](#vdp_mode2_on) | [vdp_mode2_set_pixel](#vdp_mode2_set_pixel) | [vdp_mode3_on](#vdp_mode3_on) | [vdp_mode6_blank](#vdp_mode6_blank) | [vdp_mode6_on](#vdp_mode6_on) | [vdp_mode6_set_pixel](#vdp_mode6_set_pixel) | [vdp_mode7_blank](#vdp_mode7_blank) | [vdp_mode7_on](#vdp_mode7_on) | [vdp_mode7_set_pixel](#vdp_mode7_set_pixel) | [vdp_mode_sprites_off](#vdp_mode_sprites_off) | [vdp_set_reg](#vdp_set_reg) | [vdp_text_blank](#vdp_text_blank) | [vdp_text_on](#vdp_text_on) | [vdp_wait_cmd](#vdp_wait_cmd) | 
+[gfx_circle](#gfx_circle) | [gfx_line](#gfx_line) | [gfx_plot](#gfx_plot) | [gfx_point](#gfx_point) | [gfx_rectangle](#gfx_rectangle) | [ppm_load_image](#ppm_load_image) | [vdp_bgcolor](#vdp_bgcolor) | [vdp_cmd_hmmv](#vdp_cmd_hmmv) | [vdp_fill](#vdp_fill) | [vdp_fills](#vdp_fills) | [vdp_gfx1_blank](#vdp_gfx1_blank) | [vdp_gfx1_on](#vdp_gfx1_on) | [vdp_gfx7_set_pixel_direct](#vdp_gfx7_set_pixel_direct) | [vdp_init_reg](#vdp_init_reg) | [vdp_mc_blank](#vdp_mc_blank) | [vdp_mc_init_screen](#vdp_mc_init_screen) | [vdp_mc_on](#vdp_mc_on) | [vdp_mc_set_pixel](#vdp_mc_set_pixel) | [vdp_memcpy](#vdp_memcpy) | [vdp_memcpys](#vdp_memcpys) | [vdp_mode2_blank](#vdp_mode2_blank) | [vdp_mode2_on](#vdp_mode2_on) | [vdp_mode2_set_pixel](#vdp_mode2_set_pixel) | [vdp_mode3_on](#vdp_mode3_on) | [vdp_mode6_blank](#vdp_mode6_blank) | [vdp_mode6_on](#vdp_mode6_on) | [vdp_mode6_set_pixel](#vdp_mode6_set_pixel) | [vdp_mode7_blank](#vdp_mode7_blank) | [vdp_mode7_on](#vdp_mode7_on) | [vdp_mode7_set_pixel](#vdp_mode7_set_pixel) | [vdp_mode_sprites_off](#vdp_mode_sprites_off) | [vdp_set_reg](#vdp_set_reg) | [vdp_text_blank](#vdp_text_blank) | [vdp_text_on](#vdp_text_on) | [vdp_wait_cmd](#vdp_wait_cmd) | 
 
 ***
 
@@ -757,6 +757,19 @@ Out
 
 ***
 
+### <a name="gfx_rectangle" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/libsrc/t99xx/gfx_rectangle.s#L36">gfx_rectangle</a>
+
+> draw a rectangle according to data in given rectangle struct
+
+
+
+In
+: A/Y ptr to rectangle_t struct
+
+
+
+***
+
 ### <a name="ppm_load_image" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/libsrc/t99xx/ppm/ppm.s#L65">ppm_load_image</a>
 
 > 
@@ -764,7 +777,7 @@ Out
 
 
 In
-: A/X file name to load
+: A/X file name to load<br />Y vdp vram page to load ppm into - either 0 for address $00000 or 1 for address $10000
 
 
 Out
@@ -845,7 +858,7 @@ In
 
 ***
 
-### <a name="vdp_gfx7_set_pixel_direct" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/libsrc/t99xx/mode7_setpixel.s#L67">vdp_gfx7_set_pixel_direct</a>
+### <a name="vdp_gfx7_set_pixel_direct" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/libsrc/t99xx/mode7_setpixel.s#L63">vdp_gfx7_set_pixel_direct</a>
 
 > 
 

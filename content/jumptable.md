@@ -363,7 +363,7 @@ Clobbers
 
 
 ## spi
-[krn_spi_deselect](#krn_spi_deselect) | [krn_spi_select_device](#krn_spi_select_device) | [spi_r_byte](#spi_r_byte) | [spi_rw_byte](#spi_rw_byte) | [uart_rx](#uart_rx) | [uart_tx](#uart_tx) | 
+[krn_spi_deselect](#krn_spi_deselect) | [krn_spi_select_device](#krn_spi_select_device) | [spi_r_byte](#spi_r_byte) | [spi_rw_byte](#spi_rw_byte) | [textui_blank](#textui_blank) | [textui_cursor_onoff](#textui_cursor_onoff) | [textui_disable](#textui_disable) | [textui_enable](#textui_enable) | [textui_init](#textui_init) | [textui_reset](#textui_reset) | [textui_setmode](#textui_setmode) | [textui_update_crs_ptr](#textui_update_crs_ptr) | [textui_update_screen](#textui_update_screen) | [uart_rx](#uart_rx) | [uart_tx](#uart_tx) | 
 
 ***
 
@@ -426,6 +426,123 @@ Out
 
 Clobbers
 : A,X,Y
+
+***
+
+### <a name="textui_blank" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/kernel//textui.asm#L300">textui_blank</a>
+
+> blank screen, set cursor to top left corner
+
+
+
+In
+: -
+
+
+
+***
+
+### <a name="textui_cursor_onoff" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/kernel//textui.asm#L273">textui_cursor_onoff</a>
+
+> toggle the blinking cursor on if off or off if on
+
+
+
+In
+: -
+
+
+
+***
+
+### <a name="textui_disable" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/kernel//textui.asm#L265">textui_disable</a>
+
+> disable text ui - cursor will be disabled
+
+
+
+In
+: -
+
+
+
+***
+
+### <a name="textui_enable" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/kernel//textui.asm#L257">textui_enable</a>
+
+> enable text ui
+
+
+
+In
+: -
+
+
+
+***
+
+### <a name="textui_init" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/kernel//textui.asm#L218">textui_init</a>
+
+> init the text ui if used for the first time. like kernel start or kind of
+
+
+
+In
+: -
+
+
+
+***
+
+### <a name="textui_reset" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/kernel//textui.asm#L244">textui_reset</a>
+
+> reset text ui by setting the internal state accordingly.
+
+
+
+In
+: -
+
+
+
+***
+
+### <a name="textui_setmode" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/kernel//textui.asm#L231">textui_setmode</a>
+
+> set desired text mode which is either 40 (MSX TEXT 1) or 80 columns (MSX TEXT 2)
+
+
+
+In
+: A - the desired mode, either VIDEO_MODE_80_COLS or 0 to reset to 40 column mode
+
+
+
+***
+
+### <a name="textui_update_crs_ptr" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/kernel//textui.asm#L126">textui_update_crs_ptr</a>
+
+> update to new cursor position given in crs_x and crs_y zeropage locations
+
+
+
+In
+: -
+
+
+
+***
+
+### <a name="textui_update_screen" target="_blank" href="https://github.com/Steckschwein/code/tree/master/../steckos/kernel//textui.asm#L174">textui_update_screen</a>
+
+> update internal state - is called on v-blank
+
+
+
+In
+: -
+
+
 
 ***
 
