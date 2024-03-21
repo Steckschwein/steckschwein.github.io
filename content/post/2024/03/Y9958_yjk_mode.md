@@ -88,7 +88,9 @@ In 6502 assembly there is no DIV instruction nor can we round up the result of a
     STA yjk_chunk+yjk::R_a,Y
     ...
 ```
-R0..R3 are the R component of the 4 adjacent pixels. Furthermore we add #2 to the sum of the R components. This is for "rounding up", cause if we divide by 4, which is simply 2 shifts right (LSR) on 6502 we'll lose the fraction. To round up, we use the fact that
+R0..R3 are the R component of the 4 adjacent pixels which we read from the ppm file beforehand. In R0..R3 and G0..G3, B0..B3 respectively we only use the 5 higher Bits of the RGB value from the ppm file. This is because the Y values are also just 5 Bits wide.
+
+Furthermore we add #2 to the sum of the R components. This is for "rounding up", cause if we divide by 4, which is simply 2 shifts right (LSR) on 6502 we'll lose the fraction. To round up, we use the fact that
 
 ```
   round(A/B) = (A + (B/2)) / B => e.g. round(5/2) = (5 + 1) / 2 = 3 FTW!
