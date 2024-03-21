@@ -192,6 +192,6 @@ What we did not focussed on yet is the YAE (Bit 4) in R#25. The so called SCREEN
 Further readings and investigations whether this mode was being used in MSX2/MSX2+ at all, i found interesting articles about the YJK mode (see links below). As far as i can see there is no game or kind of which is using this mode "heavily" (yet) ;)
 
 #### Links
-- https://map.grauw.nl/articles/yjk/
-- https://tomseditor.com/gallery/browse?platform=msx&format=screen12
-- https://en.wikipedia.org/wiki/Chroma_subsampling
+- <a target="_blank" href="https://map.grauw.nl/articles/yjk/">https:\/\/map.grauw.nl\/articles\/yjk\/</a>
+- <a target="_blank" href="https://tomseditor.com/gallery/browse?platform=msx&format=screen12">https:\\tomseditor.com\gallery\browse?platform=msx&format=screen12</a>
+- <a target="_blank" href="https://en.wikipedia.org/wiki/Chroma_subsampling">https:\\en.wikipedia.org\wiki\Chroma_subsampling</a>
