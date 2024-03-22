@@ -1,5 +1,6 @@
 
 ---
+author: "Marko"
 title: "YM9958 YJK (YUV) mode"
 date: "2024-03-20"
 tags:
@@ -88,12 +89,15 @@ In 6502 assembly there is no DIV instruction nor can we round up the result of a
     STA yjk_chunk+yjk::R_a,Y
     ...
 ```
-R0..R3 are the R component of the 4 adjacent pixels which we read from the ppm file beforehand. In R0..R3 and G0..G3, B0..B3 respectively we only use the 5 higher Bits of the RGB value from the ppm file. This is because the Y values are also just 5 Bits wide.
+R0..R3 are the R component of the 4 adjacent pixels which we read from the ppm file beforehand. In R0..R3, G0..G3 and B0..B3 we store the 5 higher Bits of the RGB value from the ppm file only. This is because the Y0..Y3 values are also just 5 Bits wide. Just to mention it, for the entire calculation we only require the 8 Bit range. This fits perfectly to our CPU, we never overflow (carry) and thus can avoid using expensive 16Bit values.
 
-Furthermore we add #2 to the sum of the R components. This is for "rounding up", cause if we divide by 4, which is simply 2 shifts right (LSR) on 6502 we'll lose the fraction. To round up, we use the fact that
+As can be seen in the code, we also add #2 to the sum of the R0..R3 components. This is for "rounding up", cause if we divide by 4, which is simply 2 shifts right (LSR) on 6502. But we'll lose the fraction. To avoid this we round up by using the fact that
 
 ```
-  round(A/B) = (A + (B/2)) / B => e.g. round(5/2) = (5 + 1) / 2 = 3 FTW!
+  round(A/B) = (A + (B/2)) / B
+
+  e.g. round(5/2) = 1.5 = 3 with our equation
+       (5 + 2/2) / 2 = 3 FTW!
 ```
 
 With the average RGB values R_a, G_a, B_a we can calculate the average of Y with the formula given from the datasheet.
@@ -106,7 +110,7 @@ Some transformation to ease the 6502 coding, we end up in
 
 ```
   Y_a = (4*B_a + 2*R_a + G_a + 4) / 8 # rounding is replaced with +4
-      = (B_a<<2 + R_a<<1 + G_a + 4) >> 8
+      = ((B_a << 2) + (R_a << 1) + G_a + 4) >> 8
 ```
 
 and in 6502 assembly
@@ -179,7 +183,7 @@ The rest of the code is easy, we just combine the calculated Y0..Y3 values with 
     STA a_vram
     ...
 ```
-for Y2,Y3 same manner but with J.
+for Y2,Y3 in the same manner but with J.
 
 Finally we putting it all together and enhance our ppmview.prg with the YJK mode, also known as SCREEN 12 in MSX Basic. We also add an option -rgb to support the "old" RGB mode still.
 
