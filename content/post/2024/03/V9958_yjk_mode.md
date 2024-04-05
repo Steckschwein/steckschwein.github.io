@@ -25,7 +25,7 @@ On the other side we have the PPM color information - which is 24Bit RGB - so we
 It becomes apparent that this comes with a price, namely the loss of color information. Especially the blue part of the pixel is just 2 Bit, hence we have 4 levels of blue per pixel available  only.
 The following screenshot from our [Emulator](https://github.com/Steckschwein/steckschwein-emulator/) shows the loss of color information.
 
-![Lena PPM to SCREEN 8 GRB](/post/2024/03/Y9958_yjk_mode.rgb.png)
+![Lena PPM to SCREEN 8 GRB](/post/2024/03/V9958_yjk_mode.rgb.png)
 
 There must be more to it...
 
@@ -187,7 +187,7 @@ for Y2,Y3 in the same manner but with J.
 
 Finally we putting it all together and enhance our ppmview.prg with the YJK mode, also known as SCREEN 12 in MSX Basic. We also add an option -rgb to support the "old" RGB mode still.
 
-![Lena PPM to SCREEN 12 YJK](/post/2024/03/Y9958_yjk_mode.yjk.png)
+![Lena PPM to SCREEN 12 YJK](/post/2024/03/V9958_yjk_mode.yjk.png)
 
 I think the result in YJK mode, especially when used with fotos, is very impressive and even though we have followed the simple approach of sub-sampling only.
 
