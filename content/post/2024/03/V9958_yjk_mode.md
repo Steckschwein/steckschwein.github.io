@@ -1,7 +1,7 @@
 
 ---
 author: "Marko"
-title: "YM9958 YJK (YUV) mode"
+title: "V9958 YJK (YUV) mode"
 date: "2024-03-20"
 tags:
   - "6502"
@@ -14,7 +14,7 @@ tags:
   - "vram"
   - "yjk"
   - "yuv"
-  - "y9958"
+  - "V9958"
 ---
 Some time ago we introduced a tiny tool called _ppmview.prg_ in our collection of tools and progs for our Steckschwein. The ppmview.prg, as the name already tells, is able to load an image in ppm ([Portable BitMap](https://en.wikipedia.org/wiki/Netpbm)) format with a maximum size of 256x212px and displays it on the screen.
 
@@ -29,7 +29,7 @@ The following screenshot from our [Emulator](https://github.com/Steckschwein/ste
 
 There must be more to it...
 
-In the technical documentation of the Y9958 one can read that there where some registers added. Beside the horizontal scroll registers R#26, R#27, register R#25 was added and offers 2 interesting Bits we'll now focus on. These are Bit 4 and Bit 3 in R#25.
+In the technical documentation of the V9958 one can read that there where some registers added. Beside the horizontal scroll registers R#26, R#27, register R#25 was added and offers 2 interesting Bits we'll now focus on. These are Bit 4 and Bit 3 in R#25.
 
 
 #### YJK-Type Data Display Function R#25
@@ -40,7 +40,7 @@ In the technical documentation of the Y9958 one can read that there where some r
 |  |  |  | YAE | **YJK** |  |  |  |
 </div>
 
-If Bit 3 of R#25 is set the Y9958 will read the data from VRAM and interprets them as YJK typed data. The VDP converts the YJK data to corresponding RGB signals via the internal DAC which has 5 Bit per color part (RGB).
+If Bit 3 of R#25 is set the V9958 will read the data from VRAM and interprets them as YJK typed data. The VDP converts the YJK data to corresponding RGB signals via the internal DAC which has 5 Bit per color part (RGB).
 All we have to do now is just encode the 24Bit RGB value given in the ppm file to appropriate YJK values in the VDP RAM. From the datasheet we can find out that 4 Bytes in VRAM are grouped together to encode the YJK data for 4 consecutive pixels.
 
 #### YJK Data in VRAM for 4 pixels
@@ -91,7 +91,7 @@ In 6502 assembly there is no DIV instruction nor can we round up the result of a
 ```
 R0..R3 are the R component of the 4 adjacent pixels which we read from the ppm file beforehand. In R0..R3, G0..G3 and B0..B3 we store the 5 higher Bits of the RGB value from the ppm file only. This is because the Y0..Y3 values are also just 5 Bits wide. Just to mention it, for the entire calculation we only require the 8 Bit range. This fits perfectly to our CPU, we never overflow (carry) and thus can avoid using expensive 16Bit values.
 
-As can be seen in the code, we also add #2 to the sum of the R0..R3 components. This is for "rounding up", cause if we divide by 4, which is simply 2 shifts right (LSR) on 6502. But we'll lose the fraction. To avoid this we round up by using the fact that
+As can be seen in the code, we also add #2 to the sum of the R0..R3 components. This is for "rounding up", cause if we divide by 4, which is simply 2 shifts right (LSR) on 6502, we'll otherwise lose the fraction. To avoid this we round up by using the fact that
 
 ```
   round(A/B) = (A + (B/2)) / B
@@ -141,7 +141,7 @@ and in 6502 assembly it's just a simple subtraction.
 
 ```asm
     SEC                       ; J = R_a - Y_a;
-    lda yjk_chunk+yjk::R_a
+    LDA yjk_chunk+yjk::R_a
     SBC yjk_chunk+yjk::Y_a
     STA yjk_chunk+yjk::J
     ...
