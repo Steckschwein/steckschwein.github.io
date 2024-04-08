@@ -11,7 +11,7 @@ draft: true
 Save the date! The 23th annual European Vintage Computer Festival will take place on 27./28. April 2024 !
 
 And of course there can be no VCFe without Steckschwein. This time is special, as we first presented the humble beginnings of our (then nameless) favourite homebrew computer at VCF 15.0 in 2014. 
-So this year not only marks the 10th anniversary of the Steckschwein, but also the 10th anniversary of the VCFe as being "home" of the Steckschwein.
+So this year not only marks the 10th anniversary of the Steckschwein, but also the 10th anniversary of the VCFe being "home" of the Steckschwein.
 
 On this behalf, we would like to celebrate a bit with everyone on the VCFe 23.0 by presenting every incarnation of the Steckschwein, and talking about what our most important milestones were, what the challenges were and how we solved them.
 
