@@ -5,7 +5,7 @@ author: Thomas
 tags:
   - vcfe
   
-draft: true
+draft: false
 ---
 
 Save the date! The 23th annual European Vintage Computer Festival will take place on 27./28. April 2024 !
@@ -18,4 +18,4 @@ On this behalf, we would like to celebrate a bit with everyone on the VCFe 23.0 
 More info about the VCFe:
 [VCFe (Vintage Computer Festival Europe)](http://vcfe.org)
 
-We hope to see you there!
+See you there!
