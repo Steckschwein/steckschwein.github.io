@@ -1,5 +1,5 @@
 ---
-title: "VCFe 23.0 - UPDATe"
+title: "VCFe 23.0 - UPDATE"
 date: 2024-04-18
 author: Thomas
 tags:
