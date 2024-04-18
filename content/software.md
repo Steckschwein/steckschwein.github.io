@@ -148,7 +148,7 @@ date and setdate are used to display or set the RTC time.
 ![steckOS banner command output](/images/banner.png)
 
 
-A version of the Unix SYS V banner command taken from [here](https://github.com/uffejakobsen/sysvbanner/blob/master/banner.c). One of the few tools written in C. The source compiled with cc65 without modifications. We changed some int variables to unisigned char anyway to fit our 8bit CPU.
+A version of the Unix SYS V banner command taken from [here](https://github.com/uffejakobsen/sysvbanner/blob/master/banner.c). One of the few tools written in C. The source compiled with cc65 without modifications. We changed some int variables to unsigned char anyway to fit our 8bit CPU.
 
 
 #### wozmon
@@ -165,7 +165,7 @@ An 8bit computer is nothing without period correct interpreter languages like BA
 
 ![ehbasic](/images/ehbasic.png)
 
-EhBasic is a quite common BASIC interpreter among homebrew enthusiasts because of it's easy portability. Our version is based on the [65c02 version by forum.6502.org user floobydust](http://forum.6502.org/viewtopic.php?f=5&t=5760). We extended it with a few graphics commands that interface with the V9958's command engine and implemented a [LOAD routine that accepts ASCII source files](/post/ascii_ehbasic/).
+EhBasic is a quite common BASIC interpreter among homebrew enthusiasts because of it's easy portability. Our version is based on the [65c02 version by forum.6502.org user floobydust](http://forum.6502.org/viewtopic.php?f=5&t=5760). We extended it with a few graphics commands that interface with the V9958's command engine and implemented the [LOAD](/post/ascii_ehbasic/) and the [SAVE](/post/ascii_save_ehbasic/) command to load and save the BASIC program as ASCII source instead of binary.
 
 
 ### TaliForth2
