@@ -6,7 +6,7 @@ categories:
 
 ## Repositories
 
-All sources for steckOS, BIOS, firmware, decoder and also schematics and layouts can be found in our repositories at bitbucket.org:
+All sources for steckOS, BIOS, firmware, decoder and also schematics and layouts can be found in our github repositories:
 
 
 All software (steckOS, BIOS, libraries, tools, games, stuff): 
