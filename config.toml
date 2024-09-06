@@ -5,16 +5,19 @@ paginate = 5
 #sectionPagesMenu = "main"
 opengraph = true
 schema = true
-twitter_cards = true
+twitter_cards = false
 
 [markup]
   goldmark.renderer.unsafe=true
 
 
+[Params.site]
+  ignoreErrors = ["error-remote-getjson"]
+
 [Params]
   opengraph = true
   schema = true
-  twitter_cards = true # Enable Twitter Cards if true
+  twitter_cards = false # Enable Twitter Cards if true
   readmore = false # Show "Read more" button in list if true
   post_meta = ["author", "date", "categories", "translations"] # Order of post meta information
 
@@ -27,7 +30,6 @@ twitter_cards = true
 
 [Params.widgets.social]
   # Enable parts of social widget
-  #twitter = "Steckschwein"
   github = "Steckschwein"
 
 [[Params.widgets.social.custom]]

@@ -12,9 +12,9 @@ tags:
 In preparation for the build of our new CPU-Board, we purchased two WDC 65c02 in PLCC44 package from some eBay vendor.
 On arrival, the first interesting thing is the way they were packaged. No anti esd packaging, only a plastic bag, which we found sketchy enough to post on Twitter.
 
-Next, WDC reacted to that tweet, stating that these might be not genuine or be at least very old. 
+Next, WDC reacted to that tweet, stating that these might be not genuine or be at least very old.
 
-{{< tweet user="steckschwein" id="1532446031127904256" >}}
+{{/*< tweet user="steckschwein" id="1532446031127904256" >*/}}
 
 At least they did arrive in time so we finally could assemble the first new CPU board. This board marks a lot of firsts for us:
 
