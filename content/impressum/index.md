@@ -4,6 +4,11 @@ title: "Impressum"
 
 ## Angaben gemäß § 5 TMG:
 
+Thomas Woinke\
+Schüleinstrasse 4\
+81673 München
+\
+\
 Marko Lauke\
 Gräfin-Dönhoff-Straße 16\
 83024 Rosenheim
