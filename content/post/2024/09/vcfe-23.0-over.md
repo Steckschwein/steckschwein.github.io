@@ -1,5 +1,5 @@
 ---
-title: "VCFe 23.0"
+title: "VCFe 23.0 - It's been great - as always"
 date: 2024-09-09
 author: Thomas
 tags:
@@ -7,8 +7,6 @@ tags:
   
 draft: false
 ---
-
-# VCFe 23.0 - It's been great - as always
 
 We are reflecting on a very special VCFe, as it marked the 10th (or 10 1/2th) birthday of the Steckschwein.
 
