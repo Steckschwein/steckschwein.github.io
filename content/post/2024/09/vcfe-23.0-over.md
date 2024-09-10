@@ -12,7 +12,7 @@ We are reflecting on a very special VCFe, as it marked the 10th (or 10 1/2th) bi
 
 Reconnecting with old friends, making new friends, and celebrating together were all incredibly enjoyable experiences.
 
-![Marko and Thomas presenting the 12 cycle muffin NOP-slide](team_nop_cake.png "Marko and Thomas presenting the 12 cycle muffin NOP-slide")
+![Marko and Thomas presenting the 12 cycle muffin NOP-slide](/post/2024/09/vcfe-23.0-over/team_nop_cake.png "Marko and Thomas presenting the 12 cycle muffin NOP-slide")
 
 Additionally, Marko gave us an exciting sneak peek into his nearly complete Pacman implementation, the first ever on a 6502 that closely replicates the behavior of the original Namco Pacman Arcade.
 
