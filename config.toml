@@ -1,4 +1,5 @@
 baseurl = "https://www.steckschwein.de/"
+title = "Steckschwein"
 languageCode = "en-us"
 theme = ["Mainroad"]
 paginate = 5
@@ -9,13 +10,12 @@ paginate = 5
 [Params.logo]
   title = "Steckschwein"
   subtitle = "An 8bit computer for the 21st century"
-  
-
 
 [Params.site]
   ignoreErrors = ["error-remote-getjson"]
 
 [Params]
+  description = "An 8bit computer for the 21st century"
   opengraph = true
   schema = true
   twitter_cards = false # Enable Twitter Cards if true
@@ -40,9 +40,10 @@ paginate = 5
     name = false
     pre = ""
 
+
 [languages]
+
   [languages.en.params]
-    keywords = "8bit,retro,homebrew,6502"
     copyright = ""
     menuMore = "Show more"
     readMore = "Read more"
@@ -74,9 +75,6 @@ paginate = 5
         name = "Resources"
         url = "/resources/"
         weight = 500
-
-
-
       [[languages.en.menu.main]]
         identifier = "impressum"
         name = "Impressum"
