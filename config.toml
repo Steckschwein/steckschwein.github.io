@@ -32,7 +32,7 @@ twitter_cards = false
   # Enable parts of social widget
   github = "Steckschwein"
   youtube = "@Steckschwein"
-  mastodon = "@steckschwein_6502@mastodon.social"
+  mastodon = "https://mastodon.social/@steckschwein_6502"
 
 [Params.widgets.search]
   url = "/search/"
