@@ -1,6 +1,8 @@
 ---
 title: "Software"
 author: Thomas
+menu: main
+weight: 400
 categories:
   - software
 ---

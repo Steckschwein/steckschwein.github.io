@@ -1,5 +1,7 @@
 ---
 title: "Hardware"
+menu: main
+weight: 300
 categories:
   - hardware
 ---

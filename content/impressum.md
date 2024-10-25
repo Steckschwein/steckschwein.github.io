@@ -1,4 +1,6 @@
 ---
+menu: main
+weight: 600
 title: "Impressum"
 ---
 

@@ -1,5 +1,7 @@
 ---
 title: "Resources"
+menu: main 
+weight: 500
 categories:
   - resources
 ---
