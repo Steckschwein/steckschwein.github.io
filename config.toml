@@ -2,7 +2,14 @@ baseurl = "https://www.steckschwein.de/"
 title = "Steckschwein"
 languageCode = "en-us"
 theme = ["Mainroad"]
-paginate = 5
+paginate = 6
+
+[menus]
+  [[menus.main]]
+    identifier = "blog"
+    name = "Blog"
+    url = "/"
+    weight = 100
 
 #[markup]
 #  goldmark.renderer.unsafe=true
@@ -16,11 +23,14 @@ paginate = 5
 
 [Params]
   description = "An 8bit computer for the 21st century"
-  opengraph = true
-  schema = true
-  twitter_cards = false # Enable Twitter Cards if true
-  readmore = false # Show "Read more" button in list if true
+  # opengraph = true
+  # schema = true
+  # twitter_cards = false # Enable Twitter Cards if true
+  # readmore = false # Show "Read more" button in list if true
   post_meta = ["author", "date", "categories", "translations"] # Order of post meta information
+  # menuMore = "Show more"
+  # readMore = "Read more"
+  # readOtherPosts = "Read other posts"
 
 [Params.style.vars]
   highlightColor = "rgb(96,221,108)"
@@ -28,6 +38,9 @@ paginate = 5
 [Params.sidebar]
   home = "left"
   widgets = ["recent", "search", "taglist", "social"]
+
+[Params.widgets]
+  recent_num = 15
 
 [Params.widgets.social]
   github = "Steckschwein"
@@ -39,44 +52,3 @@ paginate = 5
   [Params.widgets.search.input]
     name = false
     pre = ""
-
-
-[languages]
-
-  [languages.en.params]
-    copyright = ""
-    menuMore = "Show more"
-    readMore = "Read more"
-    readOtherPosts = "Read other posts"
-
-    [languages.en.menu]
-      # [[languages.en.menu.main]]
-      #   identifier = "about"
-      #   name = "About"
-      #   url = "/about/"
-      #   weight = 50
-      [[languages.en.menu.main]]
-        identifier = "blog"
-        name = "Blog"
-        url = "/"
-        weight = 100
-      # [[languages.en.menu.main]]
-      #   identifier = "hardware"
-      #   name = "Hardware"
-      #   url = "/hardware/"
-      #   weight = 300
-      # [[languages.en.menu.main]]
-      #   identifier = "software"
-      #   name = "Software"
-      #   url = "/software/"
-      #   weight = 400
-      # [[languages.en.menu.main]]
-      #   identifier = "resources"
-      #   name = "Resources"
-      #   url = "/resources/"
-      #   weight = 500
-      # [[languages.en.menu.main]]
-      #   identifier = "impressum"
-      #   name = "Impressum"
-      #   url = "/impressum/"
-      #   weight = 600
