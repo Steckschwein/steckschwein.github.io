@@ -1,0 +1,116 @@
+{{- if .Site.Params.widgets.social }}
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">{{ T "social_title" }}</h4>
+	<div class="widget-social__content widget__content">
+		{{- with .Site.Params.widgets.social.facebook }}
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Facebook" rel="noopener noreferrer" href="https://facebook.com/{{ . }}" target="_blank">
+				{{ partial "svg/facebook.svg" (dict "class" "widget-social__link-icon") }}
+				<span>Facebook</span>
+			</a>
+		</div>
+		{{- end }}
+		{{- with .Site.Params.widgets.social.twitter }}
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Twitter" rel="noopener noreferrer" href="https://twitter.com/{{ . }}" target="_blank">
+				{{ partial "svg/twitter.svg" (dict "class" "widget-social__link-icon") }}
+				<span>Twitter</span>
+			</a>
+		</div>
+		{{- end }}
+		{{- with .Site.Params.widgets.social.instagram }}
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Instagram" rel="noopener noreferrer" href="https://www.instagram.com/{{ . }}" target="_blank">
+				{{ partial "svg/instagram.svg" (dict "class" "widget-social__link-icon") }}
+				<span>Instagram</span>
+			</a>
+		</div>
+		{{- end }}
+		{{- with .Site.Params.widgets.social.linkedin }}
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="LinkedIn" rel="noopener noreferrer" href="https://linkedin.com/in/{{ . }}" target="_blank">
+				{{ partial "svg/linkedin.svg" (dict "class" "widget-social__link-icon") }}
+				<span>LinkedIn</span>
+			</a>
+		</div>
+		{{- end }}
+		{{- with .Site.Params.widgets.social.telegram }}
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Telegram" rel="noopener noreferrer" href="https://t.me/{{ . }}" target="_blank">
+				{{ partial "svg/telegram.svg" (dict "class" "widget-social__link-icon") }}
+				<span>Telegram</span>
+			</a>
+		</div>
+		{{- end }}
+		{{- with .Site.Params.widgets.social.github }}
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/{{ . }}" target="_blank">
+				{{ partial "svg/github.svg" (dict "class" "widget-social__link-icon") }}
+				<span>GitHub</span>
+			</a>
+		</div>
+		{{- end }}
+		{{- with .Site.Params.widgets.social.gitlab }}
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="GitLab" rel="noopener noreferrer" href="https://gitlab.com/{{ . }}" target="_blank">
+				{{ partial "svg/gitlab.svg" (dict "class" "widget-social__link-icon") }}
+				<span>GitLab</span>
+			</a>
+		</div>
+		{{- end }}
+		{{- with .Site.Params.widgets.social.bitbucket }}
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Bitbucket" rel="noopener noreferrer" href="https://bitbucket.org/{{ . }}" target="_blank">
+				{{ partial "svg/bitbucket.svg" (dict "class" "widget-social__link-icon") }}
+				<span>Bitbucket</span>
+			</a>
+		</div>
+		{{- end }}
+		{{- with .Site.Params.widgets.social.email }}
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Email" href="mailto:{{ . }}">
+				{{ partial "svg/email.svg" (dict "class" "widget-social__link-icon") }}
+				<span>{{ . }}</span>
+			</a>
+		</div>
+		{{- end }}
+
+		{{- with .Site.Params.widgets.social.youtube }}
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Youtube" rel="noopener noreferrer" href="https://www.youtube.com/{{ . }}" target="_blank">
+				<svg class="widget-social__link-icon" version="1.1" xmlns="http://www.w3.org/2000/svg" 
+				xmlns:xlink="http://www.w3.org/1999/xlink"
+height="24px"
+x="0px" y="0px" viewBox="0 0 1000 1000" enable-background="new 0 0 1000 1000" xml:space="preserve"
+class="widget-social__link-icon icon">
+<path d="M936.1,63.9C900.2,28,856.9,10,806.3,10H193.8c-50.6,0-93.9,18-129.8,53.9C28,99.8,10,143.1,10,193.7v612.5c0,50.6,18,93.9,53.9,129.8C99.9,972,143.1,990,193.8,990h612.5c50.6,0,93.9-18,129.8-53.9C972,900.1,990,856.9,990,806.2V193.7C990,143.1,972,99.8,936.1,63.9z M588.7,151.6h42.8v173.5c0,10.2,0.2,15.7,0.6,16.6c0.4,6.8,3.8,10.2,10.2,10.2c8.5,0,17.4-6.6,26.8-19.8V151.6h42.8v236.1h-42.8h0v-25.5c-17.4,19.1-33.8,28.7-49.1,28.7c-13.6,0-22.8-5.7-27.4-17.2c-2.6-7.7-3.8-19.4-3.8-35.1V151.6L588.7,151.6z M427.3,228.2c0-24.7,4.5-43.2,13.4-55.5c11.5-16.2,28.1-24.2,49.8-24.2c20.8,0,37.4,8.1,49.8,24.2c8.9,12.3,13.4,30.8,13.4,55.5v82.9c0,25.5-4.5,44-13.4,55.5c-12.3,16.2-28.9,24.3-49.8,24.3c-21.7,0-38.3-8.1-49.8-24.3c-8.9-12.3-13.4-30.8-13.4-55.5V228.2z M312.4,70.6L346.2,195l32.5-124.4h47.9l-57.4,188.9h0v128.2H322V259.5c-4.7-23.4-14.5-57-29.4-100.8c-9.8-29.4-14.7-44-14.7-44l-15.3-44H312.4L312.4,70.6z M838.2,840.7c-4.3,18.3-13.3,33.8-27.1,46.6c-13.8,12.8-29.9,20.2-48.2,22.3c-58.3,6.4-145.9,9.6-262.9,9.6c-117,0-204.6-3.2-262.9-9.6c-18.3-2.1-34.3-9.6-48.2-22.3c-13.8-12.8-22.9-28.3-27.1-46.6c-8.5-35.7-12.8-91-12.8-165.9c0-73.6,4.3-128.9,12.8-165.9c4.3-18.7,13.3-34.4,27.1-46.9c13.8-12.6,30.1-19.9,48.8-22c57.8-6.4,145.3-9.6,262.2-9.6c117.4,0,205,3.2,262.9,9.6c18.3,2.1,34.4,9.5,48.5,22c14,12.5,23.2,28.2,27.4,46.9c8.1,35.3,12.1,90.6,12.1,165.9C850.9,749.7,846.7,805,838.2,840.7z"/><polygon points="201.4,556.8 251.2,556.8 251.2,826.7 298.4,826.7 298.4,556.8 349.4,556.8 349.4,512.1 201.4,512.1 "/><path d="M434.9,771.2c-9.4,13.2-18.3,19.8-26.8,19.8c-6,0-9.1-3.2-9.6-9.6c-0.4-0.8-0.6-6.4-0.6-16.6V592.5h-42.1v185c0,16.2,1.3,27.7,3.8,34.4c3.8,11.9,12.8,17.9,26.8,17.9c15.7,0,31.9-9.6,48.5-28.7v25.5h42.7V592.5h-42.7V771.2z"/><path d="M600.2,589.3c-15.3,0-29.8,8.5-43.4,25.5V512.1h-42.8v314.5h42.8v-23c14,17.4,28.5,26.2,43.4,26.2c17.4,0,28.7-8.9,33.8-26.8c3-8.9,4.5-24.5,4.5-46.6v-93.1c0-22.5-1.5-38.3-4.5-47.2C628.9,598.2,617.6,589.3,600.2,589.3z M596.4,759.7c0,20.8-6.2,31.2-18.5,31.3c-7.2,0-14.2-3.4-21.1-10.2V637.8c6.8-6.8,13.8-10.2,21.1-10.2c12.3,0,18.5,10.6,18.5,31.9V759.7z"/><path d="M755.2,759.4c0,4.5-0.1,8-0.3,10.5c-0.2,2.6-0.3,4-0.3,4.5c-2.5,11.1-8.9,16.6-19.1,16.6c-14.5,0-21.7-10.8-21.7-32.5v-41.5h84.9v-48.5c0-24.7-4.5-42.9-13.4-54.9c-11.5-16.2-28.1-24.3-49.8-24.3s-38.7,8.1-51,24.3c-8.5,11.5-12.8,29.8-12.8,54.9v82.3c0,25.1,4.5,43.4,13.4,54.9c12.3,16.2,29.6,24.3,51.7,24.3c22.5,0,39.6-8.5,51-25.5c5.1-7.7,8.3-16.2,9.6-25.5c0.8-6,1.3-15.1,1.3-27.4v-5.7v0h-43.4L755.2,759.4L755.2,759.4L755.2,759.4z M713.8,660.1c0-21.7,7-32.5,21.1-32.5c14,0,21.1,10.8,21.1,32.5v21.7h-42.1V660.1z"/><path d="M490.4,352c13.6,0,20.4-10.8,20.4-32.5v-99.5c0-22.1-6.8-33.2-20.4-33.2c-13.6,0-20.4,11.1-20.4,33.2v99.5C470,341.1,476.8,352,490.4,352z"/>
+</svg>
+				<span>Youtube</span>
+			</a>
+		</div>
+		{{- end }}
+
+		{{- with .Site.Params.widgets.social.mastodon }}
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Mastodon" rel="noopener noreferrer" href="https://www.youtube.com/{{ . }}" target="_blank">
+				<svg class="widget-social__link-icon icon-mastodon" viewBox="0 0 256 231" width="24" height="24" fill="#fff"><path d="M211.80734 139.0875c-3.18125 16.36625-28.4925 34.2775-57.5625 37.74875-15.15875 1.80875-30.08375 3.47125-45.99875 2.74125-26.0275-1.1925-46.565-6.2125-46.565-6.2125 0 2.53375.15625 4.94625.46875 7.2025 3.38375 25.68625 25.47 27.225 46.39125 27.9425 21.11625.7225 39.91875-5.20625 39.91875-5.20625l.8675 19.09s-14.77 7.93125-41.08125 9.39c-14.50875.7975-32.52375-.365-53.50625-5.91875C9.23234 213.82 1.40609 165.31125.20859 116.09125c-.365-14.61375-.14-28.39375-.14-39.91875 0-50.33 32.97625-65.0825 32.97625-65.0825C49.67234 3.45375 78.20359.2425 107.86484 0h.72875c29.66125.2425 58.21125 3.45375 74.8375 11.09 0 0 32.975 14.7525 32.975 65.0825 0 0 .41375 37.13375-4.59875 62.915" fill="#3088d4"/><path d="M177.50984 80.077v60.94125h-24.14375v-59.15c0-12.46875-5.24625-18.7975-15.74-18.7975-11.6025 0-17.4175 7.5075-17.4175 22.3525v32.37625H96.20734V85.42325c0-14.845-5.81625-22.3525-17.41875-22.3525-10.49375 0-15.74 6.32875-15.74 18.7975v59.15H38.90484V80.077c0-12.455 3.17125-22.3525 9.54125-29.675 6.56875-7.3225 15.17125-11.07625 25.85-11.07625 12.355 0 21.71125 4.74875 27.8975 14.2475l6.01375 10.08125 6.015-10.08125c6.185-9.49875 15.54125-14.2475 27.8975-14.2475 10.6775 0 19.28 3.75375 25.85 11.07625 6.36875 7.3225 9.54 17.22 9.54 29.675" fill="#fff"/></svg>
+				<span>Mastodon</span>
+			</a>
+		</div>
+		{{- end }}
+
+
+
+		{{ range .Site.Params.widgets.social.custom }}
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="{{ .title }}" {{ with .rel | default "noopener noreferrer" }} rel="{{ . }}"{{ end }} href="{{ .url }}" target="_blank">
+				{{- if .icon }}
+					{{ partial .icon (dict "class" "widget-social__link-icon") }}
+				{{- end }}
+				<span>{{ .title }}</span>
+			</a>
+		</div>
+		{{ end }}
+	</div>
+</div>
+{{- end }}
