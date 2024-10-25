@@ -1,6 +1,5 @@
 ---
-menu: main
-weight: 600
+menu: footer
 title: "Impressum"
 ---
 
