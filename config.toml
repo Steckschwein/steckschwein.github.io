@@ -2,13 +2,14 @@ baseurl = "https://www.steckschwein.de/"
 languageCode = "en-us"
 theme = ["Mainroad"]
 paginate = 5
-#sectionPagesMenu = "main"
-opengraph = true
-schema = true
-twitter_cards = false
 
-[markup]
-  goldmark.renderer.unsafe=true
+#[markup]
+#  goldmark.renderer.unsafe=true
+
+[Params.logo]
+  title = "Steckschwein"
+  subtitle = "An 8bit computer for the 21st century"
+  
 
 
 [Params.site]
@@ -29,7 +30,6 @@ twitter_cards = false
   widgets = ["recent", "search", "taglist", "social"]
 
 [Params.widgets.social]
-  # Enable parts of social widget
   github = "Steckschwein"
   youtube = "@Steckschwein"
   mastodon = "https://mastodon.social/@steckschwein_6502"
@@ -41,10 +41,8 @@ twitter_cards = false
     pre = ""
 
 [languages]
-  [languages.en]
-    title = "Steckschwein"
-    subtitle = "An 8bit computer for the 21st century"
-    keywords = "8bit,retro,homebrew"
+  [languages.en.params]
+    keywords = "8bit,retro,homebrew,6502"
     copyright = ""
     menuMore = "Show more"
     readMore = "Read more"
@@ -56,7 +54,6 @@ twitter_cards = false
         name = "About"
         url = "/about/"
         weight = 50
-
       [[languages.en.menu.main]]
         identifier = "blog"
         name = "Blog"
