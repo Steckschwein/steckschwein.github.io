@@ -4,13 +4,6 @@ languageCode = "en-us"
 theme = ["Mainroad"]
 paginate = 6
 
-[menus]
-  [[menus.main]]
-    identifier = "blog"
-    name = "Blog"
-    url = "/"
-    weight = 100
-
 #[markup]
 #  goldmark.renderer.unsafe=true
 
@@ -23,14 +16,7 @@ paginate = 6
 
 [Params]
   description = "An 8bit computer for the 21st century"
-  # opengraph = true
-  # schema = true
-  # twitter_cards = false # Enable Twitter Cards if true
-  # readmore = false # Show "Read more" button in list if true
   post_meta = ["author", "date", "categories", "translations"] # Order of post meta information
-  # menuMore = "Show more"
-  # readMore = "Read more"
-  # readOtherPosts = "Read other posts"
 
 [Params.style.vars]
   highlightColor = "rgb(96,221,108)"
