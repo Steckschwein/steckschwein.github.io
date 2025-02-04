@@ -13,26 +13,25 @@ tags:
 draft: true
 ---
 
-The 28C256 holding the BIOS has been our go-to EEPROM almost from the very early breadboard days. Before that, we used EPROMs to hold the BIOS, and had to UV-erase them before every upgrade. 
-Which was time consuming and rather annoying. Upgrading to an EEPROM brought in a lot of convenience and reduced turnaround time greatly.
 
-But the 28C256 does have a couple of drawbacks:
-- can not be written to in-circuit, as it needs 12V programming voltage, which the Steckschwein does not provide
-- It is slow. The 28C256's access time is 150ns. We need to slow the CPU down using waitstates when accessing the BIOS
+The **28C256 EEPROM**, which holds the BIOS, has been our go-to choice since the early breadboard days. Before that, we relied on **EPROMs**, which required UV erasure before every upgrade—a time-consuming and inconvenient process. Switching to an EEPROM significantly improved our workflow, reducing turnaround time.
 
-Using ROM routines is quite unattractive from a performance point of view. This is why the BIOS's only job is to read the steckOS loader from SD Card and start it.
+However, the **28C256** has a couple of drawbacks:
 
-Hence, the first hardware upgrade for the Steckschwein SBC is a little adapter board that allows us to replace our old and trusty 28C256 EEPROM with a 512k Flash EEPROM such as the 39F040, which is available in 55ns.
+- **It cannot be written in-circuit** since it requires a 12V programming voltage, which the Steckschwein does not provide.
+- **It is slow**, with an access time of **150ns**, forcing us to introduce wait states to slow down the CPU when accessing the BIOS.
+
+Because of these limitations, using ROM routines isn't ideal from a performance standpoint. As a result, the BIOS's sole function is to load the steckOS bootloader from an SD card into **RAM** and start it.
+
+To overcome these issues, we designed an **adapter board** that replaces the **28C256 EEPROM** with a **Flash EEPROM**, such as the **39F040**, which features a much faster **55ns access time**.
 
 ![flash adapter](flash_adapter.jpg)
 
-Also with this upgrade, the Steckschwein now has 1MB of memory altogether: 512k RAM and 512k Flash EEPROM, running at full speed.
-This opens up a lot of new possibilities.
+With this upgrade, the Steckschwein SBC now has **1MB of total memory**—**512K RAM** and **512K Flash EEPROM**—running at full speed. This unlocks several new possibilities:
 
-- Get rid of the BIOS and run steckOS directly from ROM.
-- Upgrade steckOS "in-circuit" and from within itself, using a flash write tool.
-- Add a ROM based machine language monitor.
-- ROM BASIC
-- ROM FORTH
-- Demos
-- Diagnostic tools
+- Eliminating the BIOS and running **steckOS** directly from ROM.
+- Upgrading steckOS in-circuit and from within itself using a flash write tool.
+- Adding a ROM-based machine language monitor.
+- ROM BASIC/FORTH
+- Implementing **demos** and **diagnostic tools.**
+
