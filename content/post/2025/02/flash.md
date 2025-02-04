@@ -24,7 +24,7 @@ Because of these limitations, using ROM routines isn't ideal from a performance 
 
 To overcome these issues, we designed an **adapter board** that replaces the **28C256 EEPROM** with a **Flash EEPROM**, such as the **39F040**, which features a much faster **55ns access time**.
 
-![flash adapter](images/flash_adapter.jpg)
+![flash adapter](../images/flash_adapter.jpg)
 
 With this upgrade, the Steckschwein SBC now has **1MB of total memory**—**512K RAM** and **512K Flash EEPROM**—running at full speed. This unlocks several new possibilities:
 
